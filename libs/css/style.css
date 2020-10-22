@@ -1,3 +1,9 @@
+/* ===================================== 
+   Public API Request
+======================================== */
+
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
 * {
 	box-sizing: border-box;
 }
@@ -13,7 +19,55 @@ body {
     background: rgb(32, 32, 32);
 }
 
-/* gallery */
+header {
+    padding: 15px 5px 5px;
+}
+
+.header-inner-container {
+    max-width: 1180px;
+    margin: auto;
+}
+
+header h1 {
+    font-size: 1.5em;
+    color: rgba(245, 245, 245, 0.9);
+    margin-top: 35px;
+}
+
+.search-input {
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(200, 200, 200, 0.9);
+    border-radius: 0.25rem 0 0 0.25rem ;
+    max-width: 20rem;
+    transition: .4s ease-out;
+    outline: none;
+    background-color: rgba(245, 245, 245, 0.9);
+}
+
+.search-input:active, .search-input:hover, .search-input:focus {
+    border: 1px solid rgba(50, 50, 50, 0.9);
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.search-submit {
+    cursor: pointer;
+    height: 33px;
+    background: rgba(245, 245, 245, 0.9);
+    border-radius: 0 0.25rem 0.25rem 0;
+    border: 1px solid rgba(200, 200, 200, 0.9);
+    transition: .4s ease-out;
+    outline: none;
+}
+
+.search-submit:active, .search-submit:hover, .search-submit:focus {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(50, 50, 50, 0.9);
+}
+
+
+/* ===================================== 
+   Gallery
+======================================== */
 
 .gallery {
     display: flex;
@@ -42,6 +96,12 @@ body {
     overflow: hidden;
 }
 
+.card-img {
+    width: 95px;
+    margin: 10px 15px auto 10px;
+    border-radius: 50%;
+}
+
 .card-info-container {
     text-align: left;
 }
@@ -57,11 +117,15 @@ body {
     transition: .4s ease-out;
 }
 
-.loc , .dep, .cap, .job {
+.cap {
     text-transform: capitalize;
 }
 
-/* modal */
+
+/* ===================================== 
+   Modal
+======================================== */
+
 .modal-container {
     position: fixed;
     top: 0;
@@ -96,6 +160,12 @@ body {
     border: 1px solid rgba(50, 50, 50, 0.3);
 }
 
+.modal-img {
+    width: 150px;
+    margin-top: 35px;
+    border-radius: 50%;
+}
+
 .modal-name {
     margin-bottom: 5px;
 }
@@ -105,11 +175,11 @@ body {
     margin: 10px;
 }
 
-/* .modal hr {
+.modal hr {
     width: 75%;
     margin: 25px auto 30px;
     border-color: rgba(200, 200, 200, 0.2);
-} */
+}
 
 .modal-btn-container {
     display: flex;
@@ -144,7 +214,14 @@ body {
     background: grey!important;
 }
 
-/* media queries tablet  */
+/* ===================================== 
+   Media Queries
+======================================== */
+
+/* ===================================== 
+   Tablet
+======================================== */
+
 @media (min-width: 768px) {
     .header-inner-container {
         display: flex;
@@ -168,7 +245,12 @@ body {
     }
 }
 
-/* media queries desktop */
+
+/* ===================================== 
+   Desktop
+   Hover styles on desktop 
+======================================== */
+
 @media (min-width: 1024px) {
 
     .card:hover {

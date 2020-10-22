@@ -9,7 +9,10 @@ var  allDepartments, allLocations, allEmployees, searchedEmployeesID=[];
 xmlhttp_php("libs/php/getAll.php", getAllEmployees);
 xmlhttp_php("libs/php/getAllDepartments.php", getAllDepartments);
 xmlhttp_php("libs/php/getAllLocations.php", getAllLocations);
-generator(allEmployees);
+// xmlhttp_php("libs/php/insertEmployee.php?firstName=" + latitude + "&lastName=" + longitude + "&jobTitle=" + longitude + "&email=" + longitude + "&deptId=" + longitude, insertEmployeeData);
+
+
+
 //------------------------------------------//
 
 
@@ -21,6 +24,7 @@ generator(allEmployees);
 
 // Callback function for the GET request to handle the user data
 function generator(employeesData) {
+  console.log(employeesData);
   employeesData.forEach(user => {
       const firstName = user.firstName;
       const lastName = user.lastName;
@@ -44,10 +48,10 @@ function createCard(nameTag, fullName, email, location, department, jobTitle) {
   const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
   const infoContainer = $('<div class="card-info-container"></div>');
   const h3 = $(`<h3 id="${nameTag}" class="card-name cap">${fullName}</h3>`);
-  const emailP = $(`<p class="card-text">${email}</p>`);
-  const locationP = $(`<p class="card-text loc">${location}</p>`);
-  const departmentP = $(`<p class="card-text dep">${department}</p>`);
-  const jobTitleP = $(`<p class="card-text job">${jobTitle}</p>`);
+  const emailP = $(`<p class="card-text">Email: ${email}</p>`);
+  const locationP = $(`<p class="card-text loc">Location: ${location}</p>`);
+  const departmentP = $(`<p class="card-text dep">Department: ${department}</p>`);
+  const jobTitleP = $(`<p class="card-text job">JobTitle: ${jobTitle}</p>`);
 
 
 
@@ -60,64 +64,76 @@ function createCard(nameTag, fullName, email, location, department, jobTitle) {
 
 // Creates the modal window and appends it to the DOM
 function createModal(nameTag, fullName, email, location, department, jobTitle) {
+  console.log('inside create modal');
   const container = $('<div class="modal-container"></div>');
   const modal = $('<div class="modal"></div>');
   const x = $('<button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>');
   const dataContainer = $('<div class="modal-info-container"></div>');
   const h3 = $(`<h3 id="${nameTag}-modal" class="modal-name cap">Name:${fullName}</h3>`);
   const emailP = $(`<p class="modal-text">Email:${email}</p>`);
-  const departmentP = $(`<p class="modal-text dep">Deparment:${department}</p>`);
-  const locationP = $(`<p class="modal-text loc">Location:${location}</p>`);  
+  const departmentP = $(`<p class="modal-text">Deparment:${department}</p>`);
+  const locationP = $(`<p class="modal-text">Location:${location}</p>`);  
   // const hr = $('<hr>');
   const jobTitleP = $(`<p class="modal-text">JobTitle: ${jobTitle}</p>`);
-  const navContainer = $('<div class="modal-btn-container"></div>');
-  const prevButton = $('<button type="button" id="modal-prev" class="modal-prev btn">Prev</button>');
-  const nextButton = $('<button type="button" id="modal-next" class="modal-next btn">Next</button>');
+  // const navContainer = $('<div class="modal-btn-container"></div>');
+  // const prevButton = $('<button type="button" id="modal-prev" class="modal-prev btn">Prev</button>');
+  // const nextButton = $('<button type="button" id="modal-next" class="modal-next btn">Next</button>');
   
+  console.log('inside create modal2');
+
   $('body').append(container);
   container.append(modal);
-  modal.append(x).append(dataContainer).append(navContainer);
-  dataContainer
-      .append(h3).append(emailP).append(departmentP)
-      .append(jobTitleP).append(locationP).append(jobTitleP);
-  navContainer.append(prevButton).append(nextButton);
+  modal.append(x).append(dataContainer);//.append(navContainer);
+  dataContainer.append(h3).append(emailP).append(departmentP).append(locationP).append(jobTitleP);
+  // navContainer.append(prevButton).append(nextButton);
+
+  console.log('inside create modal3');
 
   // close the window
   x.click(() => container.hide());
   $(document).keydown(e => {if (e.key === 'Escape') container.hide()});
 
-  // previous user
-  const prevUser = $(`#${nameTag}-card`).prev();
-  if (prevUser.length === 0) {
-      disableButton(prevButton);
-  }
-  prevButton.click(() => {
-      container.hide();
-      prevUser.click();
-  })
+//   // previous user
+//   const prevUser = $(`#${nameTag}-card`).prev();
+//   if (prevUser.length === 0) {
+//       disableButton(prevButton);
+//   }
+//   prevButton.click(() => {
+//       container.hide();
+//       prevUser.click();
+//   })
 
-  // next user
-  const nextUser = $(`#${nameTag}-card`).next();
-  if (nextUser.length === 0) {
-      disableButton(nextButton);
-  }
-  nextButton.click(() => {
-      container.hide();
-      nextUser.click();
-  })
+//   // next user
+//   const nextUser = $(`#${nameTag}-card`).next();
+//   if (nextUser.length === 0) {
+//       disableButton(nextButton);
+//   }
+//   nextButton.click(() => {
+//       container.hide();
+//       nextUser.click();
+//   })
 
-  // use arrow keys to navigate between users
-  $(document).keydown(e => {
-      if (container.is(':visible')) {
-          if (e.key === 'ArrowLeft' && prevButton.is(':enabled')) {
-              container.hide();
-              prevUser.click();
-          } else if (e.key === 'ArrowRight' && nextButton.is(':enabled')) {
-              container.hide();
-              nextUser.click();
-          }
-      }
-  });
+//   // disable button
+//   function disableButton(button) {
+//     button.prop('disabled', true);
+//     button.addClass('disable');
+// }
+
+
+//   // use arrow keys to navigate between users
+//   $(document).keydown(e => {
+//       if (container.is(':visible')) {
+//           if (e.key === 'ArrowLeft' && prevButton.is(':enabled')) {
+//               container.hide();
+//               prevUser.click();
+//           } else if (e.key === 'ArrowRight' && nextButton.is(':enabled')) {
+//               container.hide();
+//               nextUser.click();
+//           }
+//       }
+//   });
+  console.log('inside create modal last');
+
 }
 
 
@@ -194,6 +210,8 @@ function getAllEmployees(xhttp) {
         }
         options += `<option value="${i}">${ allEmployees[i].name}</option>`;
     }
+    generator(allEmployees);
+
 }
 
 //search employees with user enterterd name 
@@ -249,4 +267,10 @@ function getSearchedEmployeesIdByLocation(ulocation){
 }
 } 
 
+// create an employee
+function insertEmployeeData(){
+
+}
+
 //------------------------------------------//
+
