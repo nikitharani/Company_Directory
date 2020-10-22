@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+        <title>Company Directory</title>
+        <!-- Bootstrap Css files-->
+        <link rel="stylesheet" href="bootstrap/css/font-awesome.css">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="bootstrap/css/mdb.css">
+        <link rel="stylesheet" href="bootstrap/css/style.css">
+
+      
+    </head>
+<body>
+  <!--nav bar-->
+  <nav class="navbar navbar-expand-sm navbar-dark indigo mb-0 ">
+
+    <!-- Navbar brand -->
+    <img src="images/directory.png" height=40px width=50px/>
+    <a class="navbar-brand" href="#">Company Directory</a>
+  
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  
+    <form class="form-inline ml-auto">
+    <input class="form-control mr-2" type="text" placeholder="Name" aria-label="Search">
+    <input class="form-control" type="text" placeholder="Location" aria-label="Search"> 
+    <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2" type="submit">Search</button>
+    </form>
+    </div>
+    <!-- Collapsible content -->  
+  </nav>
+  
+  <!--body-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2 bg-secondary">
+        <form class="form-inline ml-auto mt-2">           
+          <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2" type="submit">Add Employee</button>
+        </form>
+      </div>
+      <div class="col-md-10 bg-warning">
+        <div id="name" class="card">
+          <div class="card-img-container">
+            <img class="card-img" src="">
+          </div>
+          <div class="card-info-container">
+            <h3 id="name">Name:</h3>
+            <p class="card-text">Location:</p>
+            <p class="card-text">Depatment:</p>
+            <p class="card-text">Report To:</p>       
+          </div>        
+        </div>
+        <!-- <div class="modal-container">
+          <button type="button" id="modal-close-btn" class="modal-close-btn">
+            <strong>X</strong>
+          </button>
+          <div class="modal-info-contaier">
+            <img class="modal-img" src="" alt="">
+            <h3 id="name1" class="modal-name-cap">Nikitha</h3>
+            <p class="modal-text">nikithanalumachu@gmail.com</p>
+            <p class="modal-text cap">Birthday:21/07/1993</p>
+          </div>
+          <div class="modal-btn-container">
+            <button type="button" id="modal-prev" class="modal-prev btn disable" disabled>prev</button>
+            <button type="button" id="modal-next" class="modal-next btn">Next</button>
+
+
+          </div>
+        </div>
+
+      </div> -->
+      <div id="name" class="card">
+        <div class="card-img-container">
+          <img class="card-img" src="">
+        </div>
+        <div class="card-info-container">
+          <h3 id="name">Name:</h3>
+          <p class="card-text">Location:</p>
+          <p class="card-text">Depatment:</p>
+          <p class="card-text">Report To:</p>       
+        </div>        
+      </div>
+    </div>
+  </div>  
+
+  <script src="bootstrap/js/jquery.js"></script>
+  <script src="bootstrap/js/bootstrap.js"></script>
+  <script src="bootstrap/js/popper.min.js"></script>
+  <script src="bootstrap/js/mdb.js"></script>
+</body>
+</html>
+
+<!-- 
+<div id="name" class="card">
+  <div class="card-img-container">
+    <img class="card-img" src="">
+  </div>
+  <div class="card-info-container">
+    <h3 id="name">Name:</h3>
+    <p class="card-text">Location:</p>
+    <p class="card-text">Depatment:</p>
+    <p class="card-text">Report To:</p>
+
+
+  </div>
+
+</div>
+</div>
+</div> -->
