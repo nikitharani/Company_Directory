@@ -27,6 +27,7 @@ xmlhttp_php("libs/php/getAll.php", getAllEmployees);
 // Callback function for the GET request to handle the user data
 function generator(employeesData) {
   console.log(employeesData);
+  
   employeesData.forEach(user => {
       const firstName = user.firstName;
       const lastName = user.lastName;
@@ -42,12 +43,15 @@ function generator(employeesData) {
       card.click(() => {
           createModal(nameTag, fullName, email, location, department, jobTitle);
       });
+      
   })
 }
 
 //Creates the user's card from the supplied data and attaches it to the DOM
 function createCard(nameTag, fullName, email, location, department, jobTitle) {
-  const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
+  const modaltest=$(`<button id="${nameTag}-card" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"> </button>`);
+
+  // const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
   const infoContainer = $('<div class="card-info-container"></div>');
   const h3 = $(`<h3 id="${nameTag}" class="card-name cap">${fullName}</h3>`);
   const emailP = $(`<p class="card-text">Email: ${email}</p>`);
@@ -55,90 +59,105 @@ function createCard(nameTag, fullName, email, location, department, jobTitle) {
   const departmentP = $(`<p class="card-text dep">Department: ${department}</p>`);
   const jobTitleP = $(`<p class="card-text job">JobTitle: ${jobTitle}</p>`);
 
-
-
-  $('#gallery').append(cardDiv);
-  cardDiv.append(infoContainer);  
+  $('#gallery').append(modaltest);
+  modaltest.append(infoContainer);  
   infoContainer.append(h3).append(emailP).append(departmentP).append(locationP).append(jobTitleP);
-  // console.log(document.body.innerHTML);
 
-
-  return cardDiv;
+  return modaltest;
 }
 
 // Creates the modal window and appends it to the DOM
 function createModal(nameTag, fullName, email, location, department, jobTitle) {
   console.log('inside create modal');
-  const container = $('<div class="modal-container"></div>');
-  const modal = $('<div class="my_modal"></div>');
-  const x = $('<button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>');
-  const dataContainer = $('<div class="modal-info-container"></div>');
+  // const container = $('<div class="modal-container"></div>');
+  const container = $('<div class="modal" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>');
+  const modalDialog=$('<div class="modal-dialog" role="document"></div>');
+  const modalContent = $('<div class="modal-content"></div>');
+  //modal header
+  const modalheader=$('<div class="modal-header"></div>');
+  const modalTitle=$('<h5 class="modal-title">Employee Details</h5>');
+  const x = $('<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>');
+  const button_in = $('<span aria-hidden="true">&times;</span>');//later check
+  //modal body
+  const modalbody=$('<div class="modal-body"></div>');
   const h3 = $(`<h3 id="${nameTag}-modal" class="modal-name cap">Name:${fullName}</h3>`);
   const emailP = $(`<p class="modal-text">Email:${email}</p>`);
   const departmentP = $(`<p class="modal-text">Deparment:${department}</p>`);
   const locationP = $(`<p class="modal-text">Location:${location}</p>`);  
-  // const hr = $('<hr>');
   const jobTitleP = $(`<p class="modal-text">JobTitle: ${jobTitle}</p>`);
-  // const navContainer = $('<div class="modal-btn-container"></div>');
+  //modal footer
+  const modalfooter = $('<div class="modal-footer"></div>');
   // const prevButton = $('<button type="button" id="modal-prev" class="modal-prev btn">Prev</button>');
   // const nextButton = $('<button type="button" id="modal-next" class="modal-next btn">Next</button>');
   
+  const prevButton = $('<button type="button" class="btn btn-primary">Prev</button>');
+  const nextButton = $('<button type="button" class="btn btn-secondary">Next</button>');
+  
   console.log('inside create modal2');
 
-  $('#gallery').append(container);
-  container.append(modal);
-  modal.append(x).append(dataContainer);//.append(navContainer);
-  dataContainer.append(h3).append(emailP).append(departmentP).append(locationP).append(jobTitleP);
+
+  $('body').append(container);
+  container.append(modalDialog).append(modalContent);
+  x.append(button_in);
+  modalheader.append(modalTitle).append(x);
+  modalbody.append(h3).append(emailP).append(departmentP).append(locationP).append(jobTitleP);
+  modalfooter.append(prevButton).append(nextButton);
+  modalContent.append(modalheader).append(modalbody).append(modalfooter);
+  // dataContainer.append(h3).append(emailP).append(departmentP).append(locationP).append(jobTitleP);
   // navContainer.append(prevButton).append(nextButton);
+  container.show();
 
   console.log('inside create modal3');
-  console.log(document.body.innerHTML);
+  // console.log(document.body.innerHTML);
+
 
   // close the window
   x.click(() => container.hide());
   $(document).keydown(e => {if (e.key === 'Escape') container.hide()});
 
-//   // previous user
-//   const prevUser = $(`#${nameTag}-card`).prev();
-//   if (prevUser.length === 0) {
-//       disableButton(prevButton);
-//   }
-//   prevButton.click(() => {
-//       container.hide();
-//       prevUser.click();
-//   })
+  // previous user
+  const prevUser = $(`#${nameTag}-card`).prev();
+  if (prevUser.length === 0) {
+      disableButton(prevButton);
+  }
+  prevButton.click(() => {
+      container.hide();
+      prevUser.trigger("click");
+  })
 
-//   // next user
-//   const nextUser = $(`#${nameTag}-card`).next();
-//   if (nextUser.length === 0) {
-//       disableButton(nextButton);
-//   }
-//   nextButton.click(() => {
-//       container.hide();
-//       nextUser.click();
-//   })
+  console.log(prevUser);
 
-//   // disable button
-//   function disableButton(button) {
-//     button.prop('disabled', true);
-//     button.addClass('disable');
-// }
+  // next user
+  const nextUser = $(`#${nameTag}-card`).next();
+  if (nextUser.length === 0) {
+      disableButton(nextButton);
+  }
+  nextButton.click(() => {
+      container.hide();
+      nextUser.trigger("click");
+  })
+  console.log(nextUser);
 
-
-//   // use arrow keys to navigate between users
-//   $(document).keydown(e => {
-//       if (container.is(':visible')) {
-//           if (e.key === 'ArrowLeft' && prevButton.is(':enabled')) {
-//               container.hide();
-//               prevUser.click();
-//           } else if (e.key === 'ArrowRight' && nextButton.is(':enabled')) {
-//               container.hide();
-//               nextUser.click();
-//           }
-//       }
-//   });
+  // use arrow keys to navigate between users
+  $(document).keydown(e => {
+      if (container.is(':visible')) {
+          if (e.key === 'ArrowLeft' && prevButton.is(':enabled')) {
+              container.hide();
+              prevUser.click();
+          } else if (e.key === 'ArrowRight' && nextButton.is(':enabled')) {
+              container.hide();
+              nextUser.click();
+          }
+      }
+  });
   console.log('inside create modal last');
 
+}
+
+// disable button
+function disableButton(button) {
+  button.prop('disabled', true);
+  button.addClass('disable');
 }
 
 

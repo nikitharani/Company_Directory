@@ -96,11 +96,11 @@ header h1 {
     overflow: hidden;
 }
 
-.card-img {
+/* .card-img {
     width: 95px;
     margin: 10px 15px auto 10px;
     border-radius: 50%;
-}
+} */
 
 .card-info-container {
     text-align: left;
@@ -135,7 +135,7 @@ header h1 {
     background: rgba(0, 0, 0, 0.7);
 }
 
-.modal {
+.my_modal {
     position: relative;
     width: 95%;
     max-width: 420px;
@@ -158,12 +158,6 @@ header h1 {
     outline: none;
     border-radius: 0.25em;
     border: 1px solid rgba(50, 50, 50, 0.3);
-}
-
-.modal-img {
-    width: 150px;
-    margin-top: 35px;
-    border-radius: 50%;
 }
 
 .modal-name {
@@ -222,7 +216,7 @@ header h1 {
    Tablet
 ======================================== */
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
     .header-inner-container {
         display: flex;
         flex-direction: row;
@@ -243,7 +237,7 @@ header h1 {
     .modal {
         margin-top: 100px;
     }
-}
+} */
 
 
 /* ===================================== 
@@ -251,7 +245,7 @@ header h1 {
    Hover styles on desktop 
 ======================================== */
 
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
 
     .card:hover {
         background: rgba(255, 255, 255, 1);
@@ -269,4 +263,4 @@ header h1 {
     .disable:hover {
         color: rgba(255, 255, 255, 0.9)!important;
     }
-}
+} */
