@@ -36,48 +36,80 @@
   </nav>
   
   <!--body-->
-  <div class="container-fluid">
+  <div class="container-fluid" >
     <div class="row">
       <div class="col-md-2 bg-secondary">
-        <form class="form-inline ml-auto mt-2">           
+        <!-- <form class="form-inline ml-auto mt-2">           
           <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2" type="submit">Add Employee</button>
-        </form>
+        </form> -->
+        <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Add an Employee</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <i class="fas fa-user prefix grey-text"></i>
+          <input type="text" id="fname" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="fname">First Name</label>
+        </div>
+        <div class="md-form mb-5">
+          <i class="fas fa-user prefix grey-text"></i>
+          <input type="text" id="lname" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="lname">Last Name</label>
+        </div>
+
+        <div class="md-form mb-5">
+          <i class="fas fa-envelope prefix grey-text"></i>
+          <input type="email" id="eid" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="eid">Email</label>
+        </div>
+
+        <div class="md-form mb-5">
+          <!-- <i class="fas fa-tag prefix grey-text"></i> -->
+          <label data-error="wrong" data-success="right" for="location"></label> 
+          <select id="location" class="browser-default custom-select  custom-select-xs mb-3 ">
+          </select>
+        </div>
+
+        <div class="md-form mb-5">
+          <!-- <i class="fas fa-tag prefix grey-text"></i> -->
+          <label data-error="wrong" data-success="right" for="department"></label>
+          <select id="department" class="browser-default custom-select  custom-select-xs mb-3 ">
+          </select>
+        </div>
+
+        <div class="md-form mb-5">
+          <i class="fas fa-tag prefix grey-text"></i>
+          <input type="text" id="job" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="job">Job Title</label>
+        </div>
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button id="send" class="btn btn-unique" data-dismiss="modal">Send <i class="fas fa-paper-plane-o ml-1"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">Add Employee</a>
+</div>
+        <!--end-->
+      </div>
+      
+      
+      
+      
+      <!--gallery-->
       <div class="col-md-10 bg-warning">
         <div id="gallery" class="gallery">
-
-
-          <!--sample card data-->
-          <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"> 
-            <div class="card-info-container">
-              <h3 id="Tamarra-Ace" class="card-name cap">Tamarra Ace</h3>
-              <p class="card-text">Email: tacem@vinaora.com</p>
-              <p class="card-text dep">Department: Support</p>
-              <p class="card-text loc">Location: Munich</p>
-              <p class="card-text job">JobTitle: </p>
-            </div>
-          </button>
-          <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Employee Details</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <h3 id="Tamarra-Ace-modal" class="modal-name cap">Name:Tamarra Ace</h3>
-                  <p class="modal-text">Email:tacem@vinaora.com</p>
-                  <p class="modal-text">Deparment:Support</p>
-                  <p class="modal-text">Location:Munich</p>
-                  <p class="modal-text">JobTitle: </p>
-                </div>
-              </div>
-            </div>
-          </div> -->
-
-
         </div>
       </div>
     </div>

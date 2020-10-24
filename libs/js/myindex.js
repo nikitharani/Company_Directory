@@ -9,11 +9,42 @@ var  allDepartments, allLocations, allEmployees, searchedEmployeesID=[];
 xmlhttp_php("libs/php/getAll.php", getAllEmployees);
 // $.getJSON("libs/php/getAll.php", getAllEmployees);
 
-// xmlhttp_php("libs/php/getAllDepartments.php", getAllDepartments);
-// xmlhttp_php("libs/php/getAllLocations.php", getAllLocations);
+xmlhttp_php("libs/php/getAllDepartments.php", getAllDepartments);
+xmlhttp_php("libs/php/getAllLocations.php", getAllLocations);
 // xmlhttp_php("libs/php/insertEmployee.php?firstName=" + latitude + "&lastName=" + longitude + "&jobTitle=" + longitude + "&email=" + longitude + "&deptId=" + longitude, insertEmployeeData);
 
+//getting data from add an employee form
+$("#send").click(function() {
+  let fname = $("#fname").val();
+  console.log(fname);
 
+  let lname = $("#lname").val();
+  let loc = $("#location option:checked").val();
+  console.log(loc);
+  let dep = $("#department option:checked").val();
+  let eid = $("#eid").val();
+  let job = $("#job").val();
+  xmlhttp_php("libs/php/insertEmployee.php?firstName=" + fname + "&lastName=" + lname + "&jobTitle=" + job + "&email=" + eid + "&deptId=" + dep, insertEmployeeData);
+// $('#modalContactForm').hide();
+});
+
+$("#location").change(function(){
+  let locID = parseInt($(this).val());//$("#location option:checked").val();
+  locID = locID+1;
+  console.log("locID");
+  console.log(locID);
+
+  options = "";
+  for(i=0; i<allDepartments.length; i++){
+    if(allDepartments[i].locationID==locID){
+      options += `<option value="${i}">${ allDepartments[i].name}</option>`;
+    }    
+    
+  }
+  document.getElementById('department').innerHTML=options;
+
+
+});
 
 //------------------------------------------//
 
@@ -191,21 +222,10 @@ function getAllDepartments(xhttp) {
       }
       options += `<option value="${i}">${ allDepartments[i].name}</option>`;
     }
-  // document.getElementById("IntroCountry").innerHTML = countryIntro.data.introduction;
-  // document.getElementById("gdp").innerHTML = "$" + (countryIntro.data.gdp.value).toString() + " billion (in 2017)";
-  // document.getElementById("economy").innerHTML = countryIntro.data.economy;
-
-  // // console.log(countryIntro.data);
-
-  // document.getElementById("languages").innerHTML = countryIntro.data.people.languages;
-  // document.getElementById("religions").innerHTML = countryIntro.data.people.religions;
-  // document.getElementById("ethnic-groups").innerHTML = countryIntro.data.people.ethnic_groups;
-  // document.getElementById("death-rate").innerHTML = countryIntro.data.people.death_rate;
-  // document.getElementById("birth-rate").innerHTML = countryIntro.data.people.birth_rate;
-  // document.getElementById("unemployment").innerHTML = countryIntro.data.people.unemployment_rate;
-  // document.getElementById("sex-ratio").innerHTML = countryIntro.data.people.sex_ratio;
-  
-  }
+    const departmentList = document.getElementById("department");
+    departmentList.innerHTML=options;
+    
+}
 
 //locations drop down
 function getAllLocations(xhttp) {
@@ -219,7 +239,11 @@ function getAllLocations(xhttp) {
       }
       options += `<option value="${i}">${ allLocations[i].name}</option>`;
     }
-}
+    const locationList = document.getElementById("location");
+    locationList.innerHTML=options;
+  
+  
+  }
 
 //employee data
 function getAllEmployees(xhttp) {
@@ -295,9 +319,12 @@ function getSearchedEmployeesIdByLocation(ulocation){
 } 
 
 // create an employee
-function insertEmployeeData(){
+function insertEmployeeData(xhttp){
+  result = JSON.parse(xhttp.responseText);
 
+  console.log(result.status);
 }
+
 
 //------------------------------------------//
 
