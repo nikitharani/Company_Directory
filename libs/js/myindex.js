@@ -28,6 +28,7 @@ $("#send").click(function() {
 // $('#modalContactForm').hide();
 });
 
+//change department drop down list according to location
 $("#location").change(function(){
   let locID = parseInt($(this).val());//$("#location option:checked").val();
   locID = locID+1;
@@ -45,6 +46,66 @@ $("#location").change(function(){
 
 
 });
+
+//search using name 
+$('#search').click(function()
+// $('#search').on('input', e => 
+{
+  let ser_name = $("#search-name").val();
+  // let ser_location = $("#search-location").val();
+  console.log(ser_name);
+  // console.log(ser_location);
+  var searchednametagsIds = searchEmployeesIdByNameLocation(ser_name);
+  // var searchednametagsIds = getSearchedEmployeesIdByLocation(ser_location);
+
+  let id;
+  for(i=0;i<searchednametagsIds.length;i++){
+    id = searchednametagsIds[i].button_id;
+    if(!(searchednametagsIds[i].visibility.localeCompare("show")))
+    {
+      $(`#${id}`).show();
+    }else{
+      $(`#${id}`).hide();
+
+    }
+  }
+
+  // const cards = $('.card-btn');
+  // console.log(cards);
+  // cards.each((index, card) => {
+  //   const regex = /^(\w*)\-(\w*)\-card/;
+  //   const id = $(card).attr('id');
+  //   const name = (id.replace(regex, '$1 $2')).toLowerCase();
+  //   if (name.includes(ser_name.toLowerCase())) {
+  //       $(`#${id}`).show();
+  //   } else {
+  //       $(`#${id}`).hide();
+  //   }
+  // })
+  
+  // console.log(emp_ids);
+  // $("#gallery").empty();
+  // generator(employes_data);
+  return false;
+
+});
+
+//test 
+// search.on('input', e => {
+//   const cards = $('.card');
+//   const searchTerm = e.target.value.toLowerCase();
+//   cards.each((index, card) => {
+//       const regex = /^(\w*)\-(\w*)\-card/;
+//       const id = $(card).attr('id');
+//       const name = id.replace(regex, '$1 $2');
+//       if (name.includes(searchTerm)) {
+//           $(`#${id}`).show();
+//       } else {
+//           $(`#${id}`).hide();
+//       }
+//   });
+// });
+
 
 //------------------------------------------//
 
@@ -80,7 +141,7 @@ function generator(employeesData) {
 
 //Creates the user's card from the supplied data and attaches it to the DOM
 function createCard(nameTag, fullName, email, location, department, jobTitle) {
-  const modaltest=$(`<button id="${nameTag}-card" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"> </button>`);
+  const modaltest=$(`<button id="${nameTag}-card" type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#exampleModalLong"> </button>`);
 
   // const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
   const infoContainer = $('<div class="card-info-container"></div>');
@@ -262,18 +323,49 @@ function getAllEmployees(xhttp) {
         options += `<option value="${i}">${ allEmployees[i].name}</option>`;
     }
     generator(allEmployees);
+    const cards = $('.card-btn');
+    console.log(cards);
 
 }
 
 //search employees with user enterterd name 
 function getSearchedEmployeesIdByName(uname){
-    for(i=0;i<allEmployees.length;i++){
-        
-        if ((!(allEmployees[i].firstName.localeCompare(uname))) || (!(allEmployees[i].lastName.localeCompare(uname)))) {
-            searchedEmployeesID.push(i+1);
+  uname=uname.toLowerCase();
+  var searchedEmployeesID = [];
+  var nameTag;
+    for(i=0; i < allEmployees.length; i++){
+      nameTag = allEmployees[i].firstName + "-" + allEmployees[i].lastName + "-card";
+
+        if (((allEmployees[i].firstName.toLowerCase().includes(uname))) || ((allEmployees[i].lastName.toLowerCase().includes(uname)))) {
+            searchedEmployeesID.push({button_id :nameTag, visibility:"show"});
             
     }
+    else{
+      searchedEmployeesID.push({button_id:nameTag, visibility:"hide"});
+
     }
+    }
+    return searchedEmployeesID
+}
+
+//search employees with user enterterd name or location
+function searchEmployeesIdByNameLocation(uentry){
+  uentry=uentry.toLowerCase();
+  var searchedEmployeesID = [];
+  var nameTag;
+    for(i=0; i < allEmployees.length; i++){
+      nameTag = allEmployees[i].firstName + "-" + allEmployees[i].lastName + "-card";
+
+        if (((allEmployees[i].firstName.toLowerCase().includes(uentry))) || ((allEmployees[i].lastName.toLowerCase().includes(uentry))) || ((allEmployees[i].location.toLowerCase().includes(uentry))) ) {
+            searchedEmployeesID.push({button_id :nameTag, visibility:"show"});
+            
+    }
+    else{
+      searchedEmployeesID.push({button_id:nameTag, visibility:"hide"});
+
+    }
+    }
+    return searchedEmployeesID
 }
 
 // displayEmployeeInfo(searchedEmployeesID);
@@ -291,6 +383,7 @@ function displayEmployeeInfo(employeeIDs){
         }
    
     }
+    return SearchedEmployeeData
     // innerHTml
 
 }
@@ -309,13 +402,23 @@ function getSearchedEmployeesIdByDepartment(udepartment){
 
 //search employees with user enterterd location 
 function getSearchedEmployeesIdByLocation(ulocation){
-    for(i=0;i<allEmployees.length;i++){
-        
-        if (!(allEmployees[i].location.localeCompare(ulocation))) {
-            searchedEmployeesID.push(i+1);
+  ulocation=ulocation.toLowerCase();
+  var searchedEmployeesByLocation = [];
+  var nameTag;
+
+  for(i=0; i < allEmployees.length; i++){
+    nameTag = allEmployees[i].firstName + "-" + allEmployees[i].lastName + "-card";
+
+        if ((allEmployees[i].location.toLowerCase().includes(ulocation))) {
+          searchedEmployeesByLocation.push({button_id :nameTag, visibility:"show"});
             
+    }else{
+      searchedEmployeesByLocation.push({button_id:nameTag, visibility:"hide"});
+
     }
+    
 }
+return searchedEmployeesByLocation;
 } 
 
 // create an employee
