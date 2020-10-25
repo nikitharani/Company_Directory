@@ -17,117 +17,119 @@
 <body>
   <!--nav bar-->
   <nav class="navbar navbar-expand-sm navbar-dark indigo mb-0 ">
-
+  
     <!-- Navbar brand -->
-    <img src="images/directory.png" height=40px width=50px/>
+    <img src="images/directory.png" height=40px width=50px />
     <a class="navbar-brand" href="#">Company Directory</a>
   
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    
   
-    <form class="form-inline ml-auto">
-    <input class="form-control mr-2" type="text" placeholder="Name / Location" aria-label="Search" id="search-name">
-    <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2" id='search' type="submit">Search</button>
-    </form>
+  
+      <form class="form-inline ml-auto">
+        <input class="form-control mr-2" type="text" placeholder="Name / Location" aria-label="Search" id="search-name">
+        <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2" type="button"  id='search' type="submit">Search</button>
+      </form>
     </div>
-    <!-- Collapsible content -->  
+    <!-- Collapsible content -->
   </nav>
   
   <!--body-->
-  <div class="container-fluid" >
+  <div class="container-fluid">
     <div class="row">
       <div class="col-md-2 bg-secondary">
         <!-- <form class="form-inline ml-auto mt-2">           
-          <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2" type="submit">Add Employee</button>
-        </form> -->
+            <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2" type="submit">Add Employee</button>
+          </form> -->
         <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Add an Employee</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="fname" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="fname">First Name</label>
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Add an Employee</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                  <i class="fas fa-user prefix grey-text"></i>
+                  <input type="text" id="fname" value="NIki" class="form-control validate">
+                  <label data-error="wrong" data-success="right" for="fname">First Name</label>
+                </div>
+                <div class="md-form mb-5">
+                  <i class="fas fa-user prefix grey-text"></i>
+                  <input type="text" id="lname" class="form-control validate">
+                  <label data-error="wrong" data-success="right" for="lname">Last Name</label>
+                </div>
+  
+                <div class="md-form mb-5">
+                  <i class="fas fa-envelope prefix grey-text"></i>
+                  <input type="email" id="eid" class="form-control validate">
+                  <label data-error="wrong" data-success="right" for="eid">Email</label>
+                </div>
+  
+                <div class="md-form mb-5">
+                  <!-- <i class="fas fa-tag prefix grey-text"></i> -->
+                  <label data-error="wrong" data-success="right" for="location"></label>
+                  <select id="location" class="browser-default custom-select  custom-select-xs mb-3 ">
+                  </select>
+                </div>
+  
+                <div class="md-form mb-5">
+                  <!-- <i class="fas fa-tag prefix grey-text"></i> -->
+                  <label data-error="wrong" data-success="right" for="department"></label>
+                  <select id="department" class="browser-default custom-select  custom-select-xs mb-3 ">
+                  </select>
+                </div>
+  
+                <div class="md-form mb-5">
+                  <i class="fas fa-tag prefix grey-text"></i>
+                  <input type="text" id="job" class="form-control validate">
+                  <label data-error="wrong" data-success="right" for="job">Job Title</label>
+                </div>
+  
+              </div>
+              <div class="modal-footer d-flex justify-content-center">
+                <button id="send" class="btn btn-unique" data-dismiss="modal">Submit <i
+                    class="fas fa-paper-plane-o ml-1"></i></button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="md-form mb-5">
-          <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="lname" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="lname">Last Name</label>
+  
+        <div class="text-center">
+          <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">Add
+            Employee</a>
         </div>
-
-        <div class="md-form mb-5">
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="eid" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="eid">Email</label>
-        </div>
-
-        <div class="md-form mb-5">
-          <!-- <i class="fas fa-tag prefix grey-text"></i> -->
-          <label data-error="wrong" data-success="right" for="location"></label> 
-          <select id="location" class="browser-default custom-select  custom-select-xs mb-3 ">
-          </select>
-        </div>
-
-        <div class="md-form mb-5">
-          <!-- <i class="fas fa-tag prefix grey-text"></i> -->
-          <label data-error="wrong" data-success="right" for="department"></label>
-          <select id="department" class="browser-default custom-select  custom-select-xs mb-3 ">
-          </select>
-        </div>
-
-        <div class="md-form mb-5">
-          <i class="fas fa-tag prefix grey-text"></i>
-          <input type="text" id="job" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="job">Job Title</label>
-        </div>
-
-      </div>
-      <div class="modal-footer d-flex justify-content-center">
-        <button id="send" class="btn btn-unique" data-dismiss="modal">Submit <i class="fas fa-paper-plane-o ml-1"></i></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="text-center">
-  <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">Add Employee</a>
-</div>
         <!--end-->
       </div>
-      
-      
-      
-      
+  
+  
+  
+  
       <!--gallery-->
       <div class="col-md-10 bg-warning">
         <div id="gallery" class="gallery">
         </div>
       </div>
     </div>
-  </div>  
+  </div>
   <!-- <div id="gallery" class="gallery">
-
-  </div> -->
   
-
+    </div> -->
+  
+  
   <script src="bootstrap/js/jquery.js"></script>
-
+  
   <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
   <!--modal-->
   
-<!--end modal-->
+  <!--end modal-->
   <script src="bootstrap/js/bootstrap.js"></script>
   <script src="bootstrap/js/popper.min.js"></script>
-  <script src="bootstrap/js/mdb.js"></script>  
+  <script src="bootstrap/js/mdb.js"></script>
   <script src="libs/js/myindex.js"></script>
-</body>
+  </body>
 </html>
 

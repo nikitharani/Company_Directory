@@ -35,20 +35,19 @@
 
 	}	
 
-	//default value
-	if (empty($_REQUEST['id']))
-    {        
-        $id=111;
-    }
-    else 
-    {
-        $id = $_REQUEST['id'];
-        
-    }
-
 	// $_REQUEST used for development / debugging. Remember to cange to $_POST for production
+		//default value
+		if (empty($_REQUEST['id']))
+		{        
+			$id=109;
+		}
+		else 
+		{
+			$id = $_REQUEST['id'];
+			
+		}
 
-	$query = 'DELETE FROM department WHERE id = ' . $id;
+	$query = 'DELETE FROM personnel WHERE id = ' . $id;
 
 	$result = $conn->query($query);
 	
