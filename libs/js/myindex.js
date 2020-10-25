@@ -47,6 +47,8 @@ $('#search').click(function()
   // console.log(ser_location);
   var searchednametagsIds = searchEmployeesIdByNameLocation(ser_name);
   // var searchednametagsIds = getSearchedEmployeesIdByLocation(ser_location);
+  console.log(searchednametagsIds);
+
 
   let id;
   for(i=0;i<searchednametagsIds.length;i++){
@@ -59,8 +61,7 @@ $('#search').click(function()
 
     }
   }
-
-  return false
+  return false;
 
 });
 
@@ -116,7 +117,7 @@ function generator(employeesData) {
 
 //Creates the user's card from the supplied data and attaches it to the DOM
 function createCard(id, nameTag, fullName, email, location, department, jobTitle) {
-  const modaltest=$(`<button id="${nameTag}-${id.toString()}" type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#exampleModalLong"> </button>`);
+  const modaltest=$(`<button id="${id.toString()}" type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#exampleModalLong"> </button>`);
 
   // const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
   const infoContainer = $('<div class="card-info-container"></div>');
@@ -185,6 +186,15 @@ editButton.click(() => {
   container.hide();
   $('body').append(edit_code);
   // $('#EditContactForm').show();
+
+})
+
+//delete button functionality
+delButton.click(() => {
+  // container.hide();
+
+  deleteEmployee(id);
+
 
 })
 
@@ -319,7 +329,7 @@ function getSearchedEmployeesIdByName(uname){
   var searchedEmployeesID = [];
   var nameTag;
     for(i=0; i < allEmployees.length; i++){
-      nameTag = allEmployees[i].firstName + "-" + allEmployees[i].lastName + "-" + allEmployees[i].id.toString();
+      nameTag = allEmployees[i].id.toString();
 
         if (((allEmployees[i].firstName.toLowerCase().includes(uname))) || ((allEmployees[i].lastName.toLowerCase().includes(uname)))) {
             searchedEmployeesID.push({button_id :nameTag, visibility:"show"});
@@ -339,7 +349,7 @@ function searchEmployeesIdByNameLocation(uentry){
   var searchedEmployeesID = [];
   var nameTag;
     for(i=0; i < allEmployees.length; i++){
-      nameTag = allEmployees[i].firstName + "-" + allEmployees[i].lastName + "-" + allEmployees[i].id.toString();
+      nameTag = allEmployees[i].id.toString();
 
         if (((allEmployees[i].firstName.toLowerCase().includes(uentry))) || ((allEmployees[i].lastName.toLowerCase().includes(uentry))) || ((allEmployees[i].location.toLowerCase().includes(uentry))) ) {
             searchedEmployeesID.push({button_id :nameTag, visibility:"show"});
@@ -392,7 +402,7 @@ function getSearchedEmployeesIdByLocation(ulocation){
   var nameTag;
 
   for(i=0; i < allEmployees.length; i++){
-    nameTag = allEmployees[i].firstName + "-" + allEmployees[i].lastName + "-" + allEmployees[i].id.toString();
+    nameTag = allEmployees[i].id.toString(); 
 
         if ((allEmployees[i].location.toLowerCase().includes(ulocation))) {
           searchedEmployeesByLocation.push({button_id :nameTag, visibility:"show"});
@@ -501,6 +511,8 @@ function deleteEmployeeData(xhttp){
   result = JSON.parse(xhttp.responseText);
 
   console.log(result.status);
+  alert('delete succesful');
+  window.location.reload();
 }
 
 //------------------------------------------//
