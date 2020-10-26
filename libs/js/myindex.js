@@ -1,6 +1,7 @@
 
 // Global variables
 var  allDepartments, allLocations, allEmployees, searchedEmployeesID=[];
+var departmentList, locationList;
 
 //------------------------------------------//
 //-------------- Main code -----------------//
@@ -165,7 +166,8 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   const nextButton = $('<button type="button" class="btn btn-secondary">Next</button>');
   
   console.log('inside create modal2');
-  const edit_code = editModel(firstName, lastName, location, email, department, jobTitle );
+  
+
 
   $('body').append(container);
   container.append(modalDialog).append(modalContent);
@@ -184,8 +186,52 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
 editButton.click(() => {
 
   container.hide();
+  const edit_code = editModel(firstName, lastName, locationList, email, departmentList, jobTitle );
+
+  
   $('body').append(edit_code);
+  // window.location.reload();
   // $('#EditContactForm').show();
+
+  //change department drop down list according to location in update 
+  $("#location-edit").change(function(){
+    let locID = parseInt($(this).val());//$("#location option:checked").val();
+    locID = locID+1;
+    console.log("locID");
+    console.log(locID);
+
+    options = "";
+    for(i=0; i<allDepartments.length; i++){
+      if(allDepartments[i].locationID==locID){
+        options += `<option value="${i}">${ allDepartments[i].name}</option>`;
+      }    
+      
+    }
+    document.getElementById('department-edit').innerHTML=options;
+
+
+  });
+
+  //update button functionality
+  $("#update").click(()=>{
+    // deleteEmployee(id,"Update sucessful");
+    let fname = $("#fname-edit").val();
+    console.log(fname);
+
+    let lname = $("#lname-edit").val();
+    let loc = $("#location-edit option:checked").val();
+    console.log(loc);
+    let dep = $("#department-edit option:checked").val();
+    let eid = $("#eid-edit").val();
+    let job = $("#job-edit").val();
+    xmlhttp_php("libs/php/updateEmployee.php?firstName=" + fname + "&lastName=" + lname + "&jobTitle=" + job + "&email=" + eid + "&deptId=" + dep +"&id=" + id, updateEmployeeData);
+
+    alert('Update Succesful!');
+    window.location.reload();
+
+  })
+
+
 
 })
 
@@ -193,7 +239,7 @@ editButton.click(() => {
 delButton.click(() => {
   // container.hide();
 
-  deleteEmployee(id);
+  deleteEmployee(id,"Delete sucessful");
 
 
 })
@@ -203,7 +249,7 @@ delButton.click(() => {
   $(document).keydown(e => {if (e.key === 'Escape') container.hide()});
 
   // previous user
-  const prevUser = $(`#${nameTag}-card`).prev();
+  const prevUser = $(`#${id}`).prev();
   if (prevUser.length === 0) {
       disableButton(prevButton);
   }
@@ -215,7 +261,7 @@ delButton.click(() => {
   console.log(prevUser);
 
   // next user
-  const nextUser = $(`#${nameTag}-card`).next();
+  const nextUser = $(`#${id}`).next();
   if (nextUser.length === 0) {
       disableButton(nextButton);
   }
@@ -278,8 +324,10 @@ function getAllDepartments(xhttp) {
       }
       options += `<option value="${i}">${ allDepartments[i].name}</option>`;
     }
-    const departmentList = document.getElementById("department");
-    departmentList.innerHTML=options;
+    departmentList = options;
+    const departmentDropdown = document.getElementById("department");
+
+    departmentDropdown.innerHTML=options;
     
 }
 
@@ -295,10 +343,10 @@ function getAllLocations(xhttp) {
       }
       options += `<option value="${i}">${ allLocations[i].name}</option>`;
     }
-    const locationList = document.getElementById("location");
-    locationList.innerHTML=options;
-  
-  
+    locationList = options;
+    const locationDropdown = document.getElementById("location");
+    locationDropdown.innerHTML=options;
+    
   }
 
 //employee data
@@ -425,62 +473,54 @@ function insertEmployeeData(xhttp){
 //edit function
 function editModel(fname, lname, location, email, department, jobTitle )
 {
-  var edit_code = 
-  `<div class="modal fade" id="EditContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    var edit_code = 
+    `<div class="modal fade" id="EditContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
       <div class="modal-header text-center">
         <h4 class="modal-title w-100 font-weight-bold">Edit Employee</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" data-target="#EditContactForm" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="fname" value="${fname}" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="fname">First Name</label>
+        <div class="form-group mb-5">
+        <label data-error="wrong" data-success="right" for="fname">First Name</label>
+          <input type="text" id="fname-edit" value="${fname}" class="form-control validate">
         </div>
-        <div class="md-form mb-5">
-          <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="lname" value="${lname}" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="lname">Last Name</label>
+        <div class="form-group mb-5">
+        <label data-error="wrong" data-success="right" for="lname">Last Name</label>
+          <input type="text" id="lname-edit" value="${lname}" class="form-control validate">
         </div>
 
-        <div class="md-form mb-5">
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="eid" value="${email}" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="eid">Email</label>
+        <div class="form-group mb-5">
+        <label data-error="wrong" data-success="right" for="eid">Email</label>
+          <input type="email" id="eid-edit" value="${email}" class="form-control validate">
         </div>
 
-        <div class="md-form mb-5">
-          <!-- <i class="fas fa-tag prefix grey-text"></i> -->
-          <label data-error="wrong" data-success="right" for="location"></label> 
-          <select id="location" class="browser-default custom-select  custom-select-xs mb-3 ">
-          </select>
+        <div class="form-group mb-5">
+          <label data-error="wrong" data-success="right" for="location">Location</label> 
+          <select id="location-edit" class="browser-default custom-select  custom-select-xs mb-3 ">"${location}"</select>
         </div>
 
-        <div class="md-form mb-5">
-          <!-- <i class="fas fa-tag prefix grey-text"></i> -->
-          <label data-error="wrong" data-success="right" for="department"></label>
-          <select id="department" class="browser-default custom-select  custom-select-xs mb-3 ">
-          </select>
+        <div class="form-group mb-5">
+          <label data-error="wrong" data-success="right" for="department">Department</label>
+          <select id="department-edit" class="browser-default custom-select  custom-select-xs mb-3 ">"${department}"</select>
         </div>
 
-        <div class="md-form mb-5">
-          <i class="fas fa-tag prefix grey-text"></i>
-          <input type="text" id="job" value="${jobTitle}" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="job">Job Title</label>
+        <div class="form-group mb-5">
+        <label data-error="wrong" data-success="right" for="job">Job Title</label>
+          <input type="text" id="job-edit" value="${jobTitle}" class="form-control validate">
         </div>
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button id="update" class="btn btn-unique" data-dismiss="modal">Update<i class="fas fa-paper-plane-o ml-1"></i></button>
+      <button id="update" type="button" class="btn btn-unique" data-dismiss="modal" data-target="#EditContactForm">Update</button>
       </div>
     </div>
   </div>
 </div>`;
+
 return edit_code;
 }
 
@@ -499,11 +539,12 @@ function addEmployee(){
 
 } 
 
-function deleteEmployee(id)
+function deleteEmployee(id,msg)
 {
  
   xmlhttp_php("libs/php/deleteEmployeeByID.php?id=" + id , deleteEmployeeData);
-
+  alert(msg);
+  window.location.reload();
 
 }
 // delete an employee
@@ -511,8 +552,31 @@ function deleteEmployeeData(xhttp){
   result = JSON.parse(xhttp.responseText);
 
   console.log(result.status);
-  alert('delete succesful');
-  window.location.reload();
+  // alert('delete succesful');
+  // window.location.reload();
+}
+
+//update employee
+function updateEmployee(){
+  let fname = $("#fname-edit").val();
+  console.log(fname);
+
+  let lname = $("#lname-edit").val();
+  let loc = $("#location-edit option:checked").val();
+  console.log(loc);
+  let dep = $("#department-edit option:checked").val();
+  let eid = $("#eid-edit").val();
+  let job = $("#job-edit").val();
+  xmlhttp_php("libs/php/updateEmployee.php?firstName=" + fname + "&lastName=" + lname + "&jobTitle=" + job + "&email=" + eid + "&deptId=" + dep +"&id=" + id, updateEmployeeData);
+
+} 
+
+function updateEmployeeData(xhttp){
+  result = JSON.parse(xhttp.responseText);
+
+  console.log(result.status);
+  // alert('delete succesful');
+  // window.location.reload();
 }
 
 //------------------------------------------//
