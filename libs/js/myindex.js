@@ -116,10 +116,9 @@ function generator(employeesData) {
       });
       // console.log($(this));
 
-      // $('#card').click(function(){
-      //   console.log($(this));
-      //   createModal(id, nameTag, firstName, lastName, email, location, department, jobTitle);
-      // });
+      $("#gallery").on("click", ".btn", function () {
+        alert($(this).attr("id"));
+    });
       
   })
 }
@@ -192,7 +191,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   // console.log(document.body.innerHTML);
 
   //edit button functionality 
-editButton.click(() => {
+  editButton.click(() => {
 
   container.hide();
   const edit_code = editModel(id, firstName, lastName, locationList, email, departmentList, jobTitle );
