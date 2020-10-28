@@ -2,8 +2,6 @@
 // Global variables
 var  allDepartments, allLocations, allEmployees, searchedEmployeesID=[];
 var departmentList, locationList;
-var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
-var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
 
 //------------------------------------------//
 //-------------- Main code -----------------//
@@ -110,23 +108,18 @@ function generator(employeesData) {
       const department = user.department;
 
       const card = createCard(id, nameTag, fullName, email, location, department, jobTitle);
-      console.log($(card).attr('id'));
+
       card.click(() => {
           createModal(id, nameTag, firstName, lastName, email, location, department, jobTitle);
       });
-      // console.log($(this));
-
-      $("#gallery").on("click", ".btn", function () {
-        alert($(this).attr("id"));
-    });
       
   })
 }
 
 //Creates the user's card from the supplied data and attaches it to the DOM
 function createCard(id, nameTag, fullName, email, location, department, jobTitle) {
-  const new_id = inWords(id);
-  const modaltest=$(`<button id="${new_id}" type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#ModalLong-${id}"> </button>`);
+  // const new_id = id.toString();
+  const modaltest=$(`<button id="${String(id)}" type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#exampleModalLong"> </button>`);
 
   // const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
   const infoContainer = $('<div class="card-info-container"></div>');
@@ -148,7 +141,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   const fulName = `${firstName} ${lastName}`;
   console.log('inside create modal');
   // const container = $('<div class="modal-container"></div>');
-  const container = $(`<div class="modal" id="ModalLong-${id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>`);
+  const container = $('<div class="modal" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>');
   const modalDialog=$('<div class="modal-dialog" role="document"></div>');
   const modalContent = $('<div class="modal-content"></div>');
   //modal header
@@ -167,8 +160,8 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   const modalfooter = $('<div class="modal-footer"></div>');
   // const prevButton = $('<button type="button" id="modal-prev" class="modal-prev btn">Prev</button>');
   // const nextButton = $('<button type="button" id="modal-next" class="modal-next btn">Next</button>');
-  const editButton = $(`<button type="button" id="edit-${id}" class="btn btn-primary" data-toggle="modal" data-target="#EditContactForm-${id}">Edit</button>`);
-  const delButton = $(`<button type="button" id="del-${id}" class="btn btn-secondary">Delete</button>`);
+  const editButton = $('<button type="button" id="edit" class="btn btn-primary" data-toggle="modal" data-target="#EditContactForm">Edit</button>');
+  const delButton = $('<button type="button" id="del" class="btn btn-secondary">Delete</button>');
   
   const prevButton = $('<button type="button" class="btn btn-primary">Prev</button>');
   const nextButton = $('<button type="button" class="btn btn-secondary">Next</button>');
@@ -194,7 +187,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   editButton.click(() => {
 
   container.hide();
-  const edit_code = editModel(id, firstName, lastName, locationList, email, departmentList, jobTitle );
+  const edit_code = editModel(firstName, lastName, locationList, email, departmentList, jobTitle );
 
   
   $('body').append(edit_code);
@@ -374,8 +367,8 @@ function getAllEmployees(xhttp) {
         options += `<option value="${i}">${ allEmployees[i].name}</option>`;
     }
     generator(allEmployees);
-    // const cards = $('.card-btn');
-    // console.log(cards);
+    const cards = $('.card-btn');
+    console.log(cards);
 
 }
 
@@ -385,7 +378,7 @@ function getSearchedEmployeesIdByName(uname){
   var searchedEmployeesID = [];
   var nameTag;
     for(i=0; i < allEmployees.length; i++){
-      nameTag = inWords(allEmployees[i].id); 
+      nameTag = String(allEmployees[i].id);
 
         if (((allEmployees[i].firstName.toLowerCase().includes(uname))) || ((allEmployees[i].lastName.toLowerCase().includes(uname)))) {
             searchedEmployeesID.push({button_id :nameTag, visibility:"show"});
@@ -405,7 +398,7 @@ function searchEmployeesIdByNameLocation(uentry){
   var searchedEmployeesID = [];
   var nameTag;
     for(i=0; i < allEmployees.length; i++){
-      nameTag = inWords(allEmployees[i].id); 
+      nameTag = String(allEmployees[i].id);
 
         if (((allEmployees[i].firstName.toLowerCase().includes(uentry))) || ((allEmployees[i].lastName.toLowerCase().includes(uentry))) || ((allEmployees[i].location.toLowerCase().includes(uentry))) ) {
             searchedEmployeesID.push({button_id :nameTag, visibility:"show"});
@@ -458,7 +451,7 @@ function getSearchedEmployeesIdByLocation(ulocation){
   var nameTag;
 
   for(i=0; i < allEmployees.length; i++){
-    nameTag = inWords(allEmployees[i].id); 
+    nameTag = String(allEmployees[i].id); 
 
         if ((allEmployees[i].location.toLowerCase().includes(ulocation))) {
           searchedEmployeesByLocation.push({button_id :nameTag, visibility:"show"});
@@ -479,15 +472,15 @@ function insertEmployeeData(xhttp){
   console.log(result.status);
 }
 //edit function
-function editModel(id, fname, lname, location, email, department, jobTitle )
+function editModel(fname, lname, location, email, department, jobTitle )
 {
     var edit_code = 
-    `<div class="modal fade" id="EditContactForm-${id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    `<div class="modal fade" id="EditContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
       <div class="modal-header text-center">
         <h4 class="modal-title w-100 font-weight-bold">Edit Employee</h4>
-        <button type="button" class="close" data-dismiss="modal" data-target="#EditContactForm-${id}" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" data-target="#EditContactForm" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -523,7 +516,7 @@ function editModel(id, fname, lname, location, email, department, jobTitle )
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-      <button id="update" type="button" class="btn btn-unique" data-dismiss="modal" data-target="#EditContactForm-${id}">Update</button>
+      <button id="update" type="button" class="btn btn-unique" data-dismiss="modal" data-target="#EditContactForm">Update</button>
       </div>
     </div>
   </div>
@@ -585,23 +578,6 @@ function updateEmployeeData(xhttp){
   console.log(result.status);
   // alert('delete succesful');
   // window.location.reload();
-}
-
-//num to word
-
-function inWords (num) {
-
-    if ((num = String(num)).length > 9) return 'overflow';
-    n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
-    if (!n) return; var str = '';
-    str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
-    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
-    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
-    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
-    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
-    str = str.replace(/ /g, "-");
-    str = str.substring(0, str.length - 1);
-    return str;
 }
 
 //------------------------------------------//
