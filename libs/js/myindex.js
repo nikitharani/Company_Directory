@@ -2,6 +2,8 @@
 // Global variables
 var  allDepartments, allLocations, allEmployees, searchedEmployeesID=[];
 var departmentList, locationList;
+var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
+var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
 
 //------------------------------------------//
 //-------------- Main code -----------------//
@@ -118,8 +120,8 @@ function generator(employeesData) {
 
 //Creates the user's card from the supplied data and attaches it to the DOM
 function createCard(id, nameTag, fullName, email, location, department, jobTitle) {
-  // const new_id = `${id}`;
-  const modaltest=$(`<button id="card${id}" type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#exampleModalLong"> </button>`);
+  const new_id = inWords(id);
+  const modaltest=$(`<button id="${new_id}" type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#exampleModalLong"> </button>`);
 
   // const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
   const infoContainer = $('<div class="card-info-container"></div>');
@@ -378,7 +380,7 @@ function getSearchedEmployeesIdByName(uname){
   var searchedEmployeesID = [];
   var nameTag;
     for(i=0; i < allEmployees.length; i++){
-      nameTag = `card${allEmployees[i].id}`;
+      nameTag = inWords(allEmployees[i].id); 
 
         if (((allEmployees[i].firstName.toLowerCase().includes(uname))) || ((allEmployees[i].lastName.toLowerCase().includes(uname)))) {
             searchedEmployeesID.push({button_id :nameTag, visibility:"show"});
@@ -398,7 +400,7 @@ function searchEmployeesIdByNameLocation(uentry){
   var searchedEmployeesID = [];
   var nameTag;
     for(i=0; i < allEmployees.length; i++){
-      nameTag = `card${allEmployees[i].id}`;
+      nameTag = inWords(allEmployees[i].id); 
 
         if (((allEmployees[i].firstName.toLowerCase().includes(uentry))) || ((allEmployees[i].lastName.toLowerCase().includes(uentry))) || ((allEmployees[i].location.toLowerCase().includes(uentry))) ) {
             searchedEmployeesID.push({button_id :nameTag, visibility:"show"});
@@ -451,7 +453,7 @@ function getSearchedEmployeesIdByLocation(ulocation){
   var nameTag;
 
   for(i=0; i < allEmployees.length; i++){
-    nameTag = `card${allEmployees[i].id}`; 
+    nameTag = inWords(allEmployees[i].id); 
 
         if ((allEmployees[i].location.toLowerCase().includes(ulocation))) {
           searchedEmployeesByLocation.push({button_id :nameTag, visibility:"show"});
@@ -578,6 +580,22 @@ function updateEmployeeData(xhttp){
   console.log(result.status);
   // alert('delete succesful');
   // window.location.reload();
+}
+
+//num to word
+
+function inWords (num) {
+
+    if ((num = String(num)).length > 9) return 'overflow';
+    n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+    if (!n) return; var str = '';
+    str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
+    str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
+    str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
+    str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
+    str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
+    str = str.replace(/ /g, "-");
+    return str;
 }
 
 //------------------------------------------//
