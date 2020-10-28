@@ -110,10 +110,16 @@ function generator(employeesData) {
       const department = user.department;
 
       const card = createCard(id, nameTag, fullName, email, location, department, jobTitle);
-      console.log(card);
+      console.log($(card).attr('id'));
       card.click(() => {
           createModal(id, nameTag, firstName, lastName, email, location, department, jobTitle);
       });
+      // console.log($(this));
+
+      // $('#card').click(function(){
+      //   console.log($(this));
+      //   createModal(id, nameTag, firstName, lastName, email, location, department, jobTitle);
+      // });
       
   })
 }
@@ -162,8 +168,8 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   const modalfooter = $('<div class="modal-footer"></div>');
   // const prevButton = $('<button type="button" id="modal-prev" class="modal-prev btn">Prev</button>');
   // const nextButton = $('<button type="button" id="modal-next" class="modal-next btn">Next</button>');
-  const editButton = $(`<button type="button" id="edit" class="btn btn-primary" data-toggle="modal" data-target="#EditContactForm-${id}">Edit</button>`);
-  const delButton = $('<button type="button" id="del" class="btn btn-secondary">Delete</button>');
+  const editButton = $(`<button type="button" id="edit-${id}" class="btn btn-primary" data-toggle="modal" data-target="#EditContactForm-${id}">Edit</button>`);
+  const delButton = $(`<button type="button" id="del-${id}" class="btn btn-secondary">Delete</button>`);
   
   const prevButton = $('<button type="button" class="btn btn-primary">Prev</button>');
   const nextButton = $('<button type="button" class="btn btn-secondary">Next</button>');
