@@ -110,7 +110,7 @@ function generator(employeesData) {
       const department = user.department;
 
       const card = createCard(id, nameTag, fullName, email, location, department, jobTitle);
-      // console.log(card);
+      console.log(card);
       card.click(() => {
           createModal(id, nameTag, firstName, lastName, email, location, department, jobTitle);
       });
@@ -369,8 +369,8 @@ function getAllEmployees(xhttp) {
         options += `<option value="${i}">${ allEmployees[i].name}</option>`;
     }
     generator(allEmployees);
-    const cards = $('.card-btn');
-    console.log(cards);
+    // const cards = $('.card-btn');
+    // console.log(cards);
 
 }
 
