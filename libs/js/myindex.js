@@ -110,7 +110,7 @@ function generator(employeesData) {
       const department = user.department;
 
       const card = createCard(id, nameTag, fullName, email, location, department, jobTitle);
-
+      // console.log(card);
       card.click(() => {
           createModal(id, nameTag, firstName, lastName, email, location, department, jobTitle);
       });
@@ -595,6 +595,7 @@ function inWords (num) {
     str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
     str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) : '';
     str = str.replace(/ /g, "-");
+    str = str.substring(0, str.length - 1);
     return str;
 }
 
