@@ -118,8 +118,8 @@ function generator(employeesData) {
 
 //Creates the user's card from the supplied data and attaches it to the DOM
 function createCard(id, nameTag, fullName, email, location, department, jobTitle) {
-  const new_id = `${id}`;
-  const modaltest=$(`<button id="card${new_id}" type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#exampleModalLong"> </button>`);
+  // const new_id = `${id}`;
+  const modaltest=$(`<button id="card${id}" type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#exampleModalLong"> </button>`);
 
   // const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
   const infoContainer = $('<div class="card-info-container"></div>');
