@@ -33,15 +33,13 @@
     </div>
     <!-- Collapsible content -->
   </nav>
-  
-  <!--body-->
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-2 bg-secondary">
-        <!-- <form class="form-inline ml-auto mt-2">           
-            <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2" type="submit">Add Employee</button>
-          </form> -->
-        <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <!--navbar end-->
+
+<!--add employee and filter section-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 ">
+      <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
           aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -98,19 +96,34 @@
           </div>
         </div>
   
-        <div class="text-center">
-          <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">Add
+        <div class="text-center mt-3">
+          <a href="" class="btn btn-default btn-rounded mb-4 " data-toggle="modal" data-target="#modalContactForm">Add
             Employee</a>
         </div>
-        <!--end-->
-      </div>
+    </div>
+    <!--add employee end-->
+    <div class="col-md-4 ">
+      <label data-error="wrong" data-success="right" for="location"></label>
+      <select id="loc" class="browser-default custom-select sel custom-select-xs mb-3 mt-4">
+      </select>
+    </div>
+    <div class="col-md-4 ">
+    <label data-error="wrong" data-success="right" for="department"></label>
+    <select id="depart" class="browser-default custom-select sel custom-select-xs mb-3 mt-4">
+    </select>
+    </div>
+  </div>
+</div>
+
+<!--end-->
   
-  
-  
-  
+  <!--body-->
+  <div class="container-fluid">
+    <div class="row">  
       <!--gallery-->
-      <div class="col-md-10 bg-warning">
+      <div class="col-md-12 bg-white ">
         <div id="gallery" class="gallery">
+
         </div>
       </div>
     </div>
@@ -118,12 +131,9 @@
   <!-- <div id="gallery" class="gallery">
   
     </div> -->
-  
+  <!--end-->
   
   <script src="bootstrap/js/jquery.js"></script>
-  
-  <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
- 
   <script src="bootstrap/js/bootstrap.js"></script>
   <script src="bootstrap/js/popper.min.js"></script>
   <script src="bootstrap/js/mdb.js"></script>

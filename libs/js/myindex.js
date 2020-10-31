@@ -9,10 +9,8 @@ var departmentList, locationList;
 
 xmlhttp_php("libs/php/getAll.php", getAllEmployees);
 // $.getJSON("libs/php/getAll.php", getAllEmployees);
-
 xmlhttp_php("libs/php/getAllDepartments.php", getAllDepartments);
 xmlhttp_php("libs/php/getAllLocations.php", getAllLocations);
-// xmlhttp_php("libs/php/insertEmployee.php?firstName=" + latitude + "&lastName=" + longitude + "&jobTitle=" + longitude + "&email=" + longitude + "&deptId=" + longitude, insertEmployeeData);
 
 //getting data from add an employee form
 $("#send").click(function() {
@@ -21,22 +19,34 @@ $("#send").click(function() {
 
 //change department drop down list according to location
 $("#location").change(function(){
-  let locID = parseInt($(this).val());//$("#location option:checked").val();
-  locID = locID+1;
-  console.log("locID");
-  console.log(locID);
-
-  options = "";
-  for(i=0; i<allDepartments.length; i++){
-    if(allDepartments[i].locationID==locID){
-      options += `<option value="${i}">${ allDepartments[i].name}</option>`;
-    }    
-    
-  }
+  let locID = parseInt($(this).val());//$("#location option:checked").val();  
+  options = setDepartmentDropdown(locID);  
   document.getElementById('department').innerHTML=options;
 
 
 });
+$("#loc").change(function(){
+  let locID = parseInt($(this).val());//$("#location option:checked").val();
+  options = setDepartmentDropdown(locID);
+  document.getElementById('depart').innerHTML = options;
+
+})
+
+//change location dropdown list according to department
+$("#department").change(function(){
+  let deptID = parseInt($(this).val());//$("#location option:checked").val();
+  options = setLocationDropdown(deptID);  
+  document.getElementById('location').innerHTML=options;
+
+
+});
+$("#depart").change(function(){
+  let deptID = parseInt($(this).val());//$("#location option:checked").val();    
+  options = setLocationDropdown(deptID);
+  document.getElementById('loc').innerHTML = options;
+
+})
+
 
 //search using name 
 $('#search').click(function()
@@ -118,9 +128,11 @@ function generator(employeesData) {
 
 //Creates the user's card from the supplied data and attaches it to the DOM
 function createCard(id, nameTag, fullName, email, location, department, jobTitle) {
-  // const new_id = id.toString();
-  const modaltest=$(`<button id="${String(id)}" type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#exampleModalLong"> </button>`);
-
+  // const new_id = id.toString();"${i}"
+  // const modaltest2 = "<button id="+ '"' + String(id) +'"'+ ' type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#exampleModalLong"> </button>';
+  const modaltest=$(`<button id="${String(id)}" type="button" class="btn btn-primary card-btn btn-block mb-2 mt-2" data-toggle="modal" data-target="#exampleModalLong-${id}"> </button>`);
+  // const modaltest = $(modaltest2);
+  console.log(modaltest);
   // const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
   const infoContainer = $('<div class="card-info-container"></div>');
   const h3 = $(`<h3 id="${nameTag}" class="card-name cap">${fullName}</h3>`);
@@ -140,15 +152,15 @@ function createCard(id, nameTag, fullName, email, location, department, jobTitle
 function createModal(id, nameTag, firstName, lastName, email, location, department, jobTitle) {
   const fulName = `${firstName} ${lastName}`;
   console.log('inside create modal');
-  // const container = $('<div class="modal-container"></div>');
-  const container = $('<div class="modal" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>');
+  // container is nothing but modal
+  const container = $(`<div class="modal" id="exampleModalLong-${id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-${id}" aria-hidden="true"></div>`);
   const modalDialog=$('<div class="modal-dialog" role="document"></div>');
   const modalContent = $('<div class="modal-content"></div>');
   //modal header
   const modalheader=$('<div class="modal-header"></div>');
-  const modalTitle=$('<h5 class="modal-title">Employee Details</h5>');
-  const x = $('<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>');
-  const button_in = $('<span aria-hidden="true">&times;</span>');//later check
+  const modalTitle=$(`<h5 class="modal-title" id="exampleModalLabel-${id}">Employee Details</h5>`);
+  const x = $(`<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>`);
+  const button_in = $(`<span aria-hidden="true">&times;</span>`);//later check
   //modal body
   const modalbody=$('<div class="modal-body"></div>');
   const h3 = $(`<h3 id="${nameTag}-modal" class="modal-name cap">Name:${fulName}</h3>`);
@@ -160,7 +172,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   const modalfooter = $('<div class="modal-footer"></div>');
   // const prevButton = $('<button type="button" id="modal-prev" class="modal-prev btn">Prev</button>');
   // const nextButton = $('<button type="button" id="modal-next" class="modal-next btn">Next</button>');
-  const editButton = $('<button type="button" id="edit" class="btn btn-primary" data-toggle="modal" data-target="#EditContactForm">Edit</button>');
+  const editButton = $(`<button type="button" id="edit" class="btn btn-primary" data-toggle="modal" data-target="#EditContactForm-${id}">Edit</button>`);
   const delButton = $('<button type="button" id="del" class="btn btn-secondary">Delete</button>');
   
   const prevButton = $('<button type="button" class="btn btn-primary">Prev</button>');
@@ -187,7 +199,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   editButton.click(() => {
 
   container.hide();
-  const edit_code = editModel(firstName, lastName, locationList, email, departmentList, jobTitle );
+  const edit_code = editModel(id, firstName, lastName, locationList, email, departmentList, jobTitle );
 
   
   $('body').append(edit_code);
@@ -197,21 +209,16 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   //change department drop down list according to location in update 
   $("#location-edit").change(function(){
     let locID = parseInt($(this).val());//$("#location option:checked").val();
-    locID = locID+1;
-    console.log("locID");
-    console.log(locID);
-
-    options = "";
-    for(i=0; i<allDepartments.length; i++){
-      if(allDepartments[i].locationID==locID){
-        options += `<option value="${i}">${ allDepartments[i].name}</option>`;
-      }    
-      
-    }
+    options = setDepartmentDropdown(locID);
     document.getElementById('department-edit').innerHTML=options;
-
-
   });
+
+    //change location drop down list according to department in update 
+    $("#department-edit").change(function(){
+      let deptID = parseInt($(this).val());//$("#location option:checked").val();
+      options = setLocationDropdown(deptID);
+      document.getElementById('location-edit').innerHTML=options;
+    });
 
   //update button functionality
   $("#update").click(()=>{
@@ -220,9 +227,9 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
     console.log(fname);
 
     let lname = $("#lname-edit").val();
-    let loc = $("#location-edit option:checked").val();
+    let loc = parseInt($("#location-edit option:checked").val()) + 1;
     console.log(loc);
-    let dep = $("#department-edit option:checked").val();
+    let dep = parseInt($("#department-edit option:checked").val()) + 1;
     let eid = $("#eid-edit").val();
     let job = $("#job-edit").val();
     xmlhttp_php("libs/php/updateEmployee.php?firstName=" + fname + "&lastName=" + lname + "&jobTitle=" + job + "&email=" + eid + "&deptId=" + dep +"&id=" + id, updateEmployeeData);
@@ -245,9 +252,18 @@ delButton.click(() => {
 
 })
 
-  // close the window
-  x.click(() => container.hide());
-  $(document).keydown(e => {if (e.key === 'Escape') container.hide()});
+  // // close the window
+  // x.click(() => {
+  //   container.hide();
+  //   // window.location.reload();
+ 
+  // });
+  $(document).keydown(e => 
+    {if (e.key === 'Escape'){
+     container.hide();
+    //  window.location.reload();
+
+    }});
 
   // previous user
   const prevUser = $(`#${id}`).prev();
@@ -255,8 +271,10 @@ delButton.click(() => {
       disableButton(prevButton);
   }
   prevButton.click(() => {
-      container.hide();
+      // container.hide();
+      x.trigger("click");
       prevUser.trigger("click");
+      
   })
 
   console.log(prevUser);
@@ -267,7 +285,8 @@ delButton.click(() => {
       disableButton(nextButton);
   }
   nextButton.click(() => {
-      container.hide();
+      // container.hide();
+      x.trigger("click");
       nextUser.trigger("click");
   })
   console.log(nextUser);
@@ -329,6 +348,8 @@ function getAllDepartments(xhttp) {
     const departmentDropdown = document.getElementById("department");
 
     departmentDropdown.innerHTML=options;
+    document.getElementById("depart").innerHTML=options;
+
     
 }
 
@@ -347,7 +368,7 @@ function getAllLocations(xhttp) {
     locationList = options;
     const locationDropdown = document.getElementById("location");
     locationDropdown.innerHTML=options;
-    
+    document.getElementById("loc").innerHTML=options;
   }
 
 //employee data
@@ -472,15 +493,15 @@ function insertEmployeeData(xhttp){
   console.log(result.status);
 }
 //edit function
-function editModel(fname, lname, location, email, department, jobTitle )
+function editModel(id, fname, lname, location, email, department, jobTitle )
 {
     var edit_code = 
-    `<div class="modal fade" id="EditContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    `<div class="modal fade" id="EditContactForm-${id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-${id}" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Edit Employee</h4>
-        <button type="button" class="close" data-dismiss="modal" data-target="#EditContactForm" aria-label="Close">
+        <h4 class="modal-title w-100 font-weight-bold" id="myModalLabel-${id}">Edit Employee</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -516,7 +537,7 @@ function editModel(fname, lname, location, email, department, jobTitle )
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-      <button id="update" type="button" class="btn btn-unique" data-dismiss="modal" data-target="#EditContactForm">Update</button>
+      <button id="update" type="button" class="btn btn-unique" data-dismiss="modal" data-target="#EditContactForm-${id}">Update</button>
       </div>
     </div>
   </div>
@@ -578,6 +599,44 @@ function updateEmployeeData(xhttp){
   console.log(result.status);
   // alert('delete succesful');
   // window.location.reload();
+}
+
+//set department dropdown based on location
+function setDepartmentDropdown(locID){
+  locID = locID+1;
+  options = "";
+  for(i=0; i<allDepartments.length; i++){
+    if(allDepartments[i].locationID==locID){
+      options += `<option value="${i}">${ allDepartments[i].name}</option>`;
+    }    
+    
+  }
+  return options;
+
+}
+
+//set location dropdown based on department
+function setLocationDropdown(deptID){
+  deptID = deptID+1;
+
+
+  options = "";
+  for(i=0; i<allDepartments.length; i++)
+  {
+    if(allDepartments[i].id==deptID)
+    {
+      for(j=0; j<allLocations.length; j++)
+      {
+        if (allDepartments[i].locationID == allLocations[j].id)
+        {          
+        options += `<option value="${j}">${ allLocations[j].name}</option>`;
+        }
+      }
+    }    
+    
+  }
+  return options;
+
 }
 
 //------------------------------------------//

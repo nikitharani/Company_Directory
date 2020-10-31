@@ -10,5 +10,20 @@ html, body {
 body {
     font-family: "Nunito", sans-serif;
     text-align: center;
-    background: rgb(32, 32, 32);
+    /* background: rgb(32, 32, 32); */
+    /* overflow-x: hidden; */
+    
 }
+
+ #gallery{
+    /* background-color: lightblue; */
+  width: auto;
+  height: 620px;
+  overflow: auto;     
+} 
+
+.sel{
+  width:280px;
+  /* margin-top: 4px; */
+}
+
