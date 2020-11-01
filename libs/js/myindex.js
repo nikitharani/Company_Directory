@@ -30,6 +30,24 @@ $("#loc").change(function(){
   options = setDepartmentDropdown(locID);
   document.getElementById('depart').innerHTML = options;
 
+  locName =  $("#loc option:selected").text();
+
+  var searchedEmployeesButtonVisibilty = searchEmployeesIdByNameLocation(locName);
+
+  let id;
+  for(i=0;i<searchedEmployeesButtonVisibilty.length;i++){
+    id = searchedEmployeesButtonVisibilty[i].button_id;
+    if(!(searchedEmployeesButtonVisibilty[i].visibility.localeCompare("show")))
+    {
+      $(`#${id}`).show();
+    }else{
+      $(`#${id}`).hide();
+
+    }
+  }
+  return false;
+
+
 })
 
 //change location dropdown list according to department
@@ -45,19 +63,35 @@ $("#depart").change(function(){
   options = setLocationDropdown(deptID);
   document.getElementById('loc').innerHTML = options;
 
+  deptName = $("#depart option:selected").text();
+  locName = $("#loc option:selected").text();
+
+  var searchedEmployeesButtonVisibilty = searchEmployeesIdByDepartmentLocation(deptName,locName);
+
+  let id;
+  for(i=0;i<searchedEmployeesButtonVisibilty.length;i++){
+    id = searchedEmployeesButtonVisibilty[i].button_id;
+    if(!(searchedEmployeesButtonVisibilty[i].visibility.localeCompare("show")))
+    {
+      $(`#${id}`).show();
+    }else{
+      $(`#${id}`).hide();
+
+    }
+  }
+  return false;
+
 })
 
 
 //search using name 
 $('#search').click(function()
-// $('#search').on('input', e => 
 {
   let ser_name = $("#search-name").val();
   // let ser_location = $("#search-location").val();
   console.log(ser_name);
   // console.log(ser_location);
   var searchednametagsIds = searchEmployeesIdByNameLocation(ser_name);
-  // var searchednametagsIds = getSearchedEmployeesIdByLocation(ser_location);
   console.log(searchednametagsIds);
 
 
@@ -76,28 +110,8 @@ $('#search').click(function()
 
 });
 
-//test 
-// search.on('input', e => {
-//   const cards = $('.card');
-//   const searchTerm = e.target.value.toLowerCase();
-//   cards.each((index, card) => {
-//       const regex = /^(\w*)\-(\w*)\-card/;
-//       const id = $(card).attr('id');
-//       const name = id.replace(regex, '$1 $2');
-//       if (name.includes(searchTerm)) {
-//           $(`#${id}`).show();
-//       } else {
-//           $(`#${id}`).hide();
-//       }
-//   });
-// });
-
 
 //------------------------------------------//
-
-
-
-
 //------------------------------------------//
 //-------------- Functions -----------------//
 //------------------------------------------//
@@ -127,23 +141,22 @@ function generator(employeesData) {
           createModal(id, nameTag, firstName, lastName, email, location, department, jobTitle);
       });
       
-  })
+  }) 
 }
 
 //Creates the user's card from the supplied data and attaches it to the DOM
 function createCard(id, nameTag, fullName, email, location, department, jobTitle) {
   // const new_id = id.toString();"${i}"
   // const modaltest2 = "<button id="+ '"' + String(id) +'"'+ ' type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#exampleModalLong"> </button>';
-  const modaltest=$(`<button id="${String(id)}" type="button" class="btn btn-primary card-btn btn-block mb-2 mt-2" data-toggle="modal" data-target="#exampleModalLong-${id}"> </button>`);
+  const modaltest=$(`<button id="${String(id)}" type="button" class="btn btn-primary card-btn btn-block mb-2 mt-2 d-inline" data-toggle="modal" data-target="#exampleModalLong-${id}"> </button>`);
   // const modaltest = $(modaltest2);
-  console.log(modaltest);
   // const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
-  const infoContainer = $('<div class="card-info-container"></div>');
-  const h3 = $(`<h3 id="${nameTag}" class="card-name cap">${fullName}</h3>`);
-  const emailP = $(`<p class="card-text">Email: ${email}</p>`);
-  const locationP = $(`<p class="card-text loc">Location: ${location}</p>`);
-  const departmentP = $(`<p class="card-text dep">Department: ${department}</p>`);
-  const jobTitleP = $(`<p class="card-text job">JobTitle: ${jobTitle}</p>`);
+  const infoContainer = $('<div class="card-info-container d-inline"></div>');
+  const h3 = $(`<h3 id="${nameTag}" class="card-name cap d-inline">${fullName}</h3>`);
+  const emailP = $(`<p class="card-text d-inline">Email: ${email}</p>`);
+  const locationP = $(`<p class="card-text loc d-inline">Location: ${location}</p>`);
+  const departmentP = $(`<p class="card-text dep d-inline">Department: ${department}</p>`);
+  const jobTitleP = $(`<p class="card-text job d-inline">JobTitle: ${jobTitle}</p>`);
 
   $('#gallery').append(modaltest);
   modaltest.append(infoContainer);  
@@ -181,11 +194,8 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   const jobTitleP = $(`<p class="modal-text">JobTitle: ${jobTitle}</p>`);
   //modal footer
   const modalfooter = $('<div class="modal-footer"></div>');
-  // const prevButton = $('<button type="button" id="modal-prev" class="modal-prev btn">Prev</button>');
-  // const nextButton = $('<button type="button" id="modal-next" class="modal-next btn">Next</button>');
   const editButton = $(`<button type="button" id="edit" class="btn btn-primary" data-toggle="modal" data-target="#EditContactForm">Edit</button>`);
-  const delButton = $('<button type="button" id="del" class="btn btn-secondary">Delete</button>');
-  
+  const delButton = $('<button type="button" id="del" class="btn btn-secondary">Delete</button>');  
   const prevButton = $('<button type="button" class="btn btn-primary">Prev</button>');
   const nextButton = $('<button type="button" class="btn btn-secondary">Next</button>');
   
@@ -223,11 +233,6 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   document.getElementById('department-edit').innerHTML = departmentList;
 
 
-  
-  // $('body').append(edit_code);
-  // window.location.reload();
-  // $('#EditContactForm').show();
-
   //change department drop down list according to location in update 
   $("#location-edit").change(function(){
     let locID = parseInt($(this).val());//$("#location option:checked").val();
@@ -235,12 +240,12 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
     document.getElementById('department-edit').innerHTML=options;
   });
 
-    //change location drop down list according to department in update 
-    $("#department-edit").change(function(){
-      let deptID = parseInt($(this).val());//$("#location option:checked").val();
-      options = setLocationDropdown(deptID);
-      document.getElementById('location-edit').innerHTML=options;
-    });
+  //change location drop down list according to department in update 
+  $("#department-edit").change(function(){
+    let deptID = parseInt($(this).val());//$("#location option:checked").val();
+    options = setLocationDropdown(deptID);
+    document.getElementById('location-edit').innerHTML=options;
+  });
 
   //update button functionality
   $("#update").click(()=>{
@@ -268,25 +273,23 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
 //delete button functionality
 delButton.click(() => {
   // container.hide();
-
   deleteEmployee(id,"Delete sucessful");
-
-
 })
 
-  // // close the window
-  // x.click(() => {
-  //   container.hide();
-  //   // window.location.reload();
- 
-  // });
-  $(document).keydown(e => 
-    {if (e.key === 'Escape'){
-    //  container.hide();
-     x.trigger("click");
-    //  window.location.reload();
+// // close the window
+// x.click(() => {
+//   container.hide();
+//   // window.location.reload();
 
-    }});
+// });
+
+$(document).keydown(e => 
+  {if (e.key === 'Escape'){
+  //  container.hide();
+    x.trigger("click");
+  //  window.location.reload();
+
+  }});
 
   // previous user
   const prevUser = $(`#${id}`).prev();
@@ -444,21 +447,21 @@ function getSearchedEmployeesIdByName(uname){
 //search employees with user enterterd name or location
 function searchEmployeesIdByNameLocation(uentry){
   uentry=uentry.toLowerCase();
-  var searchedEmployeesID = [];
+  var searchedEmployeesButtonVisibilty = [];
   var nameTag;
     for(i=0; i < allEmployees.length; i++){
       nameTag = String(allEmployees[i].id);
 
         if (((allEmployees[i].firstName.toLowerCase().includes(uentry))) || ((allEmployees[i].lastName.toLowerCase().includes(uentry))) || ((allEmployees[i].location.toLowerCase().includes(uentry))) ) {
-            searchedEmployeesID.push({button_id :nameTag, visibility:"show"});
+          searchedEmployeesButtonVisibilty.push({button_id :nameTag, visibility:"show"});
             
     }
     else{
-      searchedEmployeesID.push({button_id:nameTag, visibility:"hide"});
+      searchedEmployeesButtonVisibilty.push({button_id:nameTag, visibility:"hide"});
 
     }
     }
-    return searchedEmployeesID
+    return searchedEmployeesButtonVisibilty
 }
 
 // displayEmployeeInfo(searchedEmployeesID);
@@ -634,6 +637,11 @@ function setDepartmentDropdown(locID){
   locID = locID+1;
   options = "";
   for(i=0; i<allDepartments.length; i++){
+    if (i==0)
+    {
+      options += '<option value="" disabled selected>Choose Location</option>';
+    }
+    
     if(allDepartments[i].locationID==locID){
       options += `<option value="${i}">${ allDepartments[i].name}</option>`;
     }    
@@ -657,7 +665,11 @@ function setLocationDropdown(deptID){
       {
         if (allDepartments[i].locationID == allLocations[j].id)
         {          
-        options += `<option value="${j}">${ allLocations[j].name}</option>`;
+        options += `<option value="${j}" selected>${ allLocations[j].name}</option>`;
+        }
+        else
+        {
+          options += `<option value="${j}">${ allLocations[j].name}</option>`;
         }
       }
     }    
@@ -665,6 +677,31 @@ function setLocationDropdown(deptID){
   }
   return options;
 
+}
+
+
+//search employees with user enterterd department and location
+function searchEmployeesIdByDepartmentLocation(deptName,locName){
+
+  deptName = deptName.toLowerCase();
+  locName = locName.toLowerCase();
+
+  var searchedEmployeesButtonVisibilty = [];
+  var nameTag;
+
+    for(i=0; i < allEmployees.length; i++){
+      nameTag = String(allEmployees[i].id);
+
+        if (!(allEmployees[i].location.toLowerCase().localeCompare(locName)) && !(allEmployees[i].department.toLowerCase().localeCompare(deptName))) {
+          searchedEmployeesButtonVisibilty.push({button_id :nameTag, visibility:"show"});
+            
+    }
+    else{
+      searchedEmployeesButtonVisibilty.push({button_id:nameTag, visibility:"hide"});
+
+    }
+    }
+    return searchedEmployeesButtonVisibilty
 }
 
 //------------------------------------------//
