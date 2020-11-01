@@ -15,6 +15,8 @@ xmlhttp_php("libs/php/getAllLocations.php", getAllLocations);
 //getting data from add an employee form
 $("#send").click(function() {
   addEmployee();
+  window.location.reload();
+
 });
 
 //change department drop down list according to location
@@ -33,6 +35,7 @@ $("#loc").change(function(){
   locName =  $("#loc option:selected").text();
 
   var searchedEmployeesButtonVisibilty = searchEmployeesIdByNameLocation(locName);
+  console.log(searchedEmployeesButtonVisibilty);
 
   let id;
   for(i=0;i<searchedEmployeesButtonVisibilty.length;i++){
@@ -55,7 +58,6 @@ $("#department").change(function(){
   let deptID = parseInt($(this).val());//$("#location option:checked").val();
   options = setLocationDropdown(deptID);  
   document.getElementById('location').innerHTML=options;
-
 
 });
 $("#depart").change(function(){
@@ -92,8 +94,10 @@ $('#search').click(function()
   console.log(ser_name);
   // console.log(ser_location);
   var searchednametagsIds = searchEmployeesIdByNameLocation(ser_name);
-  console.log(searchednametagsIds);
-
+  const cards = $('.card-btn');
+  console.log(cards.length);
+  console.log(cards);
+  // console.log(searchednametagsIds);
 
   let id;
   for(i=0;i<searchednametagsIds.length;i++){
@@ -101,9 +105,8 @@ $('#search').click(function()
     if(!(searchednametagsIds[i].visibility.localeCompare("show")))
     {
       $(`#${id}`).show();
-    }else{
+    }else{ 
       $(`#${id}`).hide();
-
     }
   }
   return false;
@@ -140,27 +143,28 @@ function generator(employeesData) {
       card.click(() => {
           createModal(id, nameTag, firstName, lastName, email, location, department, jobTitle);
       });
-      
+         
   }) 
+
 }
 
 //Creates the user's card from the supplied data and attaches it to the DOM
 function createCard(id, nameTag, fullName, email, location, department, jobTitle) {
-  // const new_id = id.toString();"${i}"
-  // const modaltest2 = "<button id="+ '"' + String(id) +'"'+ ' type="button" class="btn btn-primary card-btn" data-toggle="modal" data-target="#exampleModalLong"> </button>';
-  const modaltest=$(`<button id="${String(id)}" type="button" class="btn btn-primary card-btn btn-block mb-2 mt-2 d-inline" data-toggle="modal" data-target="#exampleModalLong-${id}"> </button>`);
+ const modaltest=$(`<button id="buton-${String(id)}" type="button" class="btn btn-primary card-btn btn-block mb-2 mt-2" data-toggle="modal" data-target="#exampleModalLong-${id}"> </button>`);
   // const modaltest = $(modaltest2);
   // const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
-  const infoContainer = $('<div class="card-info-container d-inline"></div>');
-  const h3 = $(`<h3 id="${nameTag}" class="card-name cap d-inline">${fullName}</h3>`);
-  const emailP = $(`<p class="card-text d-inline">Email: ${email}</p>`);
-  const locationP = $(`<p class="card-text loc d-inline">Location: ${location}</p>`);
-  const departmentP = $(`<p class="card-text dep d-inline">Department: ${department}</p>`);
-  const jobTitleP = $(`<p class="card-text job d-inline">JobTitle: ${jobTitle}</p>`);
+  const infoContainer = $(`<div class="card-info-container d-flex"></div>`);
+  const h3 = $(`<p id="${nameTag}" class="card-text">${fullName}</p>`);
+  const emailP = $(`<p class="card-text-em">${email}</p>`);
+  const locationP = $(`<p class="card-text-loc">${location}</p>`);
+
+  // const locationP = $(`<p class="card-text mr-4 ">${location}</p>`);
+  const departmentP = $(`<p class="card-text-em">${department}</p>`);
+  const jobTitleP = $(`<p class="card-text">${jobTitle}</p>`);
 
   $('#gallery').append(modaltest);
   modaltest.append(infoContainer);  
-  infoContainer.append(h3).append(emailP).append(departmentP).append(locationP).append(jobTitleP);
+  infoContainer.append(h3).append(emailP).append(departmentP).append(locationP);
 
   return modaltest;
 }
@@ -169,22 +173,21 @@ function createCard(id, nameTag, fullName, email, location, department, jobTitle
 function createModal(id, nameTag, firstName, lastName, email, location, department, jobTitle) {
   console.log($(`#exampleModalLong-${id}`).length);
   if($(`#exampleModalLong-${id}`).length==0){
-
   
-
-  // $(`#exampleModalLong-${id}`).show();
-
   const fulName = `${firstName} ${lastName}`;
   console.log('inside create modal');
+
   // container is nothing but modal
   const container = $(`<div class="modal" id="exampleModalLong-${id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-${id}" aria-hidden="true"></div>`);
   const modalDialog=$('<div class="modal-dialog" role="document"></div>');
   const modalContent = $('<div class="modal-content"></div>');
+
   //modal header
   const modalheader=$('<div class="modal-header"></div>');
   const modalTitle=$(`<h5 class="modal-title" id="exampleModalLabel-${id}">Employee Details</h5>`);
   const x = $(`<button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>`);
   const button_in = $(`<span aria-hidden="true">&times;</span>`);//later check
+
   //modal body
   const modalbody=$('<div class="modal-body"></div>');
   const h3 = $(`<h3 id="${nameTag}-modal" class="modal-name cap">Name:${fulName}</h3>`);
@@ -192,6 +195,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   const departmentP = $(`<p class="modal-text">Deparment:${department}</p>`);
   const locationP = $(`<p class="modal-text">Location:${location}</p>`);  
   const jobTitleP = $(`<p class="modal-text">JobTitle: ${jobTitle}</p>`);
+
   //modal footer
   const modalfooter = $('<div class="modal-footer"></div>');
   const editButton = $(`<button type="button" id="edit" class="btn btn-primary" data-toggle="modal" data-target="#EditContactForm">Edit</button>`);
@@ -199,9 +203,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   const prevButton = $('<button type="button" class="btn btn-primary">Prev</button>');
   const nextButton = $('<button type="button" class="btn btn-secondary">Next</button>');
   
-  console.log('inside create modal2');
-  
-
+  console.log('inside create modal2'); 
 
   $('body').append(container);
   container.append(modalDialog).append(modalContent);
@@ -210,8 +212,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   modalbody.append(h3).append(emailP).append(departmentP).append(locationP).append(jobTitleP);
   modalfooter.append(editButton).append(delButton).append(prevButton).append(nextButton);
   modalContent.append(modalheader).append(modalbody).append(modalfooter);
-  // dataContainer.append(h3).append(emailP).append(departmentP).append(locationP).append(jobTitleP);
-  // navContainer.append(prevButton).append(nextButton);
+
   container.show();
   console.log('inside create modal3');
   console.log($(`#exampleModalLong-${id}`).length);
@@ -223,15 +224,12 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   // container.hide();
   x.trigger("click");
 
-  // const edit_code = editModel(id, firstName, lastName, locationList, email, departmentList, jobTitle );
-  // $('#fname-edit').val("nikchikkiki");
   document.getElementById('fname-edit').value = firstName;
   document.getElementById('lname-edit').value = lastName;
   document.getElementById('eid-edit').value = email;
   document.getElementById('job-edit').value = jobTitle;
   document.getElementById('location-edit').innerHTML = locationList;
   document.getElementById('department-edit').innerHTML = departmentList;
-
 
   //change department drop down list according to location in update 
   $("#location-edit").change(function(){
@@ -266,8 +264,6 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
 
   })
 
-
-
 })
 
 //delete button functionality
@@ -292,7 +288,7 @@ $(document).keydown(e =>
   }});
 
   // previous user
-  const prevUser = $(`#${id}`).prev();
+  const prevUser = $(`#buton-${id}`).prev();
   if (prevUser.length === 0) {
       disableButton(prevButton);
   }
@@ -306,7 +302,7 @@ $(document).keydown(e =>
   console.log(prevUser);
 
   // next user
-  const nextUser = $(`#${id}`).next();
+  const nextUser = $(`#buton-${id}`).next();
   if (nextUser.length === 0) {
       disableButton(nextButton);
   }
@@ -321,10 +317,12 @@ $(document).keydown(e =>
   $(document).keydown(e => {
       if (container.is(':visible')) {
           if (e.key === 'ArrowLeft' && prevButton.is(':enabled')) {
-              container.hide();
+              // container.hide();
+              x.trigger("click");
               prevUser.click();
           } else if (e.key === 'ArrowRight' && nextButton.is(':enabled')) {
-              container.hide();
+              // container.hide();
+              x.trigger("click");
               nextUser.click();
           }
       }
@@ -333,8 +331,7 @@ $(document).keydown(e =>
 }
 else{
   $(`#exampleModalLong-${id}`).show();
-}
-  
+}  
 
 }
 
@@ -343,9 +340,6 @@ function disableButton(button) {
   button.prop('disabled', true);
   button.addClass('disable');
 }
-
-
-
 
 // base php ajax call function
 function xmlhttp_php(url, func) {
@@ -380,7 +374,6 @@ function getAllDepartments(xhttp) {
 
     departmentDropdown.innerHTML=options;
     document.getElementById("depart").innerHTML=options;
-
     
 }
 
@@ -404,8 +397,6 @@ function getAllLocations(xhttp) {
 
 //employee data
 function getAllEmployees(xhttp) {
-  // console.log(xhttp);
-  // employeesData = xhttp;
     employeesData = JSON.parse(xhttp.responseText);
 
     //allEmployee array
@@ -419,18 +410,16 @@ function getAllEmployees(xhttp) {
         options += `<option value="${i}">${ allEmployees[i].name}</option>`;
     }
     generator(allEmployees);
-    const cards = $('.card-btn');
-    console.log(cards);
 
 }
 
 //search employees with user enterterd name 
 function getSearchedEmployeesIdByName(uname){
-  uname=uname.toLowerCase();
+  uname = uname.toLowerCase();
   var searchedEmployeesID = [];
   var nameTag;
     for(i=0; i < allEmployees.length; i++){
-      nameTag = String(allEmployees[i].id);
+      nameTag = "buton-"+String(allEmployees[i].id);
 
         if (((allEmployees[i].firstName.toLowerCase().includes(uname))) || ((allEmployees[i].lastName.toLowerCase().includes(uname)))) {
             searchedEmployeesID.push({button_id :nameTag, visibility:"show"});
@@ -450,38 +439,16 @@ function searchEmployeesIdByNameLocation(uentry){
   var searchedEmployeesButtonVisibilty = [];
   var nameTag;
     for(i=0; i < allEmployees.length; i++){
-      nameTag = String(allEmployees[i].id);
+      nameTag = "buton-"+String(allEmployees[i].id);
 
         if (((allEmployees[i].firstName.toLowerCase().includes(uentry))) || ((allEmployees[i].lastName.toLowerCase().includes(uentry))) || ((allEmployees[i].location.toLowerCase().includes(uentry))) ) {
-          searchedEmployeesButtonVisibilty.push({button_id :nameTag, visibility:"show"});
-            
+          searchedEmployeesButtonVisibilty.push({button_id :nameTag, visibility:"show"});            
     }
     else{
       searchedEmployeesButtonVisibilty.push({button_id:nameTag, visibility:"hide"});
-
     }
     }
     return searchedEmployeesButtonVisibilty
-}
-
-// displayEmployeeInfo(searchedEmployeesID);
-// display searched employess info using ID's
-function displayEmployeeInfo(employeeIDs){
-    var SearchedEmployeeData=[];
-
-    if(employeeIDs[0]==-1){
-        SearchedEmployeeData=allEmployees; //if default
-    }else{
-        //searchedEmployeesID
-        for(i=0;i<employeeIDs.length;i++){
-            var Id = employeeIDs[i];
-            SearchedEmployeeData.push(allEmployees[Id-1]);
-        }
-   
-    }
-    return SearchedEmployeeData
-    // innerHTml
-
 }
 
 //search employees with user selected Department
@@ -489,21 +456,19 @@ function getSearchedEmployeesIdByDepartment(udepartment){
     for(i=0;i<allEmployees.length;i++){
         
         if (!(allEmployees[i].department.localeCompare(udepartment))) {
-            searchedEmployeesID.push(i+1);
-            
+            searchedEmployeesID.push(i+1);            
     }
-
 }
 }
 
 //search employees with user enterterd location 
 function getSearchedEmployeesIdByLocation(ulocation){
-  ulocation=ulocation.toLowerCase();
+  ulocation = ulocation.toLowerCase();
   var searchedEmployeesByLocation = [];
   var nameTag;
 
   for(i=0; i < allEmployees.length; i++){
-    nameTag = String(allEmployees[i].id); 
+    nameTag = "buton-"+String(allEmployees[i].id); 
 
         if ((allEmployees[i].location.toLowerCase().includes(ulocation))) {
           searchedEmployeesByLocation.push({button_id :nameTag, visibility:"show"});
@@ -600,6 +565,7 @@ function deleteEmployee(id,msg)
   window.location.reload();
 
 }
+
 // delete an employee
 function deleteEmployeeData(xhttp){
   result = JSON.parse(xhttp.responseText);
@@ -612,11 +578,9 @@ function deleteEmployeeData(xhttp){
 //update employee
 function updateEmployee(){
   let fname = $("#fname-edit").val();
-  console.log(fname);
 
   let lname = $("#lname-edit").val();
   let loc = $("#location-edit option:checked").val();
-  console.log(loc);
   let dep = $("#department-edit option:checked").val();
   let eid = $("#eid-edit").val();
   let job = $("#job-edit").val();
@@ -690,7 +654,7 @@ function searchEmployeesIdByDepartmentLocation(deptName,locName){
   var nameTag;
 
     for(i=0; i < allEmployees.length; i++){
-      nameTag = String(allEmployees[i].id);
+      nameTag = "buton-"+String(allEmployees[i].id);
 
         if (!(allEmployees[i].location.toLowerCase().localeCompare(locName)) && !(allEmployees[i].department.toLowerCase().localeCompare(deptName))) {
           searchedEmployeesButtonVisibilty.push({button_id :nameTag, visibility:"show"});

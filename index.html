@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    
-        <title>Company Directory</title>
-        <!-- Bootstrap Css files-->
-        <link rel="stylesheet" href="bootstrap/css/font-awesome.css">
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="bootstrap/css/mdb.css">
-        <link rel="stylesheet" href="libs/css/style.css">
 
-      
-    </head>
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Company Directory</title>
+  <!-- Bootstrap Css files-->
+  <link rel="stylesheet" href="bootstrap/css/font-awesome.css">
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="bootstrap/css/mdb.css">
+  <link rel="stylesheet" href="libs/css/style.css">
+
+
+</head>
+
 <body>
   <!--nav bar-->
   <nav class="navbar navbar-expand-sm navbar-dark indigo mb-0 ">
-  
+
     <!-- Navbar brand -->
     <img src="images/directory.png" height=40px width=50px />
     <a class="navbar-brand" href="#">Company Directory</a>
-  
+
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-  
-  
+
+
       <form class="form-inline ml-auto">
         <input class="form-control mr-2" type="text" placeholder="Name / Location" aria-label="Search" id="search-name">
         <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2" id='search' type="submit">Search</button>
@@ -33,13 +35,13 @@
     </div>
     <!-- Collapsible content -->
   </nav>
-    <!--navbar end-->
+  <!--navbar end-->
 
-<!--add employee and filter section-->
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 ">
-      <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  <!--add employee and filter section-->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 ">
+        <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
           aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -60,33 +62,33 @@
                   <input type="text" id="lname" class="form-control validate">
                   <label data-error="wrong" data-success="right" for="lname">Last Name</label>
                 </div>
-  
+
                 <div class="md-form mb-5">
                   <i class="fas fa-envelope prefix grey-text"></i>
                   <input type="email" id="eid" class="form-control validate">
                   <label data-error="wrong" data-success="right" for="eid">Email</label>
                 </div>
-  
+
                 <div class="md-form mb-5">
                   <!-- <i class="fas fa-tag prefix grey-text"></i> -->
                   <label data-error="wrong" data-success="right" for="location"></label>
                   <select id="location" class="browser-default custom-select  custom-select-xs mb-3 ">
                   </select>
                 </div>
-  
+
                 <div class="md-form mb-5">
                   <!-- <i class="fas fa-tag prefix grey-text"></i> -->
                   <label data-error="wrong" data-success="right" for="department"></label>
                   <select id="department" class="browser-default custom-select  custom-select-xs mb-3 ">
                   </select>
                 </div>
-  
+
                 <div class="md-form mb-5">
                   <i class="fas fa-tag prefix grey-text"></i>
                   <input type="text" id="job" class="form-control validate">
                   <label data-error="wrong" data-success="right" for="job">Job Title</label>
                 </div>
-  
+
               </div>
               <div class="modal-footer d-flex justify-content-center">
                 <button id="send" class="btn btn-unique" data-dismiss="modal">Submit <i
@@ -95,32 +97,45 @@
             </div>
           </div>
         </div>
-  
+
         <div class="text-center mt-3">
           <a href="" class="btn btn-default btn-rounded mb-4 " data-toggle="modal" data-target="#modalContactForm">Add
             Employee</a>
         </div>
-    </div>
-    <!--add employee end-->
-    <div class="col-md-4 ">
-      <label data-error="wrong" data-success="right" for="location"></label>
-      <select id="loc" class="browser-default custom-select sel custom-select-xs mb-3 mt-4">
-      </select>
-    </div>
-    <div class="col-md-4 ">
-    <label data-error="wrong" data-success="right" for="department"></label>
-    <select id="depart" class="browser-default custom-select sel custom-select-xs mb-3 mt-4">
-    </select>
+      </div>
+      <!--add employee end-->
+      <div class="col-md-4 ">
+        <label data-error="wrong" data-success="right" for="location"></label>
+        <select id="loc" class="browser-default custom-select sel custom-select-xs mb-3 mt-4">
+        </select>
+      </div>
+      <div class="col-md-4 ">
+        <label data-error="wrong" data-success="right" for="department"></label>
+        <select id="depart" class="browser-default custom-select sel custom-select-xs mb-3 mt-4">
+        </select>
+      </div>
     </div>
   </div>
-</div>
 
-<!--end-->
-  
+  <!--end-->
+
   <!--body-->
   <div class="container">
-    <div class="row">  
-      <!--gallery-->
+    <div class="row">
+      <div class="col-md-12 bg-white ">        
+        <div class="card-info-container d-inline d-flex  justify-content-between ">
+          <p class="card-text d-inline border p-2">Name</p>
+          <p class="card-text-em d-inline border p-2">Email</p>
+          <p class="card-text-em d-inline border p-2">Department</p>
+          <p class="card-text-loc d-inline border p-2">Location</p>
+        </div>
+    
+      </div>
+    
+    </div>
+
+    <div class="row">
+      <!-- gallery -->
       <div class="col-md-12 bg-white ">
         <div id="gallery" class="gallery">
 
@@ -132,12 +147,12 @@
   
     </div> -->
   <!--end-->
-  
+
   <script src="bootstrap/js/jquery.js"></script>
   <script src="bootstrap/js/bootstrap.js"></script>
   <script src="bootstrap/js/popper.min.js"></script>
   <script src="bootstrap/js/mdb.js"></script>
   <script src="libs/js/myindex.js"></script>
-  </body>
-</html>
+</body>
 
+</html>
