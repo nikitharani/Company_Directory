@@ -105,6 +105,10 @@ $('#search').click(function()
 // Callback function for the GET request to handle the user data
 function generator(employeesData) {
   console.log(employeesData);
+
+  const edit_code = editModel();  
+  $('body').append(edit_code);
+
   
   employeesData.forEach(user => {
       const id = user.id;
@@ -150,6 +154,13 @@ function createCard(id, nameTag, fullName, email, location, department, jobTitle
 
 // Creates the modal window and appends it to the DOM
 function createModal(id, nameTag, firstName, lastName, email, location, department, jobTitle) {
+  console.log($(`#exampleModalLong-${id}`).length);
+  if($(`#exampleModalLong-${id}`).length==0){
+
+  
+
+  // $(`#exampleModalLong-${id}`).show();
+
   const fulName = `${firstName} ${lastName}`;
   console.log('inside create modal');
   // container is nothing but modal
@@ -172,7 +183,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   const modalfooter = $('<div class="modal-footer"></div>');
   // const prevButton = $('<button type="button" id="modal-prev" class="modal-prev btn">Prev</button>');
   // const nextButton = $('<button type="button" id="modal-next" class="modal-next btn">Next</button>');
-  const editButton = $(`<button type="button" id="edit" class="btn btn-primary" data-toggle="modal" data-target="#EditContactForm-${id}">Edit</button>`);
+  const editButton = $(`<button type="button" id="edit" class="btn btn-primary" data-toggle="modal" data-target="#EditContactForm">Edit</button>`);
   const delButton = $('<button type="button" id="del" class="btn btn-secondary">Delete</button>');
   
   const prevButton = $('<button type="button" class="btn btn-primary">Prev</button>');
@@ -193,16 +204,27 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   // navContainer.append(prevButton).append(nextButton);
   container.show();
   console.log('inside create modal3');
+  console.log($(`#exampleModalLong-${id}`).length);
   // console.log(document.body.innerHTML);
 
   //edit button functionality 
   editButton.click(() => {
 
-  container.hide();
-  const edit_code = editModel(id, firstName, lastName, locationList, email, departmentList, jobTitle );
+  // container.hide();
+  x.trigger("click");
+
+  // const edit_code = editModel(id, firstName, lastName, locationList, email, departmentList, jobTitle );
+  // $('#fname-edit').val("nikchikkiki");
+  document.getElementById('fname-edit').value = firstName;
+  document.getElementById('lname-edit').value = lastName;
+  document.getElementById('eid-edit').value = email;
+  document.getElementById('job-edit').value = jobTitle;
+  document.getElementById('location-edit').innerHTML = locationList;
+  document.getElementById('department-edit').innerHTML = departmentList;
+
 
   
-  $('body').append(edit_code);
+  // $('body').append(edit_code);
   // window.location.reload();
   // $('#EditContactForm').show();
 
@@ -260,7 +282,8 @@ delButton.click(() => {
   // });
   $(document).keydown(e => 
     {if (e.key === 'Escape'){
-     container.hide();
+    //  container.hide();
+     x.trigger("click");
     //  window.location.reload();
 
     }});
@@ -304,6 +327,11 @@ delButton.click(() => {
       }
   });
   console.log('inside create modal last');
+}
+else{
+  $(`#exampleModalLong-${id}`).show();
+}
+  
 
 }
 
@@ -493,51 +521,51 @@ function insertEmployeeData(xhttp){
   console.log(result.status);
 }
 //edit function
-function editModel(id, fname, lname, location, email, department, jobTitle )
+function editModel()
 {
     var edit_code = 
-    `<div class="modal fade" id="EditContactForm-${id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-${id}" aria-hidden="true">
+    `<div class="modal fade" id="EditContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold" id="myModalLabel-${id}">Edit Employee</h4>
+        <h4 class="modal-title w-100 font-weight-bold" id="myModalLabel">Edit Employee</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body mx-3">
         <div class="form-group mb-5">
-        <label data-error="wrong" data-success="right" for="fname">First Name</label>
-          <input type="text" id="fname-edit" value="${fname}" class="form-control validate">
+        <label data-error="wrong" data-success="right" for="fname-edit">First Name</label>
+          <input type="text" id="fname-edit" class="form-control validate">
         </div>
         <div class="form-group mb-5">
-        <label data-error="wrong" data-success="right" for="lname">Last Name</label>
-          <input type="text" id="lname-edit" value="${lname}" class="form-control validate">
-        </div>
-
-        <div class="form-group mb-5">
-        <label data-error="wrong" data-success="right" for="eid">Email</label>
-          <input type="email" id="eid-edit" value="${email}" class="form-control validate">
+        <label data-error="wrong" data-success="right" for="lname-edit">Last Name</label>
+          <input type="text" id="lname-edit" class="form-control validate">
         </div>
 
         <div class="form-group mb-5">
-          <label data-error="wrong" data-success="right" for="location">Location</label> 
-          <select id="location-edit" class="browser-default custom-select  custom-select-xs mb-3 ">"${location}"</select>
+        <label data-error="wrong" data-success="right" for="eid-edit">Email</label>
+          <input type="email" id="eid-edit" class="form-control validate">
         </div>
 
         <div class="form-group mb-5">
-          <label data-error="wrong" data-success="right" for="department">Department</label>
-          <select id="department-edit" class="browser-default custom-select  custom-select-xs mb-3 ">"${department}"</select>
+          <label data-error="wrong" data-success="right" for="location-edit">Location</label> 
+          <select id="location-edit" class="browser-default custom-select  custom-select-xs mb-3 "></select>
         </div>
 
         <div class="form-group mb-5">
-        <label data-error="wrong" data-success="right" for="job">Job Title</label>
-          <input type="text" id="job-edit" value="${jobTitle}" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="department-edit">Department</label>
+          <select id="department-edit" class="browser-default custom-select  custom-select-xs mb-3 "></select>
+        </div>
+
+        <div class="form-group mb-5">
+        <label data-error="wrong" data-success="right" for="job-edit">Job Title</label>
+          <input type="text" id="job-edit" class="form-control validate">
         </div>
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-      <button id="update" type="button" class="btn btn-unique" data-dismiss="modal" data-target="#EditContactForm-${id}">Update</button>
+      <button id="update" type="button" class="btn btn-unique" data-dismiss="modal">Update</button>
       </div>
     </div>
   </div>
@@ -552,9 +580,9 @@ function addEmployee(){
   console.log(fname);
 
   let lname = $("#lname").val();
-  let loc = $("#location option:checked").val();
+  let loc = parseInt($("#location option:checked").val()) + 1;
   console.log(loc);
-  let dep = $("#department option:checked").val();
+  let dep = parseInt($("#department option:checked").val()) + 1;
   let eid = $("#eid").val();
   let job = $("#job").val();
   xmlhttp_php("libs/php/insertEmployee.php?firstName=" + fname + "&lastName=" + lname + "&jobTitle=" + job + "&email=" + eid + "&deptId=" + dep, insertEmployeeData);
