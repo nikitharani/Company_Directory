@@ -20,18 +20,17 @@
 
 <body>
   <!--nav bar-->
-  <nav class="navbar navbar-expand-sm navbar-dark black mb-0 ">
+  <nav class="navbar navbar-expand-sm navbar-dark black mb-0 fixed-top">
 
     <!-- Navbar brand -->
     <img src="images/directory.png" height=40px width=50px />
     <a class="navbar-brand" href="#">Company Directory</a>
     
-
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 
-      <form class="form-inline ml-auto">
+      <form class="form-inline ml-auto in-bt">
         <input class="form-control mr-2" type="text" placeholder="Name / Location" aria-label="Search" id="search-name">
         <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2" id='search' type="submit">Search</button>
       </form>
@@ -55,38 +54,42 @@
                 </button>
               </div>
               <div class="modal-body mx-3">
-                <div class="md-form mb-5">
+                <div class="md-form mb-1">
                   <i class="fas fa-user prefix grey-text"></i>
                   <input type="text" id="fname" class="form-control-sm validate">
                   <label data-error="wrong" data-success="right" for="fname">First Name</label>
                 </div>
-                <div class="md-form mb-5">
+                <div class="md-form mb-1">
                   <i class="fas fa-user prefix grey-text"></i>
                   <input type="text" id="lname" class="form-control-sm validate">
                   <label data-error="wrong" data-success="right" for="lname">Last Name</label>
                 </div>
 
-                <div class="md-form mb-5">
+                <div class="md-form mb-3">
                   <i class="fas fa-envelope prefix grey-text"></i>
                   <input type="email" id="eid" class="form-control-sm validate">
                   <label data-error="wrong" data-success="right" for="eid">Email</label>
                 </div>
 
-                <div class="md-form mb-5">
+                <div class="md-form mb-3">
                   <i class="fas fa-map-marker-alt prefix grey-text d-block "></i>
                   <label data-error="wrong" data-success="right" for="location"></label>
                   <select id="location" class="browser-default sel-drop custom-select  ml-3 mb-3 ">
                   </select>
+                  <div id="invalid-loc" class="invalid-location"></div>
+
                 </div>
 
-                <div class="md-form mb-5">
+                <div class="md-form mb-3">
                   <i class="fas fa-building prefix grey-text d-block"></i>
                   <label data-error="wrong" data-success="right" for="department"></label>
                   <select id="department" class="browser-default sel-drop custom-select ml-3 mb-3 ">
                   </select>
+                  <div id="invalid-dept" class="invalid-location"></div>
+
                 </div>
 
-                <div class="md-form mb-5">
+                <div class="md-form mb-3">
                   <i class="fas fa-suitcase prefix grey-text"></i>
                   <input type="text" id="job" class="form-control-sm validate">
                   <label data-error="wrong" data-success="right" for="job">Job Title</label>
@@ -94,7 +97,7 @@
 
               </div>
               <div class="modal-footer d-flex justify-content-center">
-                <button id="send" class="btn btn-unique" data-dismiss="modal">Submit <i
+                <button id="send" class="btn btn-unique">Submit <i
                     class="fas fa-paper-plane-o ml-1"></i></button>
               </div>
             </div>
@@ -102,19 +105,19 @@
         </div>
 
         <div class="text-center mt-3">
-          <a href="" class="btn btn-default btn-rounded addemp mb-4 " data-toggle="modal" data-target="#modalContactForm">Add
+          <a href="" class="btn btn-default btn-rounded addemp mb-4 mt-5" data-toggle="modal" data-target="#modalContactForm">Add
             Employee</a>
         </div>
       </div>
       <!--add employee end-->
-      <div class="col-md-4 ">
+      <div class="col-md-4 mt-3">
         <label data-error="wrong" data-success="right" for="location"></label>
-        <select id="loc" class="browser-default custom-select sel custom-select-xs mb-3 mt-4">
+        <select id="loc" class="browser-default custom-select sel custom-select-xs mb-3 mt-5">
         </select>
       </div>
-      <div class="col-md-4 ">
+      <div class="col-md-4 mt-3 ">
         <label data-error="wrong" data-success="right" for="department"></label>
-        <select id="depart" class="browser-default custom-select sel custom-select-xs mb-3 mt-4">
+        <select id="depart" class="browser-default custom-select sel custom-select-xs mb-3 mt-5">
         </select>
       </div>
     </div>

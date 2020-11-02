@@ -18,7 +18,7 @@ body {
  #gallery{
     /* background-color: lightblue; */
   width: auto;
-  height: 620px;
+  height: 560px;
   overflow: auto;     
 } 
 
@@ -97,4 +97,15 @@ color: black !important;
  max-width:50%;
  margin-left:30 !important;
   /* margin:auto !important; */
+}
+
+@media (max-width:576px){
+  .hd-name{
+    margin:1px;
+  }
+  #search-name{
+    width:35px;
+    /* padding:5px;  } */
+  
+}
 }

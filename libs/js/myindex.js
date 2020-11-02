@@ -15,7 +15,7 @@ xmlhttp_php("libs/php/getAllLocations.php", getAllLocations);
 //getting data from add an employee form
 $("#send").click(function() {
   addEmployee();
-  window.location.reload();
+  
 
 });
 
@@ -257,19 +257,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   //update button functionality
   $("#update").click(()=>{
     // deleteEmployee(id,"Update sucessful");
-    let fname = $("#fname-edit").val();
-    console.log(fname);
-
-    let lname = $("#lname-edit").val();
-    let loc = parseInt($("#location-edit option:checked").val()) + 1;
-    console.log(loc);
-    let dep = parseInt($("#department-edit option:checked").val()) + 1;
-    let eid = $("#eid-edit").val();
-    let job = $("#job-edit").val();
-    xmlhttp_php("libs/php/updateEmployee.php?firstName=" + fname + "&lastName=" + lname + "&jobTitle=" + job + "&email=" + eid + "&deptId=" + dep +"&id=" + id, updateEmployeeData);
-
-    alert('Update Succesful!');
-    window.location.reload();
+    updateEmployee(id);
 
   })
 
@@ -278,7 +266,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
 //delete button functionality
 delButton.click(() => {
   // container.hide();
-  deleteEmployee(id,"Delete sucessful");
+  deleteEmployee(id);
 })
 
 // // close the window
@@ -378,7 +366,7 @@ function getAllDepartments(xhttp) {
   options = "";
   for (i = 0; i < allDepartments.length; i++) {
       if (i == 0) {
-        options += '<option value="" disabled selected>Choose Department</option>';
+        options += '<option value="" selected>Choose Department</option>';
       }
       options += `<option value="${i}">${ allDepartments[i].name}</option>`;
     }
@@ -404,7 +392,7 @@ function getAllLocations(xhttp) {
   options = "";
   for (i = 0; i < allLocations.length; i++) {
       if (i == 0) {
-        options += '<option value="" disabled selected>Choose Location</option>';
+        options += '<option value="" selected>Choose Location</option>';
       }
       options += `<option value="${i}">${ allLocations[i].name}</option>`;
     }
@@ -513,10 +501,6 @@ function getSearchedEmployeesIdByLocation(ulocation){
 return searchedEmployeesByLocation;
 } 
 
-// create an employee
-function insertEmployeeData(xhttp){
-  alert(xhttp.status.description);
-}
 //edit function
 function editModel()
 {
@@ -531,38 +515,40 @@ function editModel()
         </button>
       </div>
       <div class="modal-body mx-3">
-        <div class="form-group mb-5">
+        <div class="form-group mb-1">
         <label data-error="wrong" data-success="right" for="fname-edit">First Name</label>
           <input type="text" id="fname-edit" class="form-control validate">
         </div>
-        <div class="form-group mb-5">
+        <div class="form-group mb-1">
         <label data-error="wrong" data-success="right" for="lname-edit">Last Name</label>
           <input type="text" id="lname-edit" class="form-control validate">
         </div>
 
-        <div class="form-group mb-5">
+        <div class="form-group mb-3">
         <label data-error="wrong" data-success="right" for="eid-edit">Email</label>
           <input type="email" id="eid-edit" class="form-control validate">
         </div>
 
-        <div class="form-group mb-5">
+        <div class="form-group mb-3">
           <label data-error="wrong" data-success="right" for="location-edit">Location</label> 
-          <select id="location-edit" class="browser-default custom-select  custom-select-xs mb-3 "></select>
+          <select id="location-edit" class="browser-default custom-select  custom-select-xs mb-3"></select>
+          <div id="invalid-location" class="invalid-location"></div>
         </div>
 
-        <div class="form-group mb-5">
+        <div class="form-group mb-3">
           <label data-error="wrong" data-success="right" for="department-edit">Department</label>
-          <select id="department-edit" class="browser-default custom-select  custom-select-xs mb-3 "></select>
+          <select id="department-edit" class="browser-default custom-select  custom-select-xs mb-3"></select>
+          <div id="invalid-department" class="invalid-department"></div>
         </div>
 
-        <div class="form-group mb-5">
+        <div class="form-group mb-3">
         <label data-error="wrong" data-success="right" for="job-edit">Job Title</label>
           <input type="text" id="job-edit" class="form-control validate">
         </div>
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-      <button id="update" type="button" class="btn btn-unique" data-dismiss="modal">Update</button>
+      <button id="update" type="button" class="btn btn-unique">Update</button>
       </div>
     </div>
   </div>
@@ -575,52 +561,80 @@ return edit_code;
 function addEmployee(){
   let fname = $("#fname").val();
   console.log(fname);
+  let loc = parseInt($("#location option:checked").val()) + 1;
+  let dep = parseInt($("#department option:checked").val()) + 1;
+if(Number.isNaN(loc)){
+$("#invalid-loc").text("* Invalid Location Selected!");
+return -1;
+}
+if(Number.isNaN(dep)){
+  $("#invalid-dept").text("* Invalid Department Selected!");
+  return -1;
+  }
+
+  $("#modalContactForm").hide();
 
   let lname = $("#lname").val();
-  let loc = parseInt($("#location option:checked").val()) + 1;
   console.log(loc);
-  let dep = parseInt($("#department option:checked").val()) + 1;
   let eid = $("#eid").val();
   let job = $("#job").val();
   xmlhttp_php("libs/php/insertEmployee.php?firstName=" + fname + "&lastName=" + lname + "&jobTitle=" + job + "&email=" + eid + "&deptId=" + dep, insertEmployeeData);
 
 } 
 
-function deleteEmployee(id,msg)
+// create an employee
+function insertEmployeeData(xhttp){
+  output=JSON.parse(xhttp.responseText);
+  alert(output.status.description);
+  window.location.reload();
+}
+
+function deleteEmployee(id)
 {
  
   xmlhttp_php("libs/php/deleteEmployeeByID.php?id=" + id , deleteEmployeeData);
-  alert(msg);
-  window.location.reload();
 
 }
 
 // delete an employee
 function deleteEmployeeData(xhttp){
-  alert(xhttp.status.description);
+  output=JSON.parse(xhttp.responseText);
+  alert(output.status.description);
+  window.location.reload();
   
 }
 
 //update employee
-function updateEmployee(){
-  if(xhttp.status.code == "200"){
-  let fname = $("#fname-edit").val();
+function updateEmployee(id){
+// deleteEmployee(id,"Update sucessful");
+let fname = $("#fname-edit").val();
+console.log(fname);
 
-  let lname = $("#lname-edit").val();
-  let loc = $("#location-edit option:checked").val();
-  let dep = $("#department-edit option:checked").val();
-  let eid = $("#eid-edit").val();
-  let job = $("#job-edit").val();
-  xmlhttp_php("libs/php/updateEmployee.php?firstName=" + fname + "&lastName=" + lname + "&jobTitle=" + job + "&email=" + eid + "&deptId=" + dep +"&id=" + id, updateEmployeeData);
+let lname = $("#lname-edit").val();
+let loc = parseInt($("#location-edit option:checked").val()) + 1;
+let dep = parseInt($("#department-edit option:checked").val()) + 1;
+if (Number.isNaN(loc))
+{
+  $("#invalid-location").text( "* Invalid Location Selected!" );
+  return -1;
 }
-else {
-  alert(xhttp.status.description)
+if(Number.isNaN(dep)){  
+  $("#invalid-department").text( "* Invalid Department Selected!" );
+  return -1;
 }
+$("#EditContactForm").hide();
+console.log(loc);
+
+let eid = $("#eid-edit").val();
+let job = $("#job-edit").val();
+xmlhttp_php("libs/php/updateEmployee.php?firstName=" + fname + "&lastName=" + lname + "&jobTitle=" + job + "&email=" + eid + "&deptId=" + dep +"&id=" + id, updateEmployeeData);
+
 } 
 
 function updateEmployeeData(xhttp){
-  alert(xhttp.status.description);
- // window.location.reload();
+  output=JSON.parse(xhttp.responseText);
+  alert(output.status.description);
+  window.location.reload();
 }
 
 //set department dropdown based on location
