@@ -150,7 +150,16 @@ function generator(employeesData) {
 
 //Creates the user's card from the supplied data and attaches it to the DOM
 function createCard(id, nameTag, fullName, email, location, department, jobTitle) {
- const modaltest=$(`<button id="buton-${String(id)}" type="button" class="btn btn-primary card-btn btn-block mb-2 mt-2" data-toggle="modal" data-target="#exampleModalLong-${id}"> </button>`);
+ 
+  if(parseInt(id)%2 == 0)
+  {
+    var modaltest=$(`<button id="buton-${String(id)}" type="button" class="btn card-btn btn-block mt-0 even" data-toggle="modal" data-target="#exampleModalLong-${id}"> </button>`);
+
+  }
+  else{
+    var modaltest=$(`<button id="buton-${String(id)}" type="button" class="btn card-btn btn-block mt-0 odd" data-toggle="modal" data-target="#exampleModalLong-${id}"> </button>`);
+
+  }
   // const modaltest = $(modaltest2);
   // const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
   const infoContainer = $(`<div class="card-info-container d-flex"></div>`);
@@ -178,7 +187,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   console.log('inside create modal');
 
   // container is nothing but modal
-  const container = $(`<div class="modal" id="exampleModalLong-${id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-${id}" aria-hidden="true"></div>`);
+  const container = $(`<div class="modal fade card-m mx-5" id="exampleModalLong-${id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-${id}" aria-hidden="true"></div>`);
   const modalDialog=$('<div class="modal-dialog" role="document"></div>');
   const modalContent = $('<div class="modal-content"></div>');
 
@@ -349,6 +358,7 @@ function xmlhttp_php(url, func) {
         func(this);
       }
       else if (this.status != 200 && this.status != 0) {
+        func(this);
         console.log(this.status);
         console.log(`cannot get information from :${url}`);
       }
@@ -359,6 +369,9 @@ function xmlhttp_php(url, func) {
 
 function getAllDepartments(xhttp) {
   departmentsData = JSON.parse(xhttp.responseText);
+
+  if(departmentsData.status.code == "200"){
+
   allDepartments=departmentsData.data;
   console.log(allDepartments);
 
@@ -374,12 +387,18 @@ function getAllDepartments(xhttp) {
 
     departmentDropdown.innerHTML=options;
     document.getElementById("depart").innerHTML=options;
-    
+  }
+  else
+  {
+    alert(xhttp.status.description);
+  }
 }
 
 //locations drop down
 function getAllLocations(xhttp) {
+  
   var locationsData = JSON.parse(xhttp.responseText);
+  if(locationsData.status.code == "200"){
   allLocations=locationsData.data;
   console.log(allLocations);
   options = "";
@@ -394,22 +413,34 @@ function getAllLocations(xhttp) {
     locationDropdown.innerHTML=options;
     document.getElementById("loc").innerHTML=options;
   }
+  else
+  {
+    alert(xhttp.status.description);
+  }
+  }
 
 //employee data
 function getAllEmployees(xhttp) {
+  
     employeesData = JSON.parse(xhttp.responseText);
-
+    if(employeesData.status.code=="200")
+    {
     //allEmployee array
     allEmployees = employeesData.data;
-    options = "";
+    // options = "";
 
-    for (i = 0; i < allEmployees.length; i++) {
-        if (i == 0) {
-          options += '<option value="" disabled selected>Choose Location</option>';
-        }
-        options += `<option value="${i}">${ allEmployees[i].name}</option>`;
-    }
+    // for (i = 0; i < allEmployees.length; i++) {
+    //     if (i == 0) {
+    //       options += '<option value="" disabled selected>Choose Location</option>';
+    //     }
+    //     options += `<option value="${i}">${ allEmployees[i].name}</option>`;
+    // }
     generator(allEmployees);
+  }
+  else
+  {
+    alert(xhttp.status.description);
+  }
 
 }
 
@@ -484,9 +515,7 @@ return searchedEmployeesByLocation;
 
 // create an employee
 function insertEmployeeData(xhttp){
-  result = JSON.parse(xhttp.responseText);
-
-  console.log(result.status);
+  alert(xhttp.status.description);
 }
 //edit function
 function editModel()
@@ -568,15 +597,13 @@ function deleteEmployee(id,msg)
 
 // delete an employee
 function deleteEmployeeData(xhttp){
-  result = JSON.parse(xhttp.responseText);
-
-  console.log(result.status);
-  // alert('delete succesful');
-  // window.location.reload();
+  alert(xhttp.status.description);
+  
 }
 
 //update employee
 function updateEmployee(){
+  if(xhttp.status.code == "200"){
   let fname = $("#fname-edit").val();
 
   let lname = $("#lname-edit").val();
@@ -585,15 +612,15 @@ function updateEmployee(){
   let eid = $("#eid-edit").val();
   let job = $("#job-edit").val();
   xmlhttp_php("libs/php/updateEmployee.php?firstName=" + fname + "&lastName=" + lname + "&jobTitle=" + job + "&email=" + eid + "&deptId=" + dep +"&id=" + id, updateEmployeeData);
-
+}
+else {
+  alert(xhttp.status.description)
+}
 } 
 
 function updateEmployeeData(xhttp){
-  result = JSON.parse(xhttp.responseText);
-
-  console.log(result.status);
-  // alert('delete succesful');
-  // window.location.reload();
+  alert(xhttp.status.description);
+ // window.location.reload();
 }
 
 //set department dropdown based on location

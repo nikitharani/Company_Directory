@@ -8,7 +8,9 @@
 
   <title>Company Directory</title>
   <!-- Bootstrap Css files-->
-  <link rel="stylesheet" href="bootstrap/css/font-awesome.css">
+  <!-- <link rel="stylesheet" href="bootstrap/css/font-awesome.css"> -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
   <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="bootstrap/css/mdb.css">
   <link rel="stylesheet" href="libs/css/style.css">
@@ -18,11 +20,12 @@
 
 <body>
   <!--nav bar-->
-  <nav class="navbar navbar-expand-sm navbar-dark indigo mb-0 ">
+  <nav class="navbar navbar-expand-sm navbar-dark black mb-0 ">
 
     <!-- Navbar brand -->
     <img src="images/directory.png" height=40px width=50px />
     <a class="navbar-brand" href="#">Company Directory</a>
+    
 
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -54,38 +57,38 @@
               <div class="modal-body mx-3">
                 <div class="md-form mb-5">
                   <i class="fas fa-user prefix grey-text"></i>
-                  <input type="text" id="fname" value="NIki" class="form-control validate">
+                  <input type="text" id="fname" class="form-control-sm validate">
                   <label data-error="wrong" data-success="right" for="fname">First Name</label>
                 </div>
                 <div class="md-form mb-5">
                   <i class="fas fa-user prefix grey-text"></i>
-                  <input type="text" id="lname" class="form-control validate">
+                  <input type="text" id="lname" class="form-control-sm validate">
                   <label data-error="wrong" data-success="right" for="lname">Last Name</label>
                 </div>
 
                 <div class="md-form mb-5">
                   <i class="fas fa-envelope prefix grey-text"></i>
-                  <input type="email" id="eid" class="form-control validate">
+                  <input type="email" id="eid" class="form-control-sm validate">
                   <label data-error="wrong" data-success="right" for="eid">Email</label>
                 </div>
 
                 <div class="md-form mb-5">
-                  <!-- <i class="fas fa-tag prefix grey-text"></i> -->
+                  <i class="fas fa-map-marker-alt prefix grey-text d-block "></i>
                   <label data-error="wrong" data-success="right" for="location"></label>
-                  <select id="location" class="browser-default custom-select  custom-select-xs mb-3 ">
+                  <select id="location" class="browser-default sel-drop custom-select  ml-3 mb-3 ">
                   </select>
                 </div>
 
                 <div class="md-form mb-5">
-                  <!-- <i class="fas fa-tag prefix grey-text"></i> -->
+                  <i class="fas fa-building prefix grey-text d-block"></i>
                   <label data-error="wrong" data-success="right" for="department"></label>
-                  <select id="department" class="browser-default custom-select  custom-select-xs mb-3 ">
+                  <select id="department" class="browser-default sel-drop custom-select ml-3 mb-3 ">
                   </select>
                 </div>
 
                 <div class="md-form mb-5">
-                  <i class="fas fa-tag prefix grey-text"></i>
-                  <input type="text" id="job" class="form-control validate">
+                  <i class="fas fa-suitcase prefix grey-text"></i>
+                  <input type="text" id="job" class="form-control-sm validate">
                   <label data-error="wrong" data-success="right" for="job">Job Title</label>
                 </div>
 
@@ -99,7 +102,7 @@
         </div>
 
         <div class="text-center mt-3">
-          <a href="" class="btn btn-default btn-rounded mb-4 " data-toggle="modal" data-target="#modalContactForm">Add
+          <a href="" class="btn btn-default btn-rounded addemp mb-4 " data-toggle="modal" data-target="#modalContactForm">Add
             Employee</a>
         </div>
       </div>
@@ -123,11 +126,11 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 bg-white ">        
-        <div class="card-info-container d-inline d-flex  justify-content-between ">
-          <p class="card-text d-inline border p-2">Name</p>
-          <p class="card-text-em d-inline border p-2">Email</p>
-          <p class="card-text-em d-inline border p-2">Department</p>
-          <p class="card-text-loc d-inline border p-2">Location</p>
+        <div class="card-info-container d-flex  justify-content-between ">
+          <p class="card-text-nm border p-2">Name</p>
+          <p class="card-text-eml border p-2">Email</p>
+          <p class="card-text-dp border p-2">Department</p>
+          <p class="card-text-nml border p-2">Location</p>
         </div>
     
       </div>
@@ -137,7 +140,7 @@
     <div class="row">
       <!-- gallery -->
       <div class="col-md-12 bg-white ">
-        <div id="gallery" class="gallery">
+        <div id="gallery" class="gallery border">
 
         </div>
       </div>

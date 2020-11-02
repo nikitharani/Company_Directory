@@ -26,4 +26,75 @@ body {
   width:280px;
   /* margin-top: 4px; */
 }
+.sel-drop{
+  width:400px;
+  /* margin-top: 4px; */
+}
 
+.card-text{
+  width: 20%;
+  text-align: left;
+}
+.card-text-em{
+  width: 30%;
+  text-align: left;
+
+}
+.card-text-loc{
+  width: 20%;
+  text-align: left;
+
+}
+
+/* [hidden] {
+  display: none !important;
+} */
+
+.card-text-nm{
+  width: 21%;
+  text-align: left;
+  font-weight: 700;
+}
+
+.card-text-eml{
+  width: 27%;
+  text-align: left;
+  font-weight: 700;
+}
+
+.card-text-dp{
+  width: 27%;
+  text-align: left;
+  font-weight: 700;
+}
+
+.card-text-nml{
+  width: 25%;
+  text-align: left;
+  font-weight: 700;
+}
+
+.even, .even:active, .even:visited  {
+background-color:lightgray !important;
+color: black !important;
+
+}
+.odd, .odd:active, .odd:visited {
+  background-color:whitesmoke !important;
+  color: black !important;
+  }
+.addemp{
+  background-color:#333300 !important;
+}
+
+.even:hover, .odd:hover {
+  color:black !important;
+  background-color:lightslategray !important;
+
+}
+
+.card-m{
+ max-width:50%;
+ margin-left:30 !important;
+  /* margin:auto !important; */
+}

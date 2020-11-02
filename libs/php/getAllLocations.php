@@ -39,7 +39,7 @@
 
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";
-		$output['status']['description'] = "query failed";	
+		$output['status']['description'] = "Failed To Fetch Locations!";	
 		$output['data'] = [];
 
 		mysqli_close($conn);

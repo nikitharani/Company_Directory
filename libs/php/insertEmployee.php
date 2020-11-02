@@ -22,7 +22,7 @@
 		
 		$output['status']['code'] = "300";
 		$output['status']['name'] = "failure";
-		$output['status']['description'] = "database unavailable";
+		$output['status']['description'] = "Database unavailable!";
 		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 		$output['data'] = [];
 
@@ -61,7 +61,7 @@
 
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";
-		$output['status']['description'] = "query failed";	
+		$output['status']['description'] = "Failed to add New Employee!";	
 		$output['data'] = [];
 
 		mysqli_close($conn);
@@ -74,7 +74,7 @@
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
-	$output['status']['description'] = "success";
+	$output['status']['description'] = "New Employee added successfuly!";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 	$output['data'] = [];
 	
