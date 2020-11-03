@@ -24,7 +24,7 @@
 
     <!-- Navbar brand -->
     <img src="images/directory.png" height=40px width=50px />
-    <a class="navbar-brand" href="#">Company Directory</a>
+    <a class="navbar-brand" id="navy" href="#">Company Directory</a>
     
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -42,7 +42,7 @@
   <!--add employee and filter section-->
   <div class="container">
     <div class="row">
-      <div class="col-md-4 ">
+      <div class="col-md-3 ">
         <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
           aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -105,21 +105,51 @@
         </div>
 
         <div class="text-center mt-3">
-          <a href="" class="btn btn-default btn-rounded addemp mb-4 mt-5" data-toggle="modal" data-target="#modalContactForm">Add
+          <a href="" class="btn btn-default btn-rounded addemp mb-4 mt-5 " data-toggle="modal" data-target="#modalContactForm">Add
             Employee</a>
         </div>
       </div>
       <!--add employee end-->
-      <div class="col-md-4 mt-3">
-        <label data-error="wrong" data-success="right" for="location"></label>
-        <select id="loc" class="browser-default custom-select sel custom-select-xs mb-3 mt-5">
+      <div id="loc" class="col-md-3 mt-3">
+        <select class="browser-default custom-select sel custom-select-xs mb-3 mt-5 loc">
         </select>
       </div>
-      <div class="col-md-4 mt-3 ">
-        <label data-error="wrong" data-success="right" for="department"></label>
-        <select id="depart" class="browser-default custom-select sel custom-select-xs mb-3 mt-5">
+      <div id="dept" class="col-md-3 mt-3 ">
+        <select class="browser-default custom-select sel custom-select-xs mb-3 mt-5 depart">
         </select>
       </div>
+      <!--for mobile-->
+      <div id="mob-filter" class="col-md-3 ">
+        <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#filterModal">
+          <i class="fas fa-filter prefix "></i>
+        </button>
+        <div class="modal" id="filterModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Filters</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="col-md-4 mt-3">
+                  <select class="browser-default custom-select sel custom-select-xs mb-3 mt-5 loc">
+                  </select>
+                </div>
+                <div class="col-md-4 mt-3 ">
+                  <select class="browser-default custom-select sel custom-select-xs mb-3 mt-5 depart">
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Apply</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--end mobile modal-->
     </div>
   </div>
 
@@ -158,6 +188,8 @@
   <script src="bootstrap/js/bootstrap.js"></script>
   <script src="bootstrap/js/popper.min.js"></script>
   <script src="bootstrap/js/mdb.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mobile-detect@1.4.4/mobile-detect.min.js"></script>
+  
   <script src="libs/js/myindex.js"></script>
 </body>
 

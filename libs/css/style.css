@@ -99,13 +99,31 @@ color: black !important;
   /* margin:auto !important; */
 }
 
-@media (max-width:576px){
-  .hd-name{
-    margin:1px;
-  }
-  #search-name{
-    width:35px;
-    /* padding:5px;  } */
-  
+/* #mob-filter{
+  margin-top: 8px !important;
+} */
+
+@media (max-width: 576px) {
+#navy{
+  display:block;
+  color:yellow;
 }
+.addemp {
+/* margin-left: 0px; */
+color:blue !important;
+}
+.card-text-eml,.card-text-dp{
+display:none;
+width:50%;
+padding: 4 auto;
+}
+#loc, #dept{
+display: none;
+}
+
+}
+@media (min-width: 576px){
+  #mob-filter{
+    display:none;
+  }
 }

@@ -5,7 +5,13 @@ var departmentList, locationList;
 
 //------------------------------------------//
 //-------------- Main code -----------------//
-//------------------------------------------//
+//------------------------------------------// 
+  
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+console.log("mobile device");
+}
+// alert("Your screen resolution is: " + screen.width + "x" + screen.height);
+
 
 xmlhttp_php("libs/php/getAll.php", getAllEmployees);
 // $.getJSON("libs/php/getAll.php", getAllEmployees);
@@ -14,8 +20,7 @@ xmlhttp_php("libs/php/getAllLocations.php", getAllLocations);
 
 //getting data from add an employee form
 $("#send").click(function() {
-  addEmployee();
-  
+  addEmployee(); 
 
 });
 
@@ -27,15 +32,15 @@ $("#location").change(function(){
 
 
 });
-$("#loc").change(function(){
+$(".loc").change(function(){
   let locID = parseInt($(this).val());//$("#location option:checked").val();
   options = setDepartmentDropdown(locID);
-  document.getElementById('depart').innerHTML = options;
+  document.getElementsByClassName("depart")[0].innerHTML = options;
+  document.getElementsByClassName("depart")[1].innerHTML = options;
 
-  locName =  $("#loc option:selected").text();
+  locName =  $(this).find('option:selected').text();
 
   var searchedEmployeesButtonVisibilty = searchEmployeesIdByNameLocation(locName);
-  console.log(searchedEmployeesButtonVisibilty);
 
   let id;
   for(i=0;i<searchedEmployeesButtonVisibilty.length;i++){
@@ -60,13 +65,14 @@ $("#department").change(function(){
   document.getElementById('location').innerHTML=options;
 
 });
-$("#depart").change(function(){
+$(".depart").change(function(){
   let deptID = parseInt($(this).val());//$("#location option:checked").val();    
   options = setLocationDropdown(deptID);
-  document.getElementById('loc').innerHTML = options;
+  document.getElementsByClassName("loc")[0].innerHTML=options;
+  document.getElementsByClassName("loc")[1].innerHTML=options;
 
-  deptName = $("#depart option:selected").text();
-  locName = $("#loc option:selected").text();
+  deptName = $(this).find('option:selected').text();
+  locName = $($(".loc")[0]).find('option:selected').text();
 
   var searchedEmployeesButtonVisibilty = searchEmployeesIdByDepartmentLocation(deptName,locName);
 
@@ -125,7 +131,6 @@ function generator(employeesData) {
 
   const edit_code = editModel();  
   $('body').append(edit_code);
-
   
   employeesData.forEach(user => {
       const id = user.id;
@@ -171,10 +176,19 @@ function createCard(id, nameTag, fullName, email, location, department, jobTitle
   const departmentP = $(`<p class="card-text-em">${department}</p>`);
   const jobTitleP = $(`<p class="card-text">${jobTitle}</p>`);
 
+// for mobile view
+if(screen.width <= 770){
+//  alert("You're using Mobile Device!!");
+ $('#gallery').append(modaltest);
+  modaltest.append(infoContainer);  
+  infoContainer.append(h3).append(locationP);
+}
+
+ else{
   $('#gallery').append(modaltest);
   modaltest.append(infoContainer);  
   infoContainer.append(h3).append(emailP).append(departmentP).append(locationP);
-
+ }
   return modaltest;
 }
 
@@ -374,7 +388,8 @@ function getAllDepartments(xhttp) {
     const departmentDropdown = document.getElementById("department");
 
     departmentDropdown.innerHTML=options;
-    document.getElementById("depart").innerHTML=options;
+    document.getElementsByClassName("depart")[0].innerHTML=options;
+    document.getElementsByClassName("depart")[1].innerHTML=options;
   }
   else
   {
@@ -399,7 +414,10 @@ function getAllLocations(xhttp) {
     locationList = options;
     const locationDropdown = document.getElementById("location");
     locationDropdown.innerHTML=options;
-    document.getElementById("loc").innerHTML=options;
+    console.log(document.getElementsByClassName("loc"));
+    document.getElementsByClassName("loc")[0].innerHTML=options;
+    document.getElementsByClassName("loc")[1].innerHTML=options;
+
   }
   else
   {
@@ -644,7 +662,7 @@ function setDepartmentDropdown(locID){
   for(i=0; i<allDepartments.length; i++){
     if (i==0)
     {
-      options += '<option value="" disabled selected>Choose Location</option>';
+      options += '<option value="" disabled selected>Choose Department</option>';
     }
     
     if(allDepartments[i].locationID==locID){
