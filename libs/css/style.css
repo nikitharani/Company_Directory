@@ -31,7 +31,7 @@ body {
   /* margin-top: 4px; */
 }
 
-.card-text{
+.card-text-fname{
   width: 20%;
   text-align: left;
 }
@@ -102,28 +102,85 @@ color: black !important;
 /* #mob-filter{
   margin-top: 8px !important;
 } */
+#loc-dept{
+  display:flex !important;
+  justify-content:flex-end !important;
+}
+.addemp-btn{
+  display:flex !important;
+  justify-content:flex-start !important;
+}
 
 @media (max-width: 576px) {
-#navy{
-  display:block;
-  color:yellow;
+  #gallery{
+  width: auto;
+  height: 400px;
+  overflow: auto;     
+} 
+
+.addemp-btn {
+display:flex !important;
+justify-content:space-between !important;
 }
-.addemp {
-/* margin-left: 0px; */
-color:blue !important;
+
+.mob{
+  display: none;
 }
-.card-text-eml,.card-text-dp{
-display:none;
-width:50%;
-padding: 4 auto;
+
+
+/* card button in js */
+.card-text-em{
+  display:none;
 }
-#loc, #dept{
-display: none;
+
+/* button name and location alignment */
+.card-info-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-text-eml, .card-text-dp{
+  display: none;
+}
+
+.card-text-nm{
+  width: 65%;
+  text-align: left;
+  font-weight: 700;
+}
+
+.card-text-nml{
+  width: 35%;
+  text-align: left;
+  font-weight: 700;
+}
+.header-text{
+border: 1px;
+}
+
+.card-text-fname{
+  width: 65%;
+  text-align: left;
+  margin-top: 8px;
+}
+
+.card-text-loc{
+  width: 35%;
+  text-align: left;
+  margin-top: 8px;
+
+}
+.even, .odd{
+  padding: 1px 1px 0.5px 1px ;
+  /* padding-bottom: 0.5px; */
 }
 
 }
-@media (min-width: 576px){
+@media (min-width: 576px){ 
   #mob-filter{
-    display:none;
-  }
+    display:none !important;
+  }  
+  /* .mobile-search{
+    display: none !important;
+  } */
 }

@@ -30,19 +30,36 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 
-      <form class="form-inline ml-auto in-bt">
+      <form class="form-inline ml-auto in-bt ">
         <input class="form-control mr-2" type="text" placeholder="Name / Location" aria-label="Search" id="search-name">
-        <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2" id='search' type="submit">Search</button>
+        <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2 search-bar" id='search' type="submit">Search</button>
       </form>
     </div>
     <!-- Collapsible content -->
   </nav>
   <!--navbar end-->
+  <!--search for mobile-->
+  <div class="container mobile-search mt-5">
+    <div class="row">
+      <div class="col-sm-12">
+        <form class="form-inline ml-auto in-bt ">
+          <input class="form-control mr-2" type="text" placeholder="Name / Location" aria-label="Search" id="search-name-mobile">
+          <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2 search-bar" id='search-mob' type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+  <!--search for mobile end-->
 
   <!--add employee and filter section-->
   <div class="container">
-    <div class="row">
-      <div class="col-md-3 ">
+    <div class="row" id="row-opt">
+      <div class="col-sm-4 addemp-btn bg-primary " >
+        <div class="text-center mt-3">
+          <a href="/index.html" class="btn btn-default btn-rounded addemp mb-4 mt-5 " data-toggle="modal" data-target="#modalContactForm">Add
+            Employee</a>
+        </div>
         <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
           aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -104,50 +121,50 @@
           </div>
         </div>
 
-        <div class="text-center mt-3">
-          <a href="" class="btn btn-default btn-rounded addemp mb-4 mt-5 " data-toggle="modal" data-target="#modalContactForm">Add
-            Employee</a>
-        </div>
-      </div>
-      <!--add employee end-->
-      <div id="loc" class="col-md-3 mt-3">
-        <select class="browser-default custom-select sel custom-select-xs mb-3 mt-5 loc">
-        </select>
-      </div>
-      <div id="dept" class="col-md-3 mt-3 ">
-        <select class="browser-default custom-select sel custom-select-xs mb-3 mt-5 depart">
-        </select>
-      </div>
-      <!--for mobile-->
-      <div id="mob-filter" class="col-md-3 ">
-        <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#filterModal">
-          <i class="fas fa-filter prefix "></i>
-        </button>
-        <div class="modal" id="filterModal" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Filters</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="col-md-4 mt-3">
-                  <select class="browser-default custom-select sel custom-select-xs mb-3 mt-5 loc">
-                  </select>
+        <!--for mobile filter model-->
+        <div id="mob-filter" class="mt-3 ">
+          <button type="button" class="btn btn-primary mt-5 mob-filter" data-toggle="modal" data-target="#filterModal">
+            <i class="fas fa-filter prefix px-0 py-0 "></i>
+          </button>
+          <div class="modal" id="filterModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Filters</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-                <div class="col-md-4 mt-3 ">
-                  <select class="browser-default custom-select sel custom-select-xs mb-3 mt-5 depart">
-                  </select>
+                <div class="modal-body">
+                  <div class="col-md-4 mt-3">
+                    <select class="browser-default custom-select sel custom-select-xs mb-3 mt-5 loc">
+                    </select>
+                  </div>
+                  <div class="col-md-4 mt-3 ">
+                    <select class="browser-default custom-select sel custom-select-xs mb-3 mt-5 depart">
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Apply</button>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Apply</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <!--end mobile-->
+
+        
+      </div>
+      <!--add employee end-->
+      <div id="loc-dept" class="col-sm-8 mt-4 bg-secondary">
+        <select class="browser-default custom-select sel custom-select-md mb-3 mt-5 loc mob">
+        </select>
+        <!-- </div>
+            <div id="dept" class="col-md-3 mt-3 "> -->
+        <select class="browser-default custom-select sel custom-select-md mb-3 mt-5 ml-2 depart mob">
+        </select>     
+
       </div>
       <!--end mobile modal-->
     </div>
@@ -159,7 +176,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 bg-white ">        
-        <div class="card-info-container d-flex  justify-content-between ">
+        <div class="card-info-container d-flex header-text justify-content-between ">
           <p class="card-text-nm border p-2">Name</p>
           <p class="card-text-eml border p-2">Email</p>
           <p class="card-text-dp border p-2">Department</p>

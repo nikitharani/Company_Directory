@@ -1,7 +1,7 @@
 
 // Global variables
 var  allDepartments, allLocations, allEmployees, searchedEmployeesID=[];
-var departmentList, locationList;
+var departmentList, locationList, rowColor=true;
 
 //------------------------------------------//
 //-------------- Main code -----------------//
@@ -93,9 +93,18 @@ $(".depart").change(function(){
 
 
 //search using name 
-$('#search').click(function()
+$('#search, #search-mob').click(function()
 {
-  let ser_name = $("#search-name").val();
+  let ser_name = $("#search-name-mobile").val();
+  if (ser_name ==""){
+    ser_name = $("#search-name").val();
+  }
+  else{
+    ser_name = $("#search-name-mobile").val();
+  }
+
+  // let ser_name = "nani";
+
   // let ser_location = $("#search-location").val();
   console.log(ser_name);
   // console.log(ser_location);
@@ -156,19 +165,19 @@ function generator(employeesData) {
 //Creates the user's card from the supplied data and attaches it to the DOM
 function createCard(id, nameTag, fullName, email, location, department, jobTitle) {
  
-  if(parseInt(id)%2 == 0)
+  if(rowColor == true)
   {
     var modaltest=$(`<button id="buton-${String(id)}" type="button" class="btn card-btn btn-block mt-0 even" data-toggle="modal" data-target="#exampleModalLong-${id}"> </button>`);
-
+    rowColor = false;
   }
   else{
     var modaltest=$(`<button id="buton-${String(id)}" type="button" class="btn card-btn btn-block mt-0 odd" data-toggle="modal" data-target="#exampleModalLong-${id}"> </button>`);
-
+    rowColor = true;
   }
   // const modaltest = $(modaltest2);
   // const cardDiv = $(`<div id="${nameTag}-card" class="card"></div>`);
-  const infoContainer = $(`<div class="card-info-container d-flex"></div>`);
-  const h3 = $(`<p id="${nameTag}" class="card-text">${fullName}</p>`);
+  const infoContainer = $(`<div class="card-info-container btn-container d-flex"></div>`);
+  const h3 = $(`<p id="${nameTag}" class="card-text-fname">${fullName}</p>`);
   const emailP = $(`<p class="card-text-em">${email}</p>`);
   const locationP = $(`<p class="card-text-loc">${location}</p>`);
 
@@ -176,19 +185,13 @@ function createCard(id, nameTag, fullName, email, location, department, jobTitle
   const departmentP = $(`<p class="card-text-em">${department}</p>`);
   const jobTitleP = $(`<p class="card-text">${jobTitle}</p>`);
 
-// for mobile view
-if(screen.width <= 770){
-//  alert("You're using Mobile Device!!");
- $('#gallery').append(modaltest);
-  modaltest.append(infoContainer);  
-  infoContainer.append(h3).append(locationP);
-}
 
- else{
+
+
   $('#gallery').append(modaltest);
   modaltest.append(infoContainer);  
   infoContainer.append(h3).append(emailP).append(departmentP).append(locationP);
- }
+ 
   return modaltest;
 }
 
