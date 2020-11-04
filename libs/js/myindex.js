@@ -205,7 +205,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
 
   // container is nothing but modal
   const container = $(`<div class="modal fade card-m mx-5" id="exampleModalLong-${id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-${id}" aria-hidden="true"></div>`);
-  const modalDialog=$('<div class="modal-dialog" role="document"></div>');
+  const modalDialog=$('<div class="modal-dialog modal-s" role="document"></div>');
   const modalContent = $('<div class="modal-content"></div>');
 
   //modal header
@@ -224,10 +224,12 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
 
   //modal footer
   const modalfooter = $('<div class="modal-footer"></div>');
-  const editButton = $(`<button type="button" id="edit" class="btn btn-primary" data-toggle="modal" data-target="#EditContactForm">Edit</button>`);
-  const delButton = $('<button type="button" id="del" class="btn btn-secondary">Delete</button>');  
-  const prevButton = $('<button type="button" class="btn btn-primary">Prev</button>');
-  const nextButton = $('<button type="button" class="btn btn-secondary">Next</button>');
+  const editButton = $(`<button type="button" id="edit" class="btn btn-primary button1" data-toggle="modal" data-target="#EditContactForm"><i class="fas fa-edit"></i>
+  </button>`);
+  const prevButton = $('<button type="button" class="btn btn-secondary button1"> <i class="fas fa-angle-double-left"></i></button>');
+  const nextButton = $('<button type="button" class="btn btn-secondary button1"> <i class="fas fa-angle-double-right"></i></button>');
+  const delButton = $('<button type="button" id="del" class="btn btn-primary button1"><i class="fas fa-trash-alt"></i></button>');  
+
   
   console.log('inside create modal2'); 
 
@@ -526,7 +528,7 @@ return searchedEmployeesByLocation;
 function editModel()
 {
     var edit_code = 
-    `<div class="modal fade" id="EditContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    `<div class="modal fade" style="overflow: auto" id="EditContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
       <div class="modal-header text-center">

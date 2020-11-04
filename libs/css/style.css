@@ -19,6 +19,7 @@ body {
     /* background-color: lightblue; */
   width: auto;
   height: 560px;
+  /* max-height: 8%; */
   overflow: auto;     
 } 
 
@@ -94,9 +95,8 @@ color: black !important;
 }
 
 .card-m{
- max-width:50%;
- margin-left:30 !important;
-  /* margin:auto !important; */
+  width: 40%; /* respsonsive width */
+  margin-left:30% !important; /* width/2) */ 
 }
 
 /* #mob-filter{
@@ -114,7 +114,7 @@ color: black !important;
 @media (max-width: 576px) {
   #gallery{
   width: auto;
-  height: 400px;
+  height: 500px;
   overflow: auto;     
 } 
 
@@ -189,10 +189,30 @@ border: 1px;
 .mobile-input{
 width: 60%;
 margin-top: 3px;
-/* padding-top:2px !important;
-padding-bottom:2px !important; */
 height:32px !important;
-/* padding: 2px; */
+}
+
+/* button modal size */
+.card-m{
+  width: 100%; /* respsonsive width */
+  margin-left:0% !important; /* width/2) */ 
+}
+
+/* add employee dropdown */
+.sel-drop{
+  width: 80%; 
+  margin-right:0px !important
+  /* margin-top: 4px; */
+}
+
+/* filter deopdown size */
+.loc-filter, .depart-filter{
+  width:100%;
+}
+/* next and prev button width */
+.button1{
+/* width: 5%!important; */
+padding:12px !important;
 }
 
 }
@@ -203,4 +223,6 @@ height:32px !important;
   .mobile-search{
     display: none !important;
   }
+  
 }
+
