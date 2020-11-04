@@ -114,7 +114,6 @@ color: black !important;
 @media (max-width: 576px) {
   #gallery{
   width: auto;
-  height: 500px;
   overflow: auto;     
 } 
 
@@ -225,4 +224,40 @@ padding:12px !important;
   }
   
 }
+
+@media (max-height: 568px){ 
+  #gallery{
+
+height: 340px !important;  
+  }
+}
+ @media screen and (max-height: 654px) and (min-height: 570px){
+  #gallery{
+
+height: 370px !important;  
+  }
+} 
+
+@media screen and (max-height: 736px) and (min-height: 655px){
+  #gallery{
+
+height: 440px !important;  
+  }
+} 
+
+@media screen and (max-height: 812px) and (min-height: 740px){
+  #gallery{
+
+height: 520px !important;  
+  }
+}
+@media screen and (max-height: 1024px) and (min-height: 815px){
+  #gallery{
+
+height: 595px !important;  
+  }
+}
+
+
+
 
