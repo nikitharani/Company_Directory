@@ -120,7 +120,17 @@ color: black !important;
 
 .addemp-btn {
 display:flex !important;
-justify-content:space-between !important;
+justify-content:flex-start!important;
+margin-bottom: 0px!important;
+margin-top: 0px!important;
+
+}
+.addemp, .mob-filter{
+  margin-top: 0px!important;
+  margin-bottom: 0px!important;
+  height:30px!important;
+  padding: 4px 6px !important;
+
 }
 
 .mob{
@@ -175,12 +185,22 @@ border: 1px;
   /* padding-bottom: 0.5px; */
 }
 
+/* mobile search */
+.mobile-input{
+width: 60%;
+margin-top: 3px;
+/* padding-top:2px !important;
+padding-bottom:2px !important; */
+height:32px !important;
+/* padding: 2px; */
+}
+
 }
 @media (min-width: 576px){ 
   #mob-filter{
     display:none !important;
   }  
-  /* .mobile-search{
+  .mobile-search{
     display: none !important;
-  } */
+  }
 }
