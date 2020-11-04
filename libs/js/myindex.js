@@ -1,15 +1,13 @@
 
 // Global variables
 var  allDepartments, allLocations, allEmployees, searchedEmployeesID=[];
-var departmentList, locationList, rowColor=true;
+var departmentList, locationList, rowColor=true, ascendingOrder=true;
 
 //------------------------------------------//
 //-------------- Main code -----------------//
 //------------------------------------------// 
   
-if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-console.log("mobile device");
-}
+
 // alert("Your screen resolution is: " + screen.width + "x" + screen.height);
 
 
@@ -57,6 +55,11 @@ $(".loc").change(function(){
 
 
 })
+
+//name sort calling function
+$("#name-sort").click(function(){
+  ascending();
+});
 
 //change location dropdown list according to department
 $("#department").change(function(){
@@ -218,7 +221,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   const modalbody=$('<div class="modal-body"></div>');
   const h3 = $(`<h3 id="${nameTag}-modal" class="modal-name cap">Name:${fulName}</h3>`);
   const emailP = $(`<p class="modal-text">Email:${email}</p>`);
-  const departmentP = $(`<p class="modal-text">Deparment:${department}</p>`);
+  const departmentP = $(`<p class="modal-text">Department:${department}</p>`);
   const locationP = $(`<p class="modal-text">Location:${location}</p>`);  
   const jobTitleP = $(`<p class="modal-text">JobTitle: ${jobTitle}</p>`);
 
@@ -731,6 +734,38 @@ function searchEmployeesIdByDepartmentLocation(deptName,locName){
     }
     return searchedEmployeesButtonVisibilty
 }
+
+//sorting buttons according to alphabetical order
+function ascending(){
+  
+var FirstName_with_index = [];
+
+for (var i in allEmployees) {
+  FirstName_with_index.push([allEmployees[i].firstName.toLowerCase(), 'buton-'+ String(allEmployees[i].id)]);
+}
+//appling sort
+FirstName_with_index.sort(function(left, right) {
+  return left[0] < right[0] ? -1 : 1;
+});
+
+if(ascendingOrder==true)
+{
+for(i=0;i<FirstName_with_index.length;i++){
+  $(`#${FirstName_with_index[i][1]}`).prependTo("#gallery");
+}
+ascendingOrder=false;
+}
+else{
+  for(i=FirstName_with_index.length-1;i>=0;i--){
+  $(`#${FirstName_with_index[i][1]}`).prependTo("#gallery");
+}
+ascendingOrder=true;
+}
+
+}
+
+
+
 
 //------------------------------------------//
 
