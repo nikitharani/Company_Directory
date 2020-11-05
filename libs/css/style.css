@@ -218,9 +218,9 @@ padding:12px !important;
 
 }
 @media (min-width: 576px){ 
-  #mob-filter{
+  /* #mob-filter{
     display:none !important;
-  }  
+  }   */
   .mobile-search{
     display: none !important;
   }
