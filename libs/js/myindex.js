@@ -376,7 +376,7 @@ function getAllDepartments(xhttp) {
       if (i == 0) {
         options += '<option value="" selected>Choose Department</option>';
       }
-      options += `<option value="${i}">${allDepartments[i].name}</option>`;
+      options += `<option value="${allDepartments[i].id}">${allDepartments[i].name}</option>`;
     }
     departmentList = options;
     const departmentDropdown = document.getElementById("department");
@@ -384,6 +384,7 @@ function getAllDepartments(xhttp) {
     departmentDropdown.innerHTML = options;
     document.getElementsByClassName("depart")[0].innerHTML = options;
     // document.getElementsByClassName("depart")[1].innerHTML = options;
+    // loc-In-Dept-edit
 
     // set data in department table
     departmentGenerator(allDepartments);
@@ -406,7 +407,7 @@ function getAllLocations(xhttp) {
       if (i == 0) {
         options += '<option value="" selected>Choose Location</option>';
       }
-      options += `<option value="${i}">${allLocations[i].name}</option>`;
+      options += `<option value="${allLocations[i].id}">${allLocations[i].name}</option>`;
     }
     locationList = options;
     const locationDropdown = document.getElementById("location");
@@ -415,7 +416,11 @@ function getAllLocations(xhttp) {
     document.getElementsByClassName("loc")[0].innerHTML = options;
     // document.getElementsByClassName("loc")[1].innerHTML = options;
     document.getElementById("loc-In-Dept-add").innerHTML = options;
+    // document.getElementById("loc-In-Dept-edit").innerHTML = options;
 
+
+    // set data in locations table
+    locationGenerator(allLocations);
     
 
   }
@@ -567,8 +572,8 @@ function editModel() {
 function addEmployee() {
   let fname = $("#fname").val();
   // console.log(fname);
-  let loc = parseInt($("#location option:checked").val()) + 1;
-  let dep = parseInt($("#department option:checked").val()) + 1;
+  let loc = parseInt($("#location option:checked").val());
+  let dep = parseInt($("#department option:checked").val());
   if (Number.isNaN(loc)) {
     $("#invalid-loc").text("* Invalid Location Selected!");
     return -1;
@@ -616,8 +621,8 @@ function updateEmployee(id) {
   // console.log(fname);
 
   let lname = $("#lname-edit").val();
-  let loc = parseInt($("#location-edit option:checked").val()) + 1;
-  let dep = parseInt($("#department-edit option:checked").val()) + 1;
+  let loc = parseInt($("#location-edit option:checked").val());
+  let dep = parseInt($("#department-edit option:checked").val());
   if (Number.isNaN(loc)) {
     $("#invalid-location").text("* Invalid Location Selected!");
     return -1;
@@ -643,7 +648,6 @@ function updateEmployeeData(xhttp) {
 
 //set department dropdown based on location
 function setDepartmentDropdown(locID) {
-  locID = locID + 1;
   options = "";
   for (i = 0; i < allDepartments.length; i++) {
     if (i == 0) {
@@ -651,7 +655,7 @@ function setDepartmentDropdown(locID) {
     }
 
     if (allDepartments[i].locationID == locID) {
-      options += `<option value="${i}">${allDepartments[i].name}</option>`;
+      options += `<option value="${allDepartments[i].id}">${allDepartments[i].name}</option>`;
     }
 
   }
@@ -661,18 +665,16 @@ function setDepartmentDropdown(locID) {
 
 //set location dropdown based on department
 function setLocationDropdown(deptID) {
-  deptID = deptID + 1;
-
 
   options = "";
   for (i = 0; i < allDepartments.length; i++) {
     if (allDepartments[i].id == deptID) {
       for (j = 0; j < allLocations.length; j++) {
         if (allDepartments[i].locationID == allLocations[j].id) {
-          options += `<option value="${j}" selected>${allLocations[j].name}</option>`;
+          options += `<option value="${allLocations[j].id}" selected>${allLocations[j].name}</option>`;
         }
         else {
-          options += `<option value="${j}">${allLocations[j].name}</option>`;
+          options += `<option value="${allLocations[j].id}">${allLocations[j].name}</option>`;
         }
       }
     }
@@ -758,6 +760,13 @@ function departmentGenerator(departmentData) {
               <label data-error="wrong" data-success="right" class="mb-5" for="dname">Department Name</label>
               <input type="text" id="dname" class="form-control-sm mt-3 validate">
             </div>
+            <div class="md-form mb-3 mt-0">
+              <i class="fas fa-map-marker-alt prefix grey-text d-block "></i>
+              <label data-error="wrong" data-success="right" for="location"></label>
+              <select id="loc-In-Dept-edit" class="browser-default sel-drop custom-select  ml-3 mb-3 ">
+              </select>
+              <div id="invalid-loc" class="invalid-location"></div>  
+             </div>    
           </div>
         <div class="modal-footer">
           <button type="button" id="dptEditSave" class="btn btn-primary" data-dismiss="modal">Save</button>
@@ -789,13 +798,19 @@ function departmentGenerator(departmentData) {
 
     $(`#edit-${id}`).click(() => {       
 
+    // assign default value
     document.getElementById('dname').value = deptName; 
+    document.getElementById('loc-In-Dept-edit').innerHTML = locationList; 
+
+
 
     $('#dptEditSave').click(() => {
 
       newDeptName = $('#dname').val();
+      locID = parseInt($('#loc-In-Dept-edit').val());
+      console.log(locID);
 
-      xmlhttp_php("libs/php/updateDepartmentByID.php?id=" + id + "&deptName=" + newDeptName + "&locID=" + locationId, updateDepartmentData);
+      xmlhttp_php("libs/php/updateDepartmentByID.php?id=" + id + "&deptName=" + newDeptName + "&locID=" + locID, updateDepartmentData);
 
 
     })
@@ -824,7 +839,7 @@ function updateDepartmentData(xhttp) {
 
 $('#send-dept').click(function (){
   newDepartmentName = $('#dname-add').val();
-  locID = parseInt($(`#loc-In-Dept-add`).val()) +1;
+  locID = parseInt($(`#loc-In-Dept-add`).val());
   console.log(locID);
 
   xmlhttp_php("libs/php/updateDepartmentByID.php?deptName=" + newDepartmentName + "&locID=" + locID, updateDepartmentData);
@@ -858,6 +873,101 @@ $('#location-tab').click(function(){
   $('.employee-modal').hide();
   $('.employee-modal2').hide();
   $('.location-modal').show();
+
+})
+
+
+//generator locations
+
+function locationGenerator(locationData) {
+  console.log(locationData);
+
+  
+  //department edit modal
+  const locEditModal = 
+  `<div class="modal" id="EditLocation" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Location</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          <div class="modal-body">   
+            <div class="md-form mb-0 mt-2 mr-5 ">       
+              <i class="fas fa-map-marker-alt prefix grey-text d-block mt-4 "></i>              
+              <label data-error="wrong" data-success="right" class="mb-5" for="locname">Location Name</label>
+              <input type="text" id="locname-edit" class="form-control-sm mt-3 validate">
+            </div>
+          </div>
+        <div class="modal-footer">
+          <button type="button" id="locEditSave" class="btn btn-primary" data-dismiss="modal">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  $('body').append(locEditModal);
+
+
+  //end department edit modal
+
+  locationData.forEach(user => {
+    const id = user.id;
+    const locName = user.name;
+    
+    //creating table rows
+
+    const locRow = $(`<tr>    
+    <td >${locName}</td>
+    <td ><button type="button" id=edit-loc-${id} class="btn btn-primary button1" data-toggle="modal" data-target="#EditLocation"><i class="fas fa-edit"></i>
+      <button type="button" id="del-loc-${id}" class="btn btn-primary button1"><i class="fas fa-trash-alt"></i></button>
+    </td>    
+    </tr>`)
+
+    $('#loc-body').append(locRow);
+
+    $(`#edit-loc-${id}`).click(() => {       
+
+    document.getElementById('locname-edit').value = locName; 
+
+    $('#locEditSave').click(() => {
+
+      newLocName = $('#locname-edit').val();
+
+      xmlhttp_php("libs/php/updateLocationByID.php?id=" + id + "&locName=" + newLocName, updateLocationData);
+
+
+    })
+    
+    })
+
+    //delete button
+    $(`#del-loc-${id}`).click(() => {
+
+      xmlhttp_php("libs/php/deleteLocationByIDorName.php?id=" + id, updateLocationData);
+
+    })
+
+  
+
+  })
+}
+
+function updateLocationData(xhttp) {
+  output = JSON.parse(xhttp.responseText);
+  alert(output.status.description);
+  window.location.reload();
+}
+
+// add department send functionality
+
+$('#send-loc').click(function (){
+  newLocationName = $('#lname-add').val();
+
+  xmlhttp_php("libs/php/updateLocationByID.php?locName=" + newLocationName, updateLocationData);
+
 
 })
 
