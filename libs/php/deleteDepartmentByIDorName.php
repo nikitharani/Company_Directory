@@ -47,6 +47,11 @@
 		$deptName = ucwords($deptName);
 		$query = "DELETE FROM department WHERE name = " ."'$deptName'";
 	}
+	else if(!empty($_REQUEST['locID']))
+    {
+		$locID = $_REQUEST['locID'];
+		$query = "DELETE FROM department WHERE locationID = " . $locID;
+	}
 	else
 	{
 		$id = 6;

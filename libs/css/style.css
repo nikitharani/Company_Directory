@@ -261,5 +261,27 @@ height: 595px !important;
 }
 
 
+/* edit and delete button in table */
+
+.button2{
+  /* width: 5%!important; */
+  padding:10px !important;
+margin-bottom:0px !important; 
+ }
+
+
+ #department-gallery, #location-gallery{
+  /* background-color: lightblue; */
+width: auto;
+height: 560px;
+/* max-height: 8%; */
+overflow: auto;     
+} 
+
+.card-dm:nth-of-type(even) {
+  z-index: 1052 !important;
+}
+
+
 
 

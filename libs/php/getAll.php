@@ -58,6 +58,16 @@
 
 	while ($row = mysqli_fetch_assoc($result)) {
 
+		if ($row['location'] == null)
+		{
+			$row['location'] = "N/A";
+		}
+
+		if ($row['department'] == null)
+		{
+			$row['department'] = "N/A";
+		}
+
 		array_push($data, $row);
 // 		if($counter==20){
 // 		break;
