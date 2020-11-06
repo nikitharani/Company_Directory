@@ -37,7 +37,7 @@
 	//default value
 	if (empty($_REQUEST['locID']))
 	{        
-		$locID = 6;
+		$locID = 7;
 		$deptName = "Testing";
 	}
 	else 

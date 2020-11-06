@@ -50,7 +50,12 @@
         $job_title =$_REQUEST['jobTitle'];
         $email_id = $_REQUEST['email'];
         $department_id = $_REQUEST['deptId'];
-    }
+	}
+	
+	$first_name = ucwords($first_name);
+	$last_name = ucwords($last_name);
+	$job_title = ucwords($job_title);
+	$email_id = strtolower($email_id);
 
 	// $query = 'INSERT INTO department (name, locationID) VALUES("' . $_REQUEST['name'] . '",' . $_REQUEST["locationID"] . ')';
 	$query = "INSERT INTO personnel (firstName, lastName, jobTitle, email, departmentID) VALUES('$first_name','$last_name','$job_title','$email_id',$department_id)";

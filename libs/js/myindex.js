@@ -2,6 +2,7 @@
 // Global variables
 var allDepartments, allLocations, allEmployees, searchedEmployeesID = [];
 var departmentList, locationList, rowColor = true, ascendingOrder = true;
+var EmployeesView = true, departmentView=false , locationView=false;
 
 //------------------------------------------//
 //-------------- Main code -----------------//
@@ -34,7 +35,7 @@ $(".loc").change(function () {
   let locID = parseInt($(this).val());//$("#location option:checked").val();
   options = setDepartmentDropdown(locID);
   document.getElementsByClassName("depart")[0].innerHTML = options;
-  document.getElementsByClassName("depart")[1].innerHTML = options;
+  // document.getElementsByClassName("depart")[1].innerHTML = options;
 
   locName = $(this).find('option:selected').text();
 
@@ -71,7 +72,7 @@ $(".depart").change(function () {
   let deptID = parseInt($(this).val());//$("#location option:checked").val();    
   options = setLocationDropdown(deptID);
   document.getElementsByClassName("loc")[0].innerHTML = options;
-  document.getElementsByClassName("loc")[1].innerHTML = options;
+  // document.getElementsByClassName("loc")[1].innerHTML = options;
 
   deptName = $(this).find('option:selected').text();
   locName = $($(".loc")[0]).find('option:selected').text();
@@ -382,7 +383,11 @@ function getAllDepartments(xhttp) {
 
     departmentDropdown.innerHTML = options;
     document.getElementsByClassName("depart")[0].innerHTML = options;
-    document.getElementsByClassName("depart")[1].innerHTML = options;
+    // document.getElementsByClassName("depart")[1].innerHTML = options;
+
+    // set data in department table
+    departmentGenerator(allDepartments);
+
   }
   else {
     alert(xhttp.status.description);
@@ -406,9 +411,12 @@ function getAllLocations(xhttp) {
     locationList = options;
     const locationDropdown = document.getElementById("location");
     locationDropdown.innerHTML = options;
-    // console.log(document.getElementsByClassName("loc"));
+    console.log(document.getElementsByClassName("loc"));
     document.getElementsByClassName("loc")[0].innerHTML = options;
-    document.getElementsByClassName("loc")[1].innerHTML = options;
+    // document.getElementsByClassName("loc")[1].innerHTML = options;
+    document.getElementById("loc-In-Dept-add").innerHTML = options;
+
+    
 
   }
   else {
@@ -726,6 +734,132 @@ function ascending() {
   }
 
 }
+
+//generator departments
+
+function departmentGenerator(departmentData) {
+  console.log(departmentData);
+
+  
+  //department edit modal
+  const deptEditModal = 
+  `<div class="modal" id="EditDepartment" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Department</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          <div class="modal-body">   
+            <div class="md-form mb-0 mt-2 mr-5 ">       
+              <i class="fas fa-building prefix grey-text d-block mt-4 "></i>              
+              <label data-error="wrong" data-success="right" class="mb-5" for="dname">Department Name</label>
+              <input type="text" id="dname" class="form-control-sm mt-3 validate">
+            </div>
+          </div>
+        <div class="modal-footer">
+          <button type="button" id="dptEditSave" class="btn btn-primary" data-dismiss="modal">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  $('body').append(deptEditModal);
+  //end department edit modal
+
+  departmentData.forEach(user => {
+    const id = user.id;
+    const deptName = user.name;
+    const locationId = user.locationID;
+    const locName = user.location;
+
+    //creating table rows
+
+    const DeptRow = $(`<tr>
+    <td >${deptName}</td>
+    <td >${locName}</td>
+    <td ><button type="button" id=edit-${id} class="btn btn-primary button1" data-toggle="modal" data-target="#EditDepartment"><i class="fas fa-edit"></i>
+      <button type="button" id="del-${id}" class="btn btn-primary button1"><i class="fas fa-trash-alt"></i></button>
+    </td>    
+    </tr>`)
+
+    $('#depart-body').append(DeptRow);
+
+    $(`#edit-${id}`).click(() => {       
+
+    document.getElementById('dname').value = deptName; 
+
+    $('#dptEditSave').click(() => {
+
+      newDeptName = $('#dname').val();
+
+      xmlhttp_php("libs/php/updateDepartmentByID.php?id=" + id + "&deptName=" + newDeptName + "&locID=" + locationId, updateDepartmentData);
+
+
+    })
+    
+    })
+
+    //delete button
+    $(`#del-${id}`).click(() => {
+
+      xmlhttp_php("libs/php/deleteDepartmentByIDorName.php?id=" + id, updateDepartmentData);
+
+    })
+
+  
+
+  })
+}
+
+function updateDepartmentData(xhttp) {
+  output = JSON.parse(xhttp.responseText);
+  alert(output.status.description);
+  window.location.reload();
+}
+
+// add department send functionality
+
+$('#send-dept').click(function (){
+  newDepartmentName = $('#dname-add').val();
+  locID = parseInt($(`#loc-In-Dept-add`).val()) +1;
+  console.log(locID);
+
+  xmlhttp_php("libs/php/updateDepartmentByID.php?deptName=" + newDepartmentName + "&locID=" + locID, updateDepartmentData);
+
+
+})
+
+
+//displaying 3 different views
+
+$('#employee-tab').click(function(){
+  EmployeesView = true, departmentView=false , locationView=false;
+  $('.depatment-modal').hide();
+  $('.location-modal').hide();
+  $('.employee-modal').show();
+  $('.employee-modal2').show();
+
+
+})
+$('#department-tab').click(function(){
+  EmployeesView = false, departmentView=true , locationView=false;
+  $('.location-modal').hide();
+  $('.employee-modal').hide();
+  $('.employee-modal2').hide();
+  $('.depatment-modal').show();
+
+})
+$('#location-tab').click(function(){
+  EmployeesView = false, departmentView=false , locationView=true;
+  $('.depatment-modal').hide();
+  $('.employee-modal').hide();
+  $('.employee-modal2').hide();
+  $('.location-modal').show();
+
+})
 
 
 

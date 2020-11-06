@@ -37,9 +37,9 @@
     // $_REQUEST used for development / debugging. Remember to cange to $_POST for production
     if ((empty($_REQUEST['id'])) && (!empty($_REQUEST['locID'])) && (!empty($_REQUEST['deptName'])))
 	{        
-		$locID = 6;
-		$deptName = "Testing";
-		$deptName=ucwords($deptName);
+		$locID = $_REQUEST['locID'];
+		$deptName = $_REQUEST['deptName'];
+		$deptName = ucwords($deptName);
 
 		$query = 'INSERT INTO department (name, locationID) VALUES("' . $deptName . '",' . $locID . ')';
 	}
@@ -86,7 +86,7 @@
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
-	$output['status']['description'] = "Updated department details successfully!";
+	$output['status']['description'] = "Updated department details succesfully!";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 	$output['data'] = [];
 	
