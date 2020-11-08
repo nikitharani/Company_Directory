@@ -218,12 +218,13 @@ padding:12px !important;
 
 }
 @media (min-width: 576px){ 
-  /* #mob-filter{
+  #mob-filter{
     display:none !important;
-  }   */
+  }  
   .mobile-search{
     display: none !important;
   }
+  
   
 }
 
@@ -232,11 +233,25 @@ padding:12px !important;
 
 height: 340px !important;  
   }
+  #department-gallery{
+    height: 400px !important; 
+  }
+  #location-gallery{
+    height: 420px !important; 
+  }
+
+  
 }
  @media screen and (max-height: 654px) and (min-height: 570px){
   #gallery{
-
 height: 370px !important;  
+  }
+  #department-gallery{
+    height: 300px !important; 
+
+  }
+  #location-gallery{
+    height: 420px !important; 
   }
 } 
 
@@ -252,12 +267,24 @@ height: 440px !important;
 
 height: 520px !important;  
   }
+  #department-gallery{
+    height: 620px !important; 
+
+  }
+  
 }
+/* @media screen and (min-height: 1024px){
+  .mobile-search{
+    display:none;
+  }
+} */
+
 @media screen and (max-height: 1024px) and (min-height: 815px){
   #gallery{
 
 height: 595px !important;  
   }
+  
 }
 
 
@@ -278,9 +305,71 @@ height: 560px;
 overflow: auto;     
 } 
 
+/* delete button modal overlay */
 .card-dm:nth-of-type(even) {
   z-index: 1052 !important;
 }
+
+/* page loader */
+/* .loader
+{
+  border: 0 solid transparent;
+  border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: calc(50vh -75px);
+    left: calc(50vh -75px);
+
+
+}
+.loader:after, .loader:before {
+  content: '';
+  border: 1em solid #ff5733;
+  border-radius: 50%;
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  top:0;
+  left:0;
+  animation: loader 2s infinite;
+  opacity: 0;
+}
+.loader:before {
+ animation-delay: .5s;
+}
+
+@keyframes loader {
+    0% {
+
+        transform: scale(0);
+        opacity: 0;
+    }
+    50%{
+      opacity: 1;
+
+    }
+    100% {
+      transform: scale(1);
+
+      opacity: 0;
+
+    }
+} */
+/* 
+#mob-filter{
+  display: none !important;
+} */
+/* .mobile-search{
+  display:none !important;
+} */
+
+/* @media (max-width:576px){
+  #row-opt{
+margin-bottom:0px;
+  }
+} */
+
 
 
 

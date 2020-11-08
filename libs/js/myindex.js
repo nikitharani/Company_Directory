@@ -924,10 +924,13 @@ $('#send-dept').click(function (){
 
 })
 
+
+// setTimeout(function(){
+//   $('.loader_bg').fadeToggle();
+// },1500);
+
 //BY defauly view
 $( document ).ready(function() {
-  // EmployeesView = true, departmentView=false , locationView=false;
-
   if (EmployeesView == true)
   {
     $('#employee-tab').trigger("click");
@@ -948,25 +951,25 @@ $( document ).ready(function() {
 
 $('#employee-tab').click(function(){
   EmployeesView = true, departmentView=false , locationView=false;
+  $('.mobile-search').show();
   $('.depatment-modal').hide();
   $('.location-modal').hide();
-  $('.employee-modal').show();
   $('.employee-modal2').show();
 
 
 })
 $('#department-tab').click(function(){
   EmployeesView = false, departmentView=true , locationView=false;
+  $('.mobile-search').hide();
   $('.location-modal').hide();
-  $('.employee-modal').hide();
   $('.employee-modal2').hide();
-  $('.depatment-modal').show();
+  $('.depatment-modal').show(); 
 
 })
 $('#location-tab').click(function(){
   EmployeesView = false, departmentView=false , locationView=true;
+  $('.mobile-search').hide();
   $('.depatment-modal').hide();
-  $('.employee-modal').hide();
   $('.employee-modal2').hide();
   $('.location-modal').show();
 
