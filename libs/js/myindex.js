@@ -954,7 +954,7 @@ $('#employee-tab').click(function(){
   $('.mobile-search').show();
   $('.depatment-modal').hide();
   $('.location-modal').hide();
-  $('.employee-modal2').show();
+  $('.employee-modal').show();
 
 
 })
@@ -962,7 +962,7 @@ $('#department-tab').click(function(){
   EmployeesView = false, departmentView=true , locationView=false;
   $('.mobile-search').hide();
   $('.location-modal').hide();
-  $('.employee-modal2').hide();
+  $('.employee-modal').hide();
   $('.depatment-modal').show(); 
 
 })
@@ -970,7 +970,7 @@ $('#location-tab').click(function(){
   EmployeesView = false, departmentView=false , locationView=true;
   $('.mobile-search').hide();
   $('.depatment-modal').hide();
-  $('.employee-modal2').hide();
+  $('.employee-modal').hide();
   $('.location-modal').show();
 
 })
