@@ -1,342 +1,302 @@
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html, body {
-    width: 100%;
-    max-width: 100%;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
 }
 
 body {
-    font-family: "Nunito", sans-serif;
-    text-align: center;
-    /* background: rgb(32, 32, 32); */
-    /* overflow-x: hidden; */    
+  font-family: "Nunito", sans-serif;
+  text-align: center;
 }
 
- #gallery{
-    /* background-color: lightblue; */
+/* employee modal scroll bar and height */
+
+.employee-modal {
+  height: 80%;
+}
+
+.gallery-row {
+  height: 90%;
+  overflow-y: scroll !important;
+}
+
+#gallery {
   width: auto;
-  height: 560px;
-  overflow: auto;     
-} 
-
-.sel{
-  width:280px;
-  /* margin-top: 4px; */
-}
-.sel-drop{
-  width:400px;
-  /* margin-top: 4px; */
 }
 
+/* departmnet, location modal scroll bar and height */
+
+.department-modal, .location-modal {
+  height: 85%;
+}
+
+.department-row, .location-row {
+  height: 90%;
+}
+
+.department-gallery, .location-gallery {
+  height: 100%;
+}
+
+.table-bordered {
+  height: 100%;
+}
+
+#loc-body, #depart-body {
+  height: 85%;
+}
+
+/* department and location table th fixed while adding scroll bar */
+
+table {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+
+thead {
+  flex: 0 0 auto;
+}
+
+tbody {
+  flex: 1 1 auto;
+  display: block;
+  overflow-y: auto;
+}
+
+tr {
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+}
+/* end */
+
+.sel {
+  width: 280px;
+}
+
+.sel-drop {
+  width: 400px;
+}
 
 /* Employee buttons text styling  */
-.card-text-fname{
+
+.card-text-fname {
   width: 20%;
   text-align: left;
 }
-.card-text-em{
+
+.card-text-em {
   width: 30%;
   text-align: left;
 }
-.card-text-loc{
+
+.card-text-loc {
   width: 20%;
   text-align: left;
 }
 
-
 /* Employee table header text styling  */
-.card-text-nm{
+
+.card-text-nm {
   width: 21%;
   text-align: left;
   font-weight: 700;
 }
-.card-text-eml{
+
+.card-text-eml {
   width: 27%;
   text-align: left;
   font-weight: 700;
 }
-.card-text-dp{
+
+.card-text-dp {
   width: 27%;
   text-align: left;
   font-weight: 700;
 }
-.card-text-nml{
+
+.card-text-nml {
   width: 25%;
   text-align: left;
   font-weight: 700;
 }
 
-.card-m{ /*employee details model*/
-  width: 40%; /* respsonsive width */
-  margin-left:30% !important; /* width/2) */ 
-}
+/*employee details model*/
 
+.card-m {
+  width: 40%;
+  margin-left: 30% !important;
+}
 
 /* Employee buttons alternate colours */
-.even, .even:active, .even:visited  {
-background-color:lightgray !important;
-color: black !important;
-}
-.odd, .odd:active, .odd:visited {
-  background-color:whitesmoke !important;
+
+.even, .even:active, .even:visited {
+  background-color: lightgray !important;
   color: black !important;
-  }
-.even:hover, .odd:hover {
-  color:black !important;
-  background-color:lightslategray !important;
 }
 
+.odd, .odd:active, .odd:visited {
+  background-color: whitesmoke !important;
+  color: black !important;
+}
+
+.even:hover, .odd:hover {
+  color: black !important;
+  background-color: lightslategray !important;
+}
 
 /* Add employee button  & search bar container*/
-#desktp-search{
-  display:flex !important;
-  justify-content:flex-end !important;
-}
-.addemp-btn{
-  display:flex !important;
-  justify-content:flex-start !important;
-}
-.addemp{ /*add employee button color*/
-  background-color:#333300 !important;
+
+#desktp-search {
+  display: flex !important;
+  justify-content: flex-end !important;
 }
 
+.addemp-btn {
+  display: flex !important;
+  justify-content: flex-start !important;
+}
+
+.addemp {
+  /*add employee button color*/
+  background-color: #333300 !important;
+}
 
 /* Styling for mobiles & small tabs */
+
 @media (max-width: 576px) {
-    #gallery{
+  /* #gallery{
     width: auto;
     overflow: auto;     
-  } 
-
+  }  */
   /* make flex for add employee button & mobile filter */
   .addemp-btn {
-  display:flex !important;
-  justify-content:flex-start!important;
-  margin-bottom: 0px!important;
-  margin-top: 0px!important;
+    display: flex !important;
+    justify-content: flex-start!important;
+    margin-bottom: 0px!important;
+    margin-top: 0px!important;
   }
-  .addemp, .mob-filter{
+  .addemp, .mob-filter {
     margin-top: 0px!important;
     margin-bottom: 0px!important;
-    height:30px!important;
+    height: 30px!important;
     padding: 4px 6px !important;
   }
-  .mob{
+  .mob {
     display: none;
   }
-
-
   /* Employee card buttons in js */
-  .card-text-em{
-    display:none;
-  }  
-  .card-info-container{/* button name and location alignment */
+  .card-text-em {
+    display: none;
+  }
+  .card-info-container {
+    /* button name and location alignment */
     display: flex;
     justify-content: space-between;
   }
-  .card-text-eml, .card-text-dp{
+  .card-text-eml, .card-text-dp {
     display: none;
   }
-  .card-text-fname{
+  .card-text-fname {
     width: 65%;
     text-align: left;
     margin-top: 8px;
   }
-  .card-text-loc{
+  .card-text-loc {
     width: 35%;
     text-align: left;
     margin-top: 8px;
   }
-  .even, .odd{
-    padding: 1px 1px 0.5px 1px ;
+  .even, .odd {
+    padding: 1px 1px 0.5px 1px;
     /* padding-bottom: 0.5px; */
   }
-
-
   /* Employee table header */
-  .card-text-nm{
+  .card-text-nm {
     width: 65%;
     text-align: left;
     font-weight: 700;
   }
-  .card-text-nml{
+  .card-text-nml {
     width: 35%;
     text-align: left;
     font-weight: 700;
   }
-  .header-text{
-  border: 1px;
+  .header-text {
+    border: 1px;
   }
-
-
   /* mobile search bar*/
-  .mobile-input{
-  width: 60%;
-  margin-top: 3px;
-  height:32px !important;
+  .mobile-input {
+    width: 60%;
+    margin-top: 3px;
+    height: 32px !important;
   }
-
-
   /* Employee modal size */
-  .card-m{
-    width: 100%; /* respsonsive width */
-    margin-left:0% !important; /* width/2) */ 
+  .card-m {
+    width: 100%;
+    /* respsonsive width */
+    margin-left: 0% !important;
+    /* width/2) */
   }
-
-
   /* add employee dropdown */
-  .sel-drop{
-    width: 80%; 
-    margin-right:0px !important
+  .sel-drop {
+    width: 80%;
+    margin-right: 0px !important
     /* margin-top: 4px; */
   }
-
-
   /* filter dropdown size */
-  .loc-filter, .depart-filter{
-    width:100%;
+  .loc-filter, .depart-filter {
+    width: 100%;
   }
-
   /* next and prev button width */
-  .button1{
-  /* width: 5%!important; */
-  padding:12px !important;
+  .button1 {
+    /* width: 5%!important; */
+    padding: 12px !important;
   }
-
-  /* add employee spacing adjustment */
+  /* mobile nav collapse buttons */
+  #employee-tab, #department-tab, #location-tab {
+    background-color: black !important;
+  }
+  #employee-tab:hover, #department-tab:hover, #location-tab:hover {
+    color: white !important;
+    font-weight: bolder!important;
+  }
 }
 
-@media (min-width: 576px){ 
-
-  .mobile-search{
+@media (min-width: 576px) {
+  .mobile-search {
     display: none !important;
   }
 }
 
-@media (max-height: 568px){ 
-  #gallery{
-    height: 340px !important;  
-  }
-  #department-gallery{
-    height: 400px !important; 
-  }
-  #location-gallery{
-    height: 420px !important; 
-  }  
-}
- @media screen and (max-height: 654px) and (min-height: 570px){
-  #gallery{
-    height: 370px !important;  
-  }
-  #department-gallery{
-    height: 300px !important;
-  }
-  #location-gallery{
-    height: 420px !important; 
-  }
-} 
+/* for galaxy fold */
 
-@media screen and (max-height: 736px) and (min-height: 655px){
-  #gallery{
-    height: 440px !important;  
+@media (max-width: 280px) {
+  a img {
+    width: 180px !important;
   }
-} 
-
-@media screen and (max-height: 812px) and (min-height: 740px){
-  #gallery{
-    height: 520px !important;  
-  }
-  #department-gallery{
-    height: 620px !important;
-  }  
-}
-/* @media screen and (min-height: 1024px){
-  .mobile-search{
-    display:none;
-  }
-} */
-
-@media screen and (max-height: 1024px) and (min-height: 815px){
-  #gallery{
-
-height: 595px !important;  
-  }
-  
 }
 
 /* edit and delete button in table */
-.button2{
-  /* width: 5%!important; */
-  padding:10px !important;
-  margin-bottom:0px !important; 
- }
 
-
-#department-gallery, #location-gallery{
-  /* background-color: lightblue; */
-  width: auto;
-  height: 560px;
-  /* max-height: 8%; */
-  overflow: auto;     
-} 
+.button2 {
+  padding: 10px !important;
+  margin-bottom: 0px !important;
+}
 
 /* delete button modal overlay */
+
 .card-dm:nth-of-type(even) {
   z-index: 1052 !important;
 }
 
-
-/* page loader */
-/* .loader
-{
-  border: 0 solid transparent;
-  border-radius: 50%;
-    width: 150px;
-    height: 150px;
-    position: absolute;
-    top: calc(50vh -75px);
-    left: calc(50vh -75px);
-
-
+.card-dm {
+  z-index: 1051 !important;
 }
-.loader:after, .loader:before {
-  content: '';
-  border: 1em solid #ff5733;
-  border-radius: 50%;
-  width: inherit;
-  height: inherit;
-  position: absolute;
-  top:0;
-  left:0;
-  animation: loader 2s infinite;
-  opacity: 0;
-}
-.loader:before {
- animation-delay: .5s;
-}
-
-@keyframes loader {
-    0% {
-
-        transform: scale(0);
-        opacity: 0;
-    }
-    50%{
-      opacity: 1;
-
-    }
-    100% {
-      transform: scale(1);
-
-      opacity: 0;
-
-    }
-} */
-/* 
-
-
-
-
-

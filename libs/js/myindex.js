@@ -1,8 +1,8 @@
 
 // Global variables
 var allDepartments, allLocations, allEmployees, searchedEmployeesID = [];
-var departmentList, locationList, rowColor = true, ascendingOrder = true , ascendingOrderDepartment =true, ascendingOrderLocation=true;
-var EmployeesView = true, departmentView=false , locationView=false;
+var departmentList, locationList, rowColor = true, ascendingOrder = true, ascendingOrderDepartment = true, ascendingOrderLocation = true;
+var EmployeesView = true, departmentView = false, locationView = false;
 
 //------------------------------------------//
 //-------------- Main code -----------------//
@@ -154,11 +154,11 @@ $('#search, #search-mob').click(function () {
     ser_name = $("#search-name-mobile").val();
   }
 
-  
+
   // console.log(ser_name);
   // console.log(ser_location);
   var searchednametagsIds = searchEmployeesIdByNameLocation(ser_name);
-  
+
   // console.log(searchednametagsIds);
 
   let id;
@@ -186,6 +186,9 @@ function generator(employeesData) {
 
   const edit_code = editModel();
   $('body').append(edit_code);
+
+  const delete_code = deleteModal('employees');
+  $('body').append(delete_code);
 
   employeesData.forEach(user => {
     const id = user.id;
@@ -270,7 +273,7 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
   </button>`);
     const prevButton = $('<button type="button" class="btn btn-secondary button1"> <i class="fas fa-angle-double-left"></i></button>');
     const nextButton = $('<button type="button" class="btn btn-secondary button1"> <i class="fas fa-angle-double-right"></i></button>');
-    const delButton = $('<button type="button" id="del" class="btn btn-primary button1" data-toggle="modal" data-target="#delete-modal-all"><i class="fas fa-trash-alt"></i></button>');
+    const delButton = $('<button type="button" id="del" class="btn btn-primary button1" data-toggle="modal" data-target="#delete-modal-employees"><i class="fas fa-trash-alt"></i></button>');
 
     $('body').append(container);
     container.append(modalDialog).append(modalContent);
@@ -325,9 +328,13 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
     })
 
     // //delete button functionality
-    $('#del-yes').click(() => {
-      // container.hide();
-      deleteEmployee(id);
+
+    delButton.click(() => {
+      document.getElementById('del-text-employees').innerHTML = "Are you sure want to delete employee " + "'" + fulName + "' ?";
+      $('#del-yes-employees').click(() => {
+        // container.hide();
+        deleteEmployee(id);
+      })
     })
 
     // // close the window
@@ -465,7 +472,7 @@ function getAllLocations(xhttp) {
     locationList = options;
     const locationDropdown = document.getElementById("location");
     locationDropdown.innerHTML = options;
-    console.log(document.getElementsByClassName("loc"));
+    // console.log(document.getElementsByClassName("loc"));
     document.getElementsByClassName("loc")[0].innerHTML = options;
     // document.getElementsByClassName("loc")[1].innerHTML = options;
     document.getElementById("loc-In-Dept-add").innerHTML = options;
@@ -474,7 +481,7 @@ function getAllLocations(xhttp) {
 
     // set data in locations table
     locationGenerator(allLocations);
-    
+
 
   }
   else {
@@ -488,7 +495,7 @@ function getAllEmployees(xhttp) {
   employeesData = JSON.parse(xhttp.responseText);
   if (employeesData.status.code == "200") {
     //allEmployee array
-    allEmployees = employeesData.data;    
+    allEmployees = employeesData.data;
     generator(allEmployees);
   }
   else {
@@ -793,12 +800,12 @@ function ascending() {
 //generator departments
 
 function departmentGenerator(departmentData) {
-  console.log(departmentData);
+  // console.log(departmentData);
 
-  
+
   //department edit modal
-  const deptEditModal = 
-  `<div class="modal" id="EditDepartment" tabindex="-1" role="dialog">
+  const deptEditModal =
+    `<div class="modal" id="EditDepartment" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -832,6 +839,9 @@ function departmentGenerator(departmentData) {
   $('body').append(deptEditModal);
   //end department edit modal
 
+  const delete_dept_code = deleteModal('department');
+  $('body').append(delete_dept_code);
+
   departmentData.forEach(user => {
     const id = user.id;
     const deptName = user.name;
@@ -844,52 +854,56 @@ function departmentGenerator(departmentData) {
     <td class="p-2">${deptName}</td>
     <td class="p-2">${locName}</td>
     <td class="p-2"><button type="button" id=edit-${id} class="btn btn-primary button2" data-toggle="modal" data-target="#EditDepartment"><i class="fas fa-edit"></i>
-      <button type="button" id="del-${id}" class="btn btn-primary button2" data-toggle="modal" data-target="#delete-modal-all"><i class="fas fa-trash-alt"></i></button>
+      <button type="button" id="del-${id}" class="btn btn-primary button2" data-toggle="modal" data-target="#delete-modal-department"><i class="fas fa-trash-alt"></i></button>
     </td>    
     </tr>`)
 
     $('#depart-body').append(DeptRow);
 
-    $(`#edit-${id}`).click(() => {     
-      console.log($( `.invalid-location`));
-  
+    $(`#edit-${id}`).click(() => {
+      // console.log($( `.invalid-location`));
 
-    // assign default value
-    document.getElementById('dname').value = deptName; 
-    document.getElementById('loc-In-Dept-edit').innerHTML = getLocationDropdownWithSelectedId(locationId); 
 
-    
-    $('#dptEditSave').click(() => {
+      // assign default value
+      document.getElementById('dname').value = deptName;
+      document.getElementById('loc-In-Dept-edit').innerHTML = getLocationDropdownWithSelectedId(locationId);
 
-      newDeptName = $('#dname').val();
-      locID = parseInt($('#loc-In-Dept-edit').val());
-           
-      //validation to edit department
-      if (newDeptName == "") {        
-        $("#invalid-dname").text("*Please Enter Department!");
-        return -1;
-      }      
-      if (Number.isNaN(locID)) {        
-        $("#invalid-loc-dname").text("* Invalid Location Selected!");
-        return -1;
-      }
 
-      //hide edit modal
-      $('#EditDepartment').hide();
+      $('#dptEditSave').click(() => {
 
-      //update details with php / sending values to php
-      xmlhttp_php("libs/php/updateDepartmentByID.php?id=" + id + "&deptName=" + newDeptName + "&locID=" + locID, updateDepartmentData);
-    })
-    
+        newDeptName = $('#dname').val();
+        locID = parseInt($('#loc-In-Dept-edit').val());
+
+        //validation to edit department
+        if (newDeptName == "") {
+          $("#invalid-dname").text("*Please Enter Department!");
+          return -1;
+        }
+        if (Number.isNaN(locID)) {
+          $("#invalid-loc-dname").text("* Invalid Location Selected!");
+          return -1;
+        }
+
+        //hide edit modal
+        $('#EditDepartment').hide();
+
+        //update details with php / sending values to php
+        xmlhttp_php("libs/php/updateDepartmentByID.php?id=" + id + "&deptName=" + newDeptName + "&locID=" + locID, updateDepartmentData);
+      })
+
     })
 
     //delete button
-    $('#del-yes').click(() => {
-      xmlhttp_php("libs/php/deleteDepartmentByIDorName.php?id=" + id, updateDepartmentData);
+    $(`#del-${id}`).click(() => {
+      document.getElementById('del-text-department').innerHTML = "Are you sure want to delete department " + "'" + deptName + "' ?";
 
+      $('#del-yes-department').click(() => {
+        // console.log(deptName);
+        xmlhttp_php("libs/php/deleteDepartmentByIDorName.php?id=" + id, updateDepartmentData);
+      })
     })
 
-  
+
 
   })
 }
@@ -902,17 +916,17 @@ function updateDepartmentData(xhttp) {
 
 // add department send functionality
 
-$('#send-dept').click(function (){
+$('#send-dept').click(function () {
   newDepartmentName = $('#dname-add').val();
   locID = parseInt($(`#loc-In-Dept-add`).val());
-  console.log(locID);
+  // console.log(locID);
 
   //validation to add department
-  if (newDepartmentName == "") {        
+  if (newDepartmentName == "") {
     $("#invalid-dep-add").text("* Please Enter Department!");
     return -1;
-  }      
-  if (Number.isNaN(locID)) {        
+  }
+  if (Number.isNaN(locID)) {
     $("#invalid-loc-dept").text("* Invalid Location Selected!");
     return -1;
   }
@@ -930,17 +944,14 @@ $('#send-dept').click(function (){
 // },1500);
 
 //BY defauly view
-$( document ).ready(function() {
-  if (EmployeesView == true)
-  {
+$(document).ready(function () {
+  if (EmployeesView == true) {
     $('#employee-tab').trigger("click");
   }
-  else if (departmentView == true)
-  {
+  else if (departmentView == true) {
     $('#department-tab').trigger("click");
   }
-  else if (locationView == true)
-  {
+  else if (locationView == true) {
     $('#location-tab').trigger("click");
   }
 });
@@ -949,29 +960,35 @@ $( document ).ready(function() {
 
 //displaying 3 different views
 
-$('#employee-tab').click(function(){
-  EmployeesView = true, departmentView=false , locationView=false;
+$('#employee-tab').click(function () {
+  EmployeesView = true, departmentView = false, locationView = false;
   $('.mobile-search').show();
-  $('.depatment-modal').hide();
+  $('.department-modal').hide();
   $('.location-modal').hide();
   $('.employee-modal').show();
-
+  $('.navbar-collapse').collapse('hide');
+  return false;
 
 })
-$('#department-tab').click(function(){
-  EmployeesView = false, departmentView=true , locationView=false;
+$('#department-tab').click(function () {
+  EmployeesView = false, departmentView = true, locationView = false;
   $('.mobile-search').hide();
   $('.location-modal').hide();
   $('.employee-modal').hide();
-  $('.depatment-modal').show(); 
+  $('.department-modal').show();
+  $('.navbar-collapse').collapse('hide');
+  return false;
 
 })
-$('#location-tab').click(function(){
-  EmployeesView = false, departmentView=false , locationView=true;
+$('#location-tab').click(function () {
+  EmployeesView = false, departmentView = false, locationView = true;
   $('.mobile-search').hide();
-  $('.depatment-modal').hide();
+  $('.department-modal').hide();
   $('.employee-modal').hide();
   $('.location-modal').show();
+  $('.navbar-collapse').collapse('hide');
+  return false;
+
 
 })
 
@@ -979,12 +996,12 @@ $('#location-tab').click(function(){
 //generator locations
 
 function locationGenerator(locationData) {
-  console.log(locationData);
+  // console.log(locationData);
 
-  
+
   //department edit modal
-  const locEditModal = 
-  `<div class="modal" id="EditLocation" tabindex="-1" role="dialog">
+  const locEditModal =
+    `<div class="modal" id="EditLocation" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -1012,51 +1029,58 @@ function locationGenerator(locationData) {
   // document.getElementById('del-text').innerHTML="Are you sure want to delete Location?";
 
 
-  //end department edit modal
+  //end location edit modal
+
+  //delete location modal
+  const delete_loc_code = deleteModal('location');
+  $('body').append(delete_loc_code);
 
   locationData.forEach(user => {
     const id = user.id;
     const locName = user.name;
-    
+
     //creating table rows
 
     const locRow = $(`<tr id="loc-row-${id}">    
     <td class="p-2">${locName}</td>
     <td class="p-2"><button type="button" id=edit-loc-${id} class="btn btn-primary button2" data-toggle="modal" data-target="#EditLocation"><i class="fas fa-edit"></i>
-      <button type="button" id="del-loc-${id}" class="btn btn-primary button2" data-toggle="modal" data-target="#delete-modal-all"><i class="fas fa-trash-alt"></i></button>
+      <button type="button" id="del-loc-${id}" class="btn btn-primary button2" data-toggle="modal" data-target="#delete-modal-location"><i class="fas fa-trash-alt"></i></button>
     </td>    
     </tr>`)
 
     $('#loc-body').append(locRow);
 
 
-    $(`#edit-loc-${id}`).click(() => {       
+    $(`#edit-loc-${id}`).click(() => {
 
-    document.getElementById('locname-edit').value = locName; 
+      document.getElementById('locname-edit').value = locName;
 
-    $('#locEditSave').click(() => {
+      $('#locEditSave').click(() => {
 
-      newLocName = $('#locname-edit').val();
+        newLocName = $('#locname-edit').val();
 
-      //validation to edit location
-      if (newLocName == "") {
-        $("#invalid-loc-locname").text("* Please Enter Location!");
-        return -1;
-      }
+        //validation to edit location
+        if (newLocName == "") {
+          $("#invalid-loc-locname").text("* Please Enter Location!");
+          return -1;
+        }
 
-      $('#EditLocation').hide();    
+        $('#EditLocation').hide();
 
-      xmlhttp_php("libs/php/updateLocationByID.php?id=" + id + "&locName=" + newLocName, updateLocationData);
-    })
-    
+        xmlhttp_php("libs/php/updateLocationByID.php?id=" + id + "&locName=" + newLocName, updateLocationData);
+      })
+
     })
 
     //delete button
-    $("#del-yes").click(() => {
-      // delete location from location table with locID
-      xmlhttp_php("libs/php/deleteLocationByIDorName.php?id=" + id, updateLocationData);
+    $(`#del-loc-${id}`).click(() => {
+      document.getElementById('del-text-location').innerHTML = "Are you sure want to delete location " + "'" + locName + "' ?";
+
+      $("#del-yes-location").click(() => {
+        // delete location from location table with locID
+        xmlhttp_php("libs/php/deleteLocationByIDorName.php?id=" + id, updateLocationData);
+      })
     })
- 
 
   })
 }
@@ -1068,14 +1092,14 @@ function updateLocationData(xhttp) {
 }
 
 // add department send functionality
-$('#send-loc').click(function (){
+$('#send-loc').click(function () {
   newLocationName = $('#lname-add').val();
 
   //validation to add location
-  if (newLocationName == "") {        
+  if (newLocationName == "") {
     $("#invalid-loc-loc").text("* Please Enter Location!");
     return -1;
-  }       
+  }
 
   $('#modalLocationForm').hide();
 
@@ -1085,49 +1109,66 @@ $('#send-loc').click(function (){
 })
 
 //get default value for location dropdown in edit form
-function getLocationDropdownWithSelectedId(loc)
-{
+function getLocationDropdownWithSelectedId(loc) {
   options = "";
-    for (i = 0; i < allLocations.length; i++) {
-      if (i == 0) {
-        options += '<option value="" >Choose Location</option>';
-      }
-      if ((allLocations[i].id == loc) || (allLocations[i].name == loc))
-      {
+  for (i = 0; i < allLocations.length; i++) {
+    if (i == 0) {
+      options += '<option value="" >Choose Location</option>';
+    }
+    if ((allLocations[i].id == loc) || (allLocations[i].name == loc)) {
       options += `<option value="${allLocations[i].id}" selected>${allLocations[i].name}</option>`;
 
-      }
-      else{
-      options += `<option value="${allLocations[i].id}">${allLocations[i].name}</option>`;
-      }
     }
+    else {
+      options += `<option value="${allLocations[i].id}">${allLocations[i].name}</option>`;
+    }
+  }
 
-    return options;
+  return options;
 }
 
 
 //get default value for location dropdown in edit form
-function getDepartmentDropdownWithSelectedId(dep)
-{
+function getDepartmentDropdownWithSelectedId(dep) {
   options = "";
-    for (i = 0; i < allDepartments.length; i++) {
-      if (i == 0) {
-        options += '<option value="" >Choose Location</option>';
-      }
-      if ((allDepartments[i].id == dep) || (allDepartments[i].name == dep))
-      {
+  for (i = 0; i < allDepartments.length; i++) {
+    if (i == 0) {
+      options += '<option value="" >Choose Location</option>';
+    }
+    if ((allDepartments[i].id == dep) || (allDepartments[i].name == dep)) {
       options += `<option value="${allDepartments[i].id}" selected>${allDepartments[i].name}</option>`;
 
-      }
-      else{
-      options += `<option value="${allDepartments[i].id}">${allDepartments[i].name}</option>`;
-      }
     }
+    else {
+      options += `<option value="${allDepartments[i].id}">${allDepartments[i].name}</option>`;
+    }
+  }
 
-    return options;
+  return options;
 }
 
-
+function deleteModal(name) {
+  var delModal = `<div class="modal card-dm fade" id="delete-modal-${name}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="del-text-${name}">
+        <p>Are you sure want to Delete ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="del-yes-${name}" data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-secondary" id="del-no-${name}" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>`
+  return delModal;
+}
 
 
 
