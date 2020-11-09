@@ -912,6 +912,7 @@ function updateDepartmentData(xhttp) {
   output = JSON.parse(xhttp.responseText);
   alert(output.status.description);
   window.location.reload();
+  // $('#department-tab').trigger("click");
 }
 
 // add department send functionality
@@ -938,13 +939,16 @@ $('#send-dept').click(function () {
 
 })
 
+//pre loader
+var preloader =document.getElementById('loading');
+function myFunction() {
+  setTimeout(function(){ preloader.style.display ='none'; }, 1000);
+}
 
-// setTimeout(function(){
-//   $('.loader_bg').fadeToggle();
-// },1500);
 
 //BY defauly view
 $(document).ready(function () {
+
   if (EmployeesView == true) {
     $('#employee-tab').trigger("click");
   }
