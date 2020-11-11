@@ -598,18 +598,18 @@ function editModel() {
         <div class="form-group mb-3">
         <label data-error="wrong" data-success="right" for="eid-edit">Email</label>
           <input type="email" id="eid-edit" class="form-control validate">
+        </div>       
+
+        <div class="form-group mb-3">
+          <label data-error="wrong" data-success="right" for="department-edit">Department</label>
+          <select id="department-edit" class="browser-default custom-select  custom-select-xs mb-3"></select>
+          <div id="invalid-department" class="invalid-department"></div>
         </div>
 
         <div class="form-group mb-3">
           <label data-error="wrong" data-success="right" for="location-edit">Location</label> 
           <select id="location-edit" class="browser-default custom-select  custom-select-xs mb-3"></select>
           <div id="invalid-location" class="invalid-location"></div>
-        </div>
-
-        <div class="form-group mb-3">
-          <label data-error="wrong" data-success="right" for="department-edit">Department</label>
-          <select id="department-edit" class="browser-default custom-select  custom-select-xs mb-3"></select>
-          <div id="invalid-department" class="invalid-department"></div>
         </div>
 
         <div class="form-group mb-3">
@@ -835,12 +835,14 @@ function departmentGenerator(departmentData) {
       </div>
     </div>
   </div>`;
+   //end department edit modal
 
-  $('body').append(deptEditModal);
-  //end department edit modal
+   const delete_dept_code = deleteModal('department');
 
-  const delete_dept_code = deleteModal('department');
-  $('body').append(delete_dept_code);
+  if($(`#EditDepartment`).length == 0){
+    $('body').append(deptEditModal);
+    $('body').append(delete_dept_code);
+  }
 
   departmentData.forEach(user => {
     const id = user.id;
@@ -858,7 +860,13 @@ function departmentGenerator(departmentData) {
     </td>    
     </tr>`)
 
+    if($(`#dept-row-${id}`).length == 0){
     $('#depart-body').append(DeptRow);
+    }
+    else{
+      $(`#dept-row-${id}`).find("td").eq(0)[0].innerHTML = deptName;
+      $(`#dept-row-${id}`).find("td").eq(1)[0].innerHTML = locName;
+    }
 
     $(`#edit-${id}`).click(() => {
       // console.log($( `.invalid-location`));
@@ -884,8 +892,12 @@ function departmentGenerator(departmentData) {
           return -1;
         }
 
+        // change immediately department details with out using database updated information
+        $(`#dept-row-${id}`).find("td").eq(0)[0].innerHTML = newDeptName;
+        $(`#dept-row-${id}`).find("td").eq(1)[0].innerHTML = $("#loc-In-Dept-edit").find('option:selected').text();
+
         //hide edit modal
-        $('#EditDepartment').hide();
+        $('#EditDepartment').modal('hide');
 
         //update details with php / sending values to php
         xmlhttp_php("libs/php/updateDepartmentByID.php?id=" + id + "&deptName=" + newDeptName + "&locID=" + locID, updateDepartmentData);
@@ -899,7 +911,9 @@ function departmentGenerator(departmentData) {
 
       $('#del-yes-department').click(() => {
         // console.log(deptName);
+        $(`#dept-row-${id}`).hide();
         xmlhttp_php("libs/php/deleteDepartmentByIDorName.php?id=" + id, updateDepartmentData);
+
       })
     })
 
@@ -911,8 +925,8 @@ function departmentGenerator(departmentData) {
 function updateDepartmentData(xhttp) {
   output = JSON.parse(xhttp.responseText);
   alert(output.status.description);
+  window.location = window.location.href + "#department-tab";
   window.location.reload();
-  // $('#department-tab').trigger("click");
 }
 
 // add department send functionality
@@ -949,15 +963,35 @@ function myFunction() {
 //BY defauly view
 $(document).ready(function () {
 
-  if (EmployeesView == true) {
-    $('#employee-tab').trigger("click");
+  tabView = "";
+  var n = window.location.href.indexOf("#");
+  if (n > 0)
+  {
+    tabView = window.location.href.substring(n, window.location.href.length);
+    window.history.replaceState( {} , "Company Directory", window.location.href.substring(0, n) );
+    console.log(n);
+    console.log(tabView);
   }
-  else if (departmentView == true) {
-    $('#department-tab').trigger("click");
+
+  if (tabView == "")
+  {    
+    console.log(tabView);
+    if (EmployeesView == true) {
+      $('#employee-tab').trigger("click");
+    }
+    else if (departmentView == true) {
+      $('#department-tab').trigger("click");
+    }
+    else if (locationView == true) {
+      $('#location-tab').trigger("click");
+    }
   }
-  else if (locationView == true) {
-    $('#location-tab').trigger("click");
+  else
+  {
+    console.log(tabView);
+    $(`${tabView}`).trigger("click");    
   }
+
 });
 
 
@@ -1083,6 +1117,7 @@ function locationGenerator(locationData) {
       $("#del-yes-location").click(() => {
         // delete location from location table with locID
         xmlhttp_php("libs/php/deleteLocationByIDorName.php?id=" + id, updateLocationData);
+        
       })
     })
 
@@ -1092,6 +1127,7 @@ function locationGenerator(locationData) {
 function updateLocationData(xhttp) {
   output = JSON.parse(xhttp.responseText);
   alert(output.status.description);
+  window.location = window.location.href + "#location-tab";
   window.location.reload();
 }
 
