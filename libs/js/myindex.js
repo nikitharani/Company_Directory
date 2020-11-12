@@ -23,6 +23,21 @@ $("#send").click(function () {
 
 });
 
+// reset filter
+$('#reset-filter').click(function () {
+  document.getElementsByClassName("depart")[0].innerHTML = getDepartmentDropdownWithSelectedId();
+  document.getElementsByClassName("loc")[0].innerHTML = getLocationDropdownWithSelectedId();
+
+  card_buttons = $('.card-btn');
+  // console.log(card_buttons);
+  for (i = 0; i < card_buttons.length; i++) {
+    id = $(card_buttons[i]).attr('id');
+    $(`#${id}`).show();
+  }
+
+});
+
+
 //change department drop down list according to location
 $("#location").change(function () {
   let locID = parseInt($(this).val());//$("#location option:checked").val();  
@@ -433,19 +448,20 @@ function getAllDepartments(xhttp) {
     // console.log(allDepartments);
 
     options = "";
+    options2 = "";
     for (i = 0; i < allDepartments.length; i++) {
       if (i == 0) {
         options += '<option value="" selected>Choose Department</option>';
+        // options2 += '<option value="" selected>All Departments</option>';
       }
       options += `<option value="${allDepartments[i].id}">${allDepartments[i].name}</option>`;
+      // options2 += `<option value="${allDepartments[i].id}">${allDepartments[i].name}</option>`;
     }
     departmentList = options;
     const departmentDropdown = document.getElementById("department");
 
     departmentDropdown.innerHTML = options;
     document.getElementsByClassName("depart")[0].innerHTML = options;
-    // document.getElementsByClassName("depart")[1].innerHTML = options;
-    // loc-In-Dept-edit
 
     // set data in department table
     departmentGenerator(allDepartments);
@@ -464,11 +480,14 @@ function getAllLocations(xhttp) {
     allLocations = locationsData.data;
     // console.log(allLocations);
     options = "";
+    options2 = "";
     for (i = 0; i < allLocations.length; i++) {
       if (i == 0) {
         options += '<option value="" selected>Choose Location</option>';
+        // options2 += '<option value="" selected>All Locations</option>';
       }
       options += `<option value="${allLocations[i].id}">${allLocations[i].name}</option>`;
+      // options2 += `<option value="${allLocations[i].id}">${allLocations[i].name}</option>`;
     }
     locationList = options;
     const locationDropdown = document.getElementById("location");
@@ -748,7 +767,7 @@ function setDepartmentDropdown(locID) {
   options = "";
   for (i = 0; i < allDepartments.length; i++) {
     if (i == 0) {
-      options += '<option value="" disabled selected>Choose Department</option>';
+      options += '<option value="" selected>Choose Department</option>';
     }
 
     if (allDepartments[i].locationID == locID) {
@@ -766,7 +785,7 @@ function setLocationDropdown(deptID) {
   options = "";
   for (i = 0; i < allDepartments.length; i++) {
     if (i == 0) {
-      options += `<option value="" disabled>Choose Location</option>`;
+      options += `<option value="" selected>Choose Location</option>`;
     }
     if (allDepartments[i].id == deptID) {
       for (j = 0; j < allLocations.length; j++) {
@@ -1236,7 +1255,7 @@ function getDepartmentDropdownWithSelectedId(dep) {
   options = "";
   for (i = 0; i < allDepartments.length; i++) {
     if (i == 0) {
-      options += '<option value="" >Choose Location</option>';
+      options += '<option value="" >Choose Department</option>';
     }
     if ((allDepartments[i].id == dep) || (allDepartments[i].name == dep)) {
       options += `<option value="${allDepartments[i].id}" selected>${allDepartments[i].name}</option>`;
