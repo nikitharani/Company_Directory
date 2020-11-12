@@ -332,7 +332,8 @@ function createModal(id, nameTag, firstName, lastName, email, location, departme
     delButton.click(() => {
       document.getElementById('del-text-employees').innerHTML = "Are you sure want to delete employee " + "'" + fulName + "' ?";
       $('#del-yes-employees').click(() => {
-        // container.hide();
+        container.hide();
+        $('#delete-modal-employees').hide();
         deleteEmployee(id);
       })
     })
@@ -655,9 +656,21 @@ function addEmployee() {
 
 // create an employee
 function insertEmployeeData(xhttp) {
-  output = JSON.parse(xhttp.responseText);
-  alert(output.status.description);
+  output = JSON.parse(xhttp.responseText); 
+
+  //alert code
+  document.getElementById('alertMsg').innerHTML=output.status.description;
+  $('#alert-modal').show();
+  $('#alert-ok, #alert-close').click(function(){
   window.location.reload();
+  });
+  // close modal using escape
+  $(document).keydown(e => {
+    if (e.key === 'Escape') {
+      $('#alert-modal').hide();
+      window.location.reload();
+    }
+  });
 }
 
 function deleteEmployee(id) {
@@ -669,8 +682,20 @@ function deleteEmployee(id) {
 // delete an employee
 function deleteEmployeeData(xhttp) {
   output = JSON.parse(xhttp.responseText);
-  alert(output.status.description);
+
+  //alert code
+  document.getElementById('alertMsg').innerHTML=output.status.description;
+  $('#alert-modal').show();
+  $('#alert-ok, #alert-close').click(function(){
   window.location.reload();
+  });
+  // close modal using escape
+  $(document).keydown(e => {
+    if (e.key === 'Escape') {
+      $('#alert-modal').hide();
+      window.location.reload();
+    }
+  });
 
 }
 
@@ -702,8 +727,20 @@ function updateEmployee(id) {
 
 function updateEmployeeData(xhttp) {
   output = JSON.parse(xhttp.responseText);
-  alert(output.status.description);
+
+    //alert code
+  document.getElementById('alertMsg').innerHTML=output.status.description;
+  $('#alert-modal').show();
+  $('#alert-ok, #alert-close').click(function(){
   window.location.reload();
+  });
+  // close modal using escape
+  $(document).keydown(e => {
+    if (e.key === 'Escape') {
+      $('#alert-modal').hide();
+      window.location.reload();
+    }
+  });
 }
 
 //set department dropdown based on location
@@ -728,6 +765,10 @@ function setLocationDropdown(deptID) {
 
   options = "";
   for (i = 0; i < allDepartments.length; i++) {
+    if (i == 0)
+    {
+      options += `<option value="" disabled>Choose Location</option>`;
+    }
     if (allDepartments[i].id == deptID) {
       for (j = 0; j < allLocations.length; j++) {
         if (allDepartments[i].locationID == allLocations[j].id) {
@@ -924,9 +965,21 @@ function departmentGenerator(departmentData) {
 
 function updateDepartmentData(xhttp) {
   output = JSON.parse(xhttp.responseText);
-  alert(output.status.description);
-  window.location = window.location.href + "#department-tab";
+  //alert code
+  document.getElementById('alertMsg').innerHTML=output.status.description;
+  $('#alert-modal').show();
+  $('#alert-ok, #alert-close').click(function(){
+    window.location = window.location.href + "#department-tab";
   window.location.reload();
+  });
+  // close modal using escape
+  $(document).keydown(e => {
+    if (e.key === 'Escape') {
+      $('#alert-modal').hide();
+      window.location = window.location.href + "#department-tab";
+      window.location.reload();
+    }
+  });
 }
 
 // add department send functionality
@@ -1126,9 +1179,23 @@ function locationGenerator(locationData) {
 
 function updateLocationData(xhttp) {
   output = JSON.parse(xhttp.responseText);
-  alert(output.status.description);
-  window.location = window.location.href + "#location-tab";
+   //alert code
+   document.getElementById('alertMsg').innerHTML=output.status.description;
+   $('#alert-modal').show();
+   $('#alert-ok, #alert-close').click(function(){
+    window.location = window.location.href + "#location-tab";
+    window.location.reload();
+   });
+   // close modal using escape
+   $(document).keydown(e => {
+     if (e.key === 'Escape') {
+       $('#alert-modal').hide();
+       window.location = window.location.href + "#location-tab";
+       window.location.reload(); 
   window.location.reload();
+       window.location.reload(); 
+     }
+   });
 }
 
 // add department send functionality
