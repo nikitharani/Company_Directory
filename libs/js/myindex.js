@@ -416,8 +416,8 @@ function xmlhttp_php(url, func) {
     }
     else if (this.status != 200 && this.status != 0) {
       func(this);
-      console.log(this.status);
-      console.log(`cannot get information from :${url}`);
+      // console.log(this.status);
+      // console.log(`cannot get information from :${url}`);
     }
   };
   xmlhttp.open("GET", url, true);
@@ -656,13 +656,13 @@ function addEmployee() {
 
 // create an employee
 function insertEmployeeData(xhttp) {
-  output = JSON.parse(xhttp.responseText); 
+  output = JSON.parse(xhttp.responseText);
 
   //alert code
-  document.getElementById('alertMsg').innerHTML=output.status.description;
+  document.getElementById('alertMsg').innerHTML = output.status.description;
   $('#alert-modal').show();
-  $('#alert-ok, #alert-close').click(function(){
-  window.location.reload();
+  $('#alert-ok, #alert-close').click(function () {
+    window.location.reload();
   });
   // close modal using escape
   $(document).keydown(e => {
@@ -684,10 +684,10 @@ function deleteEmployeeData(xhttp) {
   output = JSON.parse(xhttp.responseText);
 
   //alert code
-  document.getElementById('alertMsg').innerHTML=output.status.description;
+  document.getElementById('alertMsg').innerHTML = output.status.description;
   $('#alert-modal').show();
-  $('#alert-ok, #alert-close').click(function(){
-  window.location.reload();
+  $('#alert-ok, #alert-close').click(function () {
+    window.location.reload();
   });
   // close modal using escape
   $(document).keydown(e => {
@@ -728,11 +728,11 @@ function updateEmployee(id) {
 function updateEmployeeData(xhttp) {
   output = JSON.parse(xhttp.responseText);
 
-    //alert code
-  document.getElementById('alertMsg').innerHTML=output.status.description;
+  //alert code
+  document.getElementById('alertMsg').innerHTML = output.status.description;
   $('#alert-modal').show();
-  $('#alert-ok, #alert-close').click(function(){
-  window.location.reload();
+  $('#alert-ok, #alert-close').click(function () {
+    window.location.reload();
   });
   // close modal using escape
   $(document).keydown(e => {
@@ -765,8 +765,7 @@ function setLocationDropdown(deptID) {
 
   options = "";
   for (i = 0; i < allDepartments.length; i++) {
-    if (i == 0)
-    {
+    if (i == 0) {
       options += `<option value="" disabled>Choose Location</option>`;
     }
     if (allDepartments[i].id == deptID) {
@@ -876,11 +875,11 @@ function departmentGenerator(departmentData) {
       </div>
     </div>
   </div>`;
-   //end department edit modal
+  //end department edit modal
 
-   const delete_dept_code = deleteModal('department');
+  const delete_dept_code = deleteModal('department');
 
-  if($(`#EditDepartment`).length == 0){
+  if ($(`#EditDepartment`).length == 0) {
     $('body').append(deptEditModal);
     $('body').append(delete_dept_code);
   }
@@ -901,10 +900,10 @@ function departmentGenerator(departmentData) {
     </td>    
     </tr>`)
 
-    if($(`#dept-row-${id}`).length == 0){
-    $('#depart-body').append(DeptRow);
+    if ($(`#dept-row-${id}`).length == 0) {
+      $('#depart-body').append(DeptRow);
     }
-    else{
+    else {
       $(`#dept-row-${id}`).find("td").eq(0)[0].innerHTML = deptName;
       $(`#dept-row-${id}`).find("td").eq(1)[0].innerHTML = locName;
     }
@@ -966,11 +965,11 @@ function departmentGenerator(departmentData) {
 function updateDepartmentData(xhttp) {
   output = JSON.parse(xhttp.responseText);
   //alert code
-  document.getElementById('alertMsg').innerHTML=output.status.description;
+  document.getElementById('alertMsg').innerHTML = output.status.description;
   $('#alert-modal').show();
-  $('#alert-ok, #alert-close').click(function(){
+  $('#alert-ok, #alert-close').click(function () {
     window.location = window.location.href + "#department-tab";
-  window.location.reload();
+    window.location.reload();
   });
   // close modal using escape
   $(document).keydown(e => {
@@ -1007,9 +1006,9 @@ $('#send-dept').click(function () {
 })
 
 //pre loader
-var preloader =document.getElementById('loading');
+var preloader = document.getElementById('loading');
 function myFunction() {
-  setTimeout(function(){ preloader.style.display ='none'; }, 1000);
+  setTimeout(function () { preloader.style.display = 'none'; }, 1000);
 }
 
 
@@ -1018,17 +1017,15 @@ $(document).ready(function () {
 
   tabView = "";
   var n = window.location.href.indexOf("#");
-  if (n > 0)
-  {
+  if (n > 0) {
     tabView = window.location.href.substring(n, window.location.href.length);
-    window.history.replaceState( {} , "Company Directory", window.location.href.substring(0, n) );
-    console.log(n);
-    console.log(tabView);
+    window.history.replaceState({}, "Company Directory", window.location.href.substring(0, n));
+    // console.log(n);
+    // console.log(tabView);
   }
 
-  if (tabView == "")
-  {    
-    console.log(tabView);
+  if (tabView == "") {
+    // console.log(tabView);
     if (EmployeesView == true) {
       $('#employee-tab').trigger("click");
     }
@@ -1039,10 +1036,9 @@ $(document).ready(function () {
       $('#location-tab').trigger("click");
     }
   }
-  else
-  {
-    console.log(tabView);
-    $(`${tabView}`).trigger("click");    
+  else {
+    // console.log(tabView);
+    $(`${tabView}`).trigger("click");
   }
 
 });
@@ -1170,7 +1166,7 @@ function locationGenerator(locationData) {
       $("#del-yes-location").click(() => {
         // delete location from location table with locID
         xmlhttp_php("libs/php/deleteLocationByIDorName.php?id=" + id, updateLocationData);
-        
+
       })
     })
 
@@ -1179,23 +1175,23 @@ function locationGenerator(locationData) {
 
 function updateLocationData(xhttp) {
   output = JSON.parse(xhttp.responseText);
-   //alert code
-   document.getElementById('alertMsg').innerHTML=output.status.description;
-   $('#alert-modal').show();
-   $('#alert-ok, #alert-close').click(function(){
+  //alert code
+  document.getElementById('alertMsg').innerHTML = output.status.description;
+  $('#alert-modal').show();
+  $('#alert-ok, #alert-close').click(function () {
     window.location = window.location.href + "#location-tab";
     window.location.reload();
-   });
-   // close modal using escape
-   $(document).keydown(e => {
-     if (e.key === 'Escape') {
-       $('#alert-modal').hide();
-       window.location = window.location.href + "#location-tab";
-       window.location.reload(); 
-  window.location.reload();
-       window.location.reload(); 
-     }
-   });
+  });
+  // close modal using escape
+  $(document).keydown(e => {
+    if (e.key === 'Escape') {
+      $('#alert-modal').hide();
+      window.location = window.location.href + "#location-tab";
+      window.location.reload();
+      window.location.reload();
+      window.location.reload();
+    }
+  });
 }
 
 // add department send functionality
