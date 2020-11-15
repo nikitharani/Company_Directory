@@ -970,9 +970,31 @@ function departmentGenerator(departmentData) {
 
       $('#del-yes-department').click(() => {
         // console.log(deptName);
-        $(`#dept-row-${id}`).hide();
-        xmlhttp_php("libs/php/deleteDepartmentByIDorName.php?id=" + id, updateDepartmentData);
+        //refuse to delete depatment if there are employees in it
+        numOfEmployees = getNumberOfEmployeesInDepartmentLocation(deptName);
+        console.log(numOfEmployees);
+        if (numOfEmployees > 0) {
+          document.getElementById('alertMsg').innerHTML = "Cannot delete department " + "'" + deptName + "'"+" because there are employees in it!";
+          $('#alert-modal').show();
 
+          // close modal when clicked ok or close
+          $('#alert-ok, #alert-close').click(function () {
+            $('#alert-modal').hide();     
+          });
+        
+          // close modal using escape
+          $(document).keydown(e => {
+            if (e.key === 'Escape') {
+              $('#alert-modal').hide();        
+            }
+          });
+
+        }
+        else 
+        {
+          xmlhttp_php("libs/php/deleteDepartmentByIDorName.php?id=" + id, updateDepartmentData);
+        }
+        
       })
     })
 
@@ -1183,8 +1205,32 @@ function locationGenerator(locationData) {
       document.getElementById('del-text-location').innerHTML = "Are you sure want to delete location " + "'" + locName + "' ?";
 
       $("#del-yes-location").click(() => {
-        // delete location from location table with locID
+        //refuse to delete location if there are employees in it
+        numOfEmployees = getNumberOfEmployeesInDepartmentLocation('', locName);
+        if (numOfEmployees > 0) {
+          // document.getElementById('alertMsg').innerHTML = "Cannot delete location " + "'" + locName + "'"+" because there are employees in it!";
+          $('#alertMsg').html("Cannot delete the location " + "'" + locName + "'"+" because there are employees in it!");
+          $('#alert-modal').show();
+
+          // close modal when clicked ok or close
+          $('#alert-ok, #alert-close').click(function () {
+            $('#alert-modal').hide();   
+            $('#alertMsg').html('');  
+          });
+        
+          // close modal using escape
+          $(document).keydown(e => {
+            if (e.key === 'Escape') {
+              $('#alert-modal').hide();  
+              $('#alertMsg').html('');
+            }
+          });
+        }
+        else
+        {
+          // delete location from location table with locID
         xmlhttp_php("libs/php/deleteLocationByIDorName.php?id=" + id, updateLocationData);
+        }
 
       })
     })
@@ -1195,7 +1241,8 @@ function locationGenerator(locationData) {
 function updateLocationData(xhttp) {
   output = JSON.parse(xhttp.responseText);
   //alert code
-  document.getElementById('alertMsg').innerHTML = output.status.description;
+  // document.getElementById('alertMsg').innerHTML = output.status.description;
+  $('#alertMsg').html(output.status.description);
   $('#alert-modal').show();
   $('#alert-ok, #alert-close').click(function () {
     window.location = window.location.href + "#location-tab";
@@ -1206,8 +1253,6 @@ function updateLocationData(xhttp) {
     if (e.key === 'Escape') {
       $('#alert-modal').hide();
       window.location = window.location.href + "#location-tab";
-      window.location.reload();
-      window.location.reload();
       window.location.reload();
     }
   });
@@ -1293,6 +1338,26 @@ function deleteModal(name) {
 }
 
 
+
+function getNumberOfEmployeesInDepartmentLocation(deptName = '', locName = '') {
+
+  deptName = deptName.toLowerCase();
+  locName = locName.toLowerCase();
+  var totalNumEmployees = 0;
+  // !(allEmployees[i].location.toLowerCase().localeCompare(locName))
+
+  for (i = 0; i < allEmployees.length; i++) {
+
+    if (!(allEmployees[i].department.toLowerCase().localeCompare(deptName))) {
+      totalNumEmployees = totalNumEmployees + 1;
+    }
+    else if (!(allEmployees[i].location.toLowerCase().localeCompare(locName))) {
+      totalNumEmployees = totalNumEmployees + 1;
+    }
+
+  }
+  return totalNumEmployees
+}
 
 //------------------------------------------//
 
